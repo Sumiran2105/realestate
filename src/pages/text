@@ -1,0 +1,133 @@
+<section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+        {/* Parallax Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center will-change-transform"
+          style={{
+            backgroundImage: "url('/city.jpg')",
+            transform: "translateY(var(--parallax)) scale(1.08)",
+          }}
+        ></div>
+
+        {/* Gradient Overlay (Improves Readability) */}
+       
+
+        {/* Content */}
+        <div className="relative text-center px-6 max-w-5xl text-white">
+
+          {/* Tag */}
+          <p className="uppercase tracking-[0.3em] text-xs mb-6 text-brand-dark font-medium">
+            ADVANCED SEARCH & DISCOVERY
+          </p>
+
+          {/* Headline */}
+          <h1 className="text-5xl md:text-6xl font-bold text-brand-dark">
+            Find Verified Properties
+            <span className="block text-brand-dark mt-3">
+              With Complete Transparency
+            </span>
+          </h1>
+
+          {/* Subtext */}
+          <p className="mt-8 text-lg text-gray-900 max-w-3xl mx-auto leading-relaxed">
+            Search using location intelligence, structured property filters,
+            and government-backed verification criteria designed to
+            eliminate risk and improve decision-making.
+          </p>
+
+          {/* ================= SEARCH CARD ================= */}
+          <div className="mt-20 relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl 
+                          shadow-[0_40px_120px_rgba(0,0,0,0.25)] 
+                          border border-white/20 p-10 text-slate-800 
+                          transition-all duration-500 hover:shadow-[0_50px_150px_rgba(0,0,0,0.35)]">
+
+           
+            <div className="grid md:grid-cols-3 gap-5">
+              <input
+                type="text"
+                placeholder="City, District, Mandal, Locality..."
+                className="px-5 py-4 rounded-2xl border border-slate-200 
+                          focus:ring-2 focus:ring-brand focus:border-brand 
+                          outline-none transition"
+              />
+
+              <select className="px-5 py-4 rounded-2xl border border-slate-200 
+                                focus:ring-2 focus:ring-brand focus:border-brand 
+                                outline-none transition">
+                <option>Budget Range</option>
+                <option>₹10L - ₹25L</option>
+                <option>₹25L - ₹50L</option>
+                <option>₹50L - ₹1Cr</option>
+                <option>₹1Cr - ₹5Cr+</option>
+              </select>
+
+              <select className="px-5 py-4 rounded-2xl border border-slate-200 
+                                focus:ring-2 focus:ring-brand focus:border-brand 
+                                outline-none transition">
+                <option>Property Type</option>
+                <option>Apartment</option>
+                <option>Villa</option>
+                <option>Land</option>
+              </select>
+            </div>
+
+            
+            <div className="grid md:grid-cols-3 gap-5 mt-5">
+              <select className="px-5 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition">
+                <option>Bedrooms</option>
+                <option>1 BHK</option>
+                <option>2 BHK</option>
+                <option>3 BHK</option>
+                <option>4+ BHK</option>
+              </select>
+
+              <select className="px-5 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition">
+                <option>Area (sq.ft.)</option>
+                <option>500 - 1000</option>
+                <option>1000 - 2000</option>
+                <option>2000+</option>
+              </select>
+
+              <select className="px-5 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition">
+                <option>Furnishing Status</option>
+                <option>Unfurnished</option>
+                <option>Semi Furnished</option>
+                <option>Fully Furnished</option>
+              </select>
+            </div>
+
+            
+            <div className="mt-8 flex flex-wrap gap-3 justify-center">
+              {[
+                "Verified Owners Only",
+                "Clear Title",
+                "RERA Approved",
+                "Municipal Approved",
+                "Ready for Bank Loan",
+                "Immediate Possession",
+              ].map((item, index) => (
+                <button
+                  key={index}
+                  className="px-5 py-2 rounded-full text-sm 
+                             bg-brand-soft text-brand-dark 
+                             border border-brand-light 
+                             hover:bg-brand-light transition"
+                >
+                  ✓ {item}
+                </button>
+              ))}
+            </div>
+
+            {/* Search Button */}
+            <button
+              className="mt-10 w-full bg-brand-dark text-white py-5 rounded-2xl
+                         hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
+                         transition-all duration-300 font-semibold text-lg 
+                         shadow-xl"
+            >
+              Search Verified Properties
+            </button>
+
+          </div>
+        </div>
+      </section>
