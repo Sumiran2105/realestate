@@ -1,31 +1,51 @@
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
 export default function SignUp() {
   return (
-    <div className="flex items-center justify-center py-20 bg-slate-100">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center">Create Account</h2>
+    <div className="min-h-screen flex items-center justify-center bg-[#25252b] overflow-hidden">
+      
+      <motion.div
+        initial={{ x: 200, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="w-[400px] p-8 border-2 border-[#e46033] shadow-[0_0_25px_#e46033] rounded-xl bg-[#2c2c33]"
+      >
+        <h2 className="text-3xl font-bold text-white text-center mb-8">
+          Create Account
+        </h2>
 
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="mt-6 w-full px-4 py-3 border rounded-lg"
-        />
+        <form className="space-y-6">
+          <input
+            type="text"
+            placeholder="Username"
+            className="w-full bg-transparent border-b-2 border-white text-white py-2 outline-none focus:border-[#e46033]"
+          />
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="mt-4 w-full px-4 py-3 border rounded-lg"
-        />
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full bg-transparent border-b-2 border-white text-white py-2 outline-none focus:border-[#e46033]"
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="mt-4 w-full px-4 py-3 border rounded-lg"
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full bg-transparent border-b-2 border-white text-white py-2 outline-none focus:border-[#e46033]"
+          />
 
-        <button className="mt-6 w-full bg-emerald-500 text-white py-3 rounded-lg hover:bg-emerald-600 transition">
-          Sign Up
-        </button>
-      </div>
+          <button className="w-full py-3 border-2 border-[#e46033] rounded-full text-white font-semibold hover:bg-[#e46033] transition">
+            Sign Up
+          </button>
+
+          <p className="text-sm text-center text-white">
+            Already have an account?{" "}
+            <Link to="/signin" className="text-[#e46033] font-semibold">
+              Sign In
+            </Link>
+          </p>
+        </form>
+      </motion.div>
     </div>
   );
 }
