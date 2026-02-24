@@ -1,0 +1,2635 @@
+{
+  "platform": "Verified Real Estate & Intelligence Platform",
+  "generated_date": "2024-05-21",
+  "total_listings": 26,
+  "property_category": "Plots/Land",
+  "verification_standard": "Government Approved (Dharani, Meebhoomi, IGRS, RERA)",
+  "listings": [
+    {
+      "property_id": "TS-HYD-24001",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Prime Residential Plot in Financial District",
+      "description": "A fully approved residential plot located in the heart of Hyderabad's Financial District. Ideal for a luxury home or investment. All approvals in place including HMDA layout approval.",
+      "location": {
+        "address": "Sector 2, Financial District",
+        "city": "Hyderabad",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "500032",
+        "landmark": "Near IKEA",
+        "gps_coordinates": {
+          "lat": 17.4194,
+          "lng": 78.3747
+        },
+        "zone": "HMDA",
+        "connectivity": {
+          "nearest_metro": "Raidurg Metro (6 km)",
+          "nearest_it_hub": "Financial District (0.5 km)",
+          "nearest_airport": "Rajiv Gandhi International Airport (25 km)",
+          "nearest_bus_stop": "Nampally Bus Stand (2 km)"
+        }
+      },
+      "property_details": {
+        "plot_area_sq_yards": 300,
+        "plot_area_sq_ft": 2700,
+        "dimensions": "30 x 90 ft",
+        "facing": "East",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Compound Wall with Gate"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": "HMDA/LRS/123/2022",
+          "approved_date": "2022-05-15",
+          "status": "Approved"
+        },
+        "rera_details": {
+          "applicable": false,
+          "reason": "Plot in an approved layout (< 1000 sq mtrs), RERA registration not mandatory but layout is HMDA approved."
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "K. Srinivas Reddy",
+          "survey_number": "123/45",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "municipal_approvals": {
+          "plan_approval": "GHMC/BPS/2022/789",
+          "occupancy_certificate": "Not Applicable for Plot"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/1234/567",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "HMWSSB",
+            "connection_number": "HMWB/9876/543",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-20",
+        "report_summary": "All government records match. No liens or disputes. HMDA approved layout. Ready for registration."
+      },
+      "pricing": {
+        "expected_price": 15000000,
+        "price_per_sq_yd": 50000,
+        "price_per_sq_ft": 5555.56,
+        "fair_price_estimate": {
+          "min": 14500000,
+          "max": 15500000,
+          "confidence_level": "90%"
+        },
+        "price_trend": {
+          "6_months": "+5%",
+          "1_year": "+12%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "K. Srinivas Reddy",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-01-15",
+        "total_listings": 4,
+        "response_rate": "98%",
+        "response_time": "< 1 hour"
+      },
+      "media": {
+        "images": [
+          "https://4.imimg.com/data4/YT/VW/ANDROID-34162931/product-500x500.jpeg",
+          "https://royalepavani.weebly.com/uploads/1/4/7/6/147651071/hmda-approved-plots-in-hyderabad_orig.jpeg"
+        ],
+        "video_tour": "https://example.com/videos/plot-24001.mp4",
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15225.93996295563!2d78.36137782686889!3d17.436486157207487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93eec732b6c3%3A0x4f4859b38450be0f!2sDiamond%20Hills%2C%20Lumbini%20Avenue%2C%20Gachibowli%2C%20Hyderabad%2C%20Telangana%20500032!5e0!3m2!1sen!2sin!4v1771928719591!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24002",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Corner Plot in HMDA Approved Layout - Kokapet",
+      "description": "Excellent investment opportunity. A spacious corner plot in the fastest-growing suburb of Hyderabad. Direct access to the Outer Ring Road (ORR). Full approvals from HMDA and DTCP.",
+      "location": {
+        "address": "Neopolis Layout, Kokapet",
+        "city": "Hyderabad",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "500075",
+        "landmark": "Opp. to Amazon Office",
+        "gps_coordinates": {
+          "lat": 17.3652,
+          "lng": 78.3317
+        },
+        "zone": "HMDA",
+        "connectivity": {
+          "nearest_metro": "Future Metro Station (2 km - Proposed)",
+          "nearest_it_hub": "Outer Ring Road (1 km)",
+          "nearest_airport": "RGIA (20 km)",
+          "nearest_bus_stop": "Kokapet Bus Stand (1 km)"
+        }
+      },
+      "property_details": {
+        "plot_area_sq_yards": 450,
+        "plot_area_sq_ft": 4050,
+        "dimensions": "45 x 90 ft",
+        "facing": "North",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.75,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA/DTCP",
+          "approval_number": "HMDA/DTCP/LRS/456/2023",
+          "approved_date": "2023-02-10",
+          "status": "Approved"
+        },
+        "rera_details": {
+          "applicable": false,
+          "reason": "Plot in an approved layout. Developer has obtained HMDA approval."
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "Neopolis Infra Developers Pvt Ltd",
+          "survey_number": "67/89",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "municipal_approvals": {
+          "plan_approval": "GHMC/BPS/2023/1122",
+          "occupancy_certificate": "Not Applicable"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/3456/789",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "HMWSSB",
+            "connection_number": "HMWB/2345/678",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 1,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-19",
+        "report_summary": "Prime location corner plot with all approvals. Clear title and no dues."
+      },
+      "pricing": {
+        "expected_price": 22500000,
+        "price_per_sq_yd": 50000,
+        "price_per_sq_ft": 5555.56,
+        "fair_price_estimate": {
+          "min": 22000000,
+          "max": 23500000,
+          "confidence_level": "92%"
+        },
+        "price_trend": {
+          "6_months": "+8%",
+          "1_year": "+20%"
+        },
+        "negotiability": "Yes (Negotiable for serious buyers)"
+      },
+      "seller_information": {
+        "name": "Neopolis Infra Developers Pvt Ltd",
+        "type": "Builder/Developer",
+        "verification_badge": "Verified Developer",
+        "member_since": "2022-06-01",
+        "total_listings": 12,
+        "rera_license": "RERA/TS/12345/2023",
+        "gst_number": "36ABCDE1234F1Z5",
+        "response_rate": "100%",
+        "response_time": "< 30 mins"
+      },
+      "media": {
+        "images": [
+          "https://estatedekho.s3.ap-south-1.amazonaws.com/images/properties/17213072357041/21721307252-horizon-hills-phase-2-plot-for-sale-in-kokapet-hyderabad-17213072357041.jpg",
+          "https://imagecdn.99acres.com/media1/34373/15/687475199M-1766039970433.webp"
+        ],
+        "video_tour": "https://example.com/videos/plot-24002.mp4",
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60916.79002776302!2d78.23936362167969!3d17.397414700000013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb957149e4146f%3A0x91af4ccfd35260a1!2sKokapet%20land!5e0!3m2!1sen!2sin!4v1771928814847!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-WGL-24003",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Affordable Residential Plot near Warangal University",
+      "description": "Great investment for education corridor. Located close to Kakatiya University and new medical college. DTCP approved layout with all basic infrastructure.",
+      "location": {
+        "address": "Kakatiya Layout, Hanamkonda",
+        "city": "Warangal",
+        "district": "Warangal Urban",
+        "state": "Telangana",
+        "pincode": "506001",
+        "landmark": "Near Kakatiya University Gate",
+        "gps_coordinates": {
+          "lat": 18.0002,
+          "lng": 79.6023
+        },
+        "zone": "DTCP",
+        "connectivity": {
+          "nearest_railway": "Warangal Railway Station (7 km)",
+          "nearest_bus_stop": "Hanamkonda Bus Stand (3 km)",
+          "nearest_airport": "RGIA (20 km)",
+          "nearest_it_hub": "Kakatiya University (3 km)"
+        }
+      },
+      "property_details": {
+        "plot_area_sq_yards": 200,
+        "plot_area_sq_ft": 1800,
+        "dimensions": "20 x 90 ft",
+        "facing": "West",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "DTCP Warangal",
+          "approval_number": "DTCP/WGL/789/2023",
+          "approved_date": "2023-09-20",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "G. Rajamouli",
+          "survey_number": "101/22",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSN/7890/123",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": false,
+            "details": "Borewell water available in layout, pending individual connection"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 9,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-18"
+      },
+      "pricing": {
+        "expected_price": 6000000,
+        "price_per_sq_yd": 30000,
+        "price_per_sq_ft": 3333.33,
+        "fair_price_estimate": {
+          "min": 5800000,
+          "max": 6200000,
+          "confidence_level": "88%"
+        },
+        "price_trend": {
+          "6_months": "+3%",
+          "1_year": "+7%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "G. Rajamouli",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2024-01-10",
+        "total_listings": 2,
+        "response_rate": "95%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://svsgkrealty.com/wp-content/uploads/2025/03/DJI_20250304170840_0201_D-scaled.jpg",
+          "https://housing-images.n7net.in/01c16c28/431667b646e903754b9c273635ff6dfb/v0/medium/residential_plot-for-sale-hanamkonda-Warangal-plot_view.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15175.792559557429!2d79.54324312712622!3d18.027610232002736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a334f5dc8e4bb8f%3A0x6b344fc811467349!2sHanamkonda%2C%20Telangana%20506009!5e0!3m2!1sen!2sin!4v1771929313996!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-VSP-24004",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Beach View Plot in Bheemili Vizag",
+      "description": "Rare opportunity to own a plot with sea view. Approved by VUDA. Clear title and all documents verified via Meebhoomi.",
+      "location": {
+        "address": "Bheemunipatnam Beach Road",
+        "city": "Visakhapatnam",
+        "district": "Visakhapatnam",
+        "state": "Andhra Pradesh",
+        "pincode": "531163",
+        "landmark": "Near Bheemili Beach",
+        "gps_coordinates": {
+          "lat": 17.8892,
+          "lng": 83.4520
+        },
+        "zone": "VUDA",
+        "connectivity": {
+          "nearest_bus_stop": "Vizag City (25 km)",
+          "nearest_airport": "visakhapatnam (30 km)",
+          "nearest_it_hub": "Bheemili (2 km)"
+        }
+      },
+      "property_details": {
+        "plot_area_sq_yards": 250,
+        "plot_area_sq_ft": 2250,
+        "dimensions": "25 x 90 ft",
+        "facing": "East (Sea Facing)",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.25,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "VUDA",
+          "approval_number": "VUDA/BHEEM/456/2021",
+          "approved_date": "2021-12-01",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "P. Suryanarayana",
+          "survey_number": "45/6B",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/4567/890",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 1,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "igrs_cross_verification": "Match Found",
+        "last_verified_date": "2024-05-20"
+      },
+      "pricing": {
+        "expected_price": 17500000,
+        "price_per_sq_yd": 70000,
+        "price_per_sq_ft": 7777.78,
+        "fair_price_estimate": {
+          "min": 16800000,
+          "max": 18200000,
+          "confidence_level": "85%"
+        },
+        "price_trend": {
+          "1_year": "+15%"
+        },
+        "negotiability": "No"
+      },
+      "seller_information": {
+        "name": "P. Suryanarayana",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2022-11-05",
+        "total_listings": 1,
+        "response_rate": "100%",
+        "response_time": "< 3 hours"
+      },
+      "media": {
+        "images": [
+          "https://framerusercontent.com/images/vbw8P4PR7A3XChIPr09d8mZlgg.jpg",
+          "https://www.vizaglands.com/storage/beach-2.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60742.841055591554!2d83.36032866014583!3d17.912200861524074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a39578fa06f4a07%3A0x77ddbc0071a90f0f!2sBheemunipatnam%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771929613373!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-TPT-24005",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Temple View Plot near Tirupati",
+      "description": "A quiet, approved plot in the spiritual capital of AP. Close to the new bypass road. TTD layout with all approvals.",
+      "location": {
+        "address": "Srinivasa Nagar, Tirupati Rural",
+        "city": "Tirupati",
+        "district": "Chittoor",
+        "state": "Andhra Pradesh",
+        "pincode": "517501",
+        "landmark": "Near Tirupati Airport (5 km)",
+        "connectivity": {
+          "nearest_bus_stop": "Tirupati (5 km)",
+          "nearest_airport": "Tirupati (15 km)",
+          "nearest_railway_station": "Tirupati (10 km)"
+        },
+        "gps_coordinates": {
+          "lat": 13.6366,
+          "lng": 79.5432
+        },
+        "zone": "Tirupati Development Authority"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 300,
+        "plot_area_sq_ft": 2700,
+        "dimensions": "30 x 90 ft",
+        "facing": "North",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Compound Wall"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "Tirupati Development Authority",
+          "approval_number": "TDA/LRS/567/2022",
+          "approved_date": "2022-08-15",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "N. Chandrasekhar",
+          "survey_number": "210/78",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/8901/234",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 1,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-19"
+      },
+      "pricing": {
+        "expected_price": 12000000,
+        "price_per_sq_yd": 40000,
+        "price_per_sq_ft": 4444.44,
+        "fair_price_estimate": {
+          "min": 11500000,
+          "max": 12500000,
+          "confidence_level": "89%"
+        },
+        "price_trend": {
+          "6_months": "+4%",
+          "1_year": "+10%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "N. Chandrasekhar",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-03-12",
+        "total_listings": 2,
+        "response_rate": "96%",
+        "response_time": "< 1 hour"
+      },
+      "media": {
+        "images": [
+          "https://imagecdn.99acres.com/media1/32442/5/648845245M-1767040810420.webp",
+          "https://housing-images.n7net.in/01c16c28/150a23770bc440f20e4833c63cd1f90b/v0/medium/residential_plot-for-sale-chandragiri_2-Tirupathi-plot_view.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62038.1779155795!2d79.37601534624642!3d13.634260771598411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4d4b0f88620427%3A0xcf4152d1daca0cac!2sTirupati%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771929790903!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24006",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Premium Gated Community Plot - Tellapur",
+      "description": "Part of a premium gated community with all amenities: parks, clubhouse, and underground wiring. HMDA approved and RERA registered community.",
+      "location": {
+        "address": "Avenue 7, Sattva Enclave, Tellapur",
+        "city": "Hyderabad",
+        "district": "Sangareddy",
+        "state": "Telangana",
+        "pincode": "502032",
+        "landmark": "Near My Home Vihanga",
+        "connectivity": {
+          "nearest_bus_stop": "Tellapur (5 km)",
+          "nearest_airport": "Rajiv Gandhi International Airport (25 km)",
+          "nearest_railway_station": "Tellapur (10 km)",
+          "nearest_it_hub": "Sangareddy (0.5 km)",
+          "nearest_metro": "Raidurg Metro (20 km)"
+          },
+        "gps_coordinates": {
+          "lat": 17.4779,
+          "lng": 78.3037
+        },
+        "zone": "HMDA"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 400,
+        "plot_area_sq_ft": 3600,
+        "dimensions": "40 x 90 ft",
+        "facing": "South",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.75,
+        "boundary": "Compound Wall with Gate",
+        "community_amenities": ["Clubhouse", "Park", "Jogging Track", "Security"]
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": "HMDA/LRS/999/2022",
+          "approved_date": "2022-11-20",
+          "status": "Approved"
+        },
+        "rera_details": {
+          "applicable": true,
+          "rera_number": "RERA/TS/67890/2023",
+          "project_name": "Sattva Enclave",
+          "status": "Active",
+          "compliance_status": "No Violations"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "Sattva Infra Pvt Ltd",
+          "survey_number": "34/AA",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "municipal_approvals": {
+          "plan_approval": "GHMC/BPS/2023/4567"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/5566/7788",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "HMWSSB",
+            "connection_number": "HMWB/1122/3344",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 1,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "rera_compliance": "Compliant",
+        "last_verified_date": "2024-05-20"
+      },
+      "pricing": {
+        "expected_price": 28000000,
+        "price_per_sq_yd": 70000,
+        "price_per_sq_ft": 7777.78,
+        "fair_price_estimate": {
+          "min": 27000000,
+          "max": 29000000,
+          "confidence_level": "93%"
+        },
+        "price_trend": {
+          "6_months": "+7%",
+          "1_year": "+18%"
+        },
+        "negotiability": "No"
+      },
+      "seller_information": {
+        "name": "Sattva Infra Pvt Ltd",
+        "type": "Builder/Developer",
+        "verification_badge": "Verified Developer",
+        "member_since": "2021-09-01",
+        "total_listings": 25,
+        "rera_license": "RERA/TS/67890/2023",
+        "gst_number": "36SATTVA1234F1Z",
+        "response_rate": "100%",
+        "response_time": "< 15 mins"
+      },
+      "media": {
+        "images": [
+          "https://img.staticmb.com/mbphoto/property/cropped_images/2024/Sep/21/Photo_h470_w1080/74981583_3_reenSwing03_470_1080.jpg",
+          "https://dynamic.realestateindia.com/prop_images/3062289/1264282_1-350x350.jpg"
+          
+        ],
+        "video_tour": "https://example.com/videos/sattva-enclave.mp4",
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30447.662595406076!2d78.25796622258486!3d17.46173262843202!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcbed28e2167d5b%3A0x65f513ea77460926!2sTellapur%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771930018758!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-VSP-24007",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "NADA Approved Plot - Rushikonda Hills",
+      "description": "Exclusive plot in the upscale Rushikonda area. Approved by VUDA and located near the IT corridor. Stunning hill and sea views.",
+      "location": {
+        "address": "Rushikonda Hills, Vizag",
+        "city": "Visakhapatnam",
+        "district": "Visakhapatnam",
+        "state": "Andhra Pradesh",
+        "pincode": "530045",
+        "landmark": "Near Rushikonda Beach",
+        "connectivity": {
+          "nearest_bus_stop": "Vizag City (25 km)",
+          "nearest_airport": "visakhapatnam (30 km)",
+          "nearest_it_hub": "Rushikonda (2 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.7935,
+          "lng": 83.3902
+        },
+        "zone": "VUDA / IT Corridor"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 350,
+        "plot_area_sq_ft": 3150,
+        "dimensions": "35 x 90 ft",
+        "facing": "East",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "VUDA",
+          "approval_number": "VUDA/RUSH/123/2021",
+          "approved_date": "2021-05-05",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "K. V. Ramana",
+          "survey_number": "98/15",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/6543/210",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 1,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-18"
+      },
+      "pricing": {
+        "expected_price": 28000000,
+        "price_per_sq_yd": 80000,
+        "price_per_sq_ft": 8888.89,
+        "fair_price_estimate": {
+          "min": 27000000,
+          "max": 29500000,
+          "confidence_level": "87%"
+        },
+        "price_trend": {
+          "1_year": "+22%"
+        },
+        "negotiability": "Negotiable"
+      },
+      "seller_information": {
+        "name": "K. V. Ramana",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2022-05-20",
+        "total_listings": 1,
+        "response_rate": "99%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://www.vizaglands.com/storage/it-sez.jpeg",
+          "https://www.vizaglands.com/storage/it-sez.jpeg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60783.4577110256!2d83.2992548048064!3d17.793289946293047!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a395af948044bc5%3A0xc2208a51b05eb969!2sRushikonda%2C%20Visakhapatnam%2C%20Andhra%20Pradesh%20530045!5e0!3m2!1sen!2sin!4v1771930342627!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24008",
+      "listing_type": "Agricultural Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Large Agricultural Land with Dharani Clear Title - Shankarpally",
+      "description": "Vast agricultural land suitable for farmhouse or investment. Dharani records clear, no litigation. Well and electricity connection available.",
+      "location": {
+        "address": "Shankarpally Mandal",
+        "city": "Hyderabad (Rural)",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "501203",
+        "landmark": "Near Shankarpally",
+        "connectivity": {
+          "nearest_bus_stop": "Shankarpally (1 km)",
+          "nearest_railway_station": "Secunderabad (30 km)",
+          "nearest_it_hub": "Shankarpally (2 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.4525,
+          "lng": 78.1300
+        },
+        "zone": "Peri-Urban"
+      },
+      "property_details": {
+        "total_land_area_acres": 1.5,
+        "convertible_to_sq_yards": 7260,
+        "land_use": "Agricultural",
+        "soil_type": "Black Soil",
+        "water_source": "Borewell & Open Well",
+        "electricity": "Agricultural Connection"
+      },
+      "government_approvals": {
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "M. Ramesh Yadav",
+          "survey_numbers": ["456/A", "456/B", "457"],
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "revenue_records": {
+          "pattadar_passbook_verified": true,
+          "adangal_verified": true
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-15"
+      },
+      "pricing": {
+        "expected_price": 45000000,
+        "price_per_acre": 30000000,
+        "fair_price_estimate": {
+          "min": 44000000,
+          "max": 47000000,
+          "confidence_level": "85%"
+        },
+        "price_trend": {
+          "1_year": "+8%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "M. Ramesh Yadav",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-07-15",
+        "total_listings": 3,
+        "response_rate": "95%",
+        "response_time": "< 3 hours"
+      },
+      "media": {
+        "images": [
+          "https://housing-images.n7net.in/01c16c28/7ece53bcc3e3372d6dfce86c5327b9b2/v0/medium/agricultural_land-for-sale-dhobipet-Hyderabad-plot_view.jpg",
+          "https://hasirufarms.com/wp-content/uploads/2026/01/2-2-1024x576.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30447.94100001846!2d78.09820458908098!3d17.460067087749657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcbef9f23b7652f%3A0xfaf2db67f59f2a75!2sShankarpalle%2C%20Telangana%20501203!5e0!3m2!1sen!2sin!4v1771930566347!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-GUN-24009",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "DTCP Approved Plot in Guntur New Capital Region",
+      "description": "Investment hotspot. Located in the influence zone of the new Andhra Pradesh capital region. DTCP approved layout with good road connectivity.",
+      "location": {
+        "address": "Mangalagiri Road",
+        "city": "Guntur",
+        "district": "Guntur",
+        "state": "Andhra Pradesh",
+        "pincode": "522001",
+        "landmark": "Near VIT University",
+        "connectivity": {
+          "nearest_bus_stop": "Guntur (1 km)",
+          "nearest_railway_station": "Guntur (30 km)",
+          "nearest_it_hub": "Guntur (2 km)"
+        },
+        "gps_coordinates": {
+          "lat": 16.4378,
+          "lng": 80.5526
+        },
+        "zone": "APCRDA"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 200,
+        "plot_area_sq_ft": 1800,
+        "dimensions": "20 x 90 ft",
+        "facing": "West",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.75
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "DTCP Guntur",
+          "approval_number": "DTCP/GNT/345/2023",
+          "approved_date": "2023-04-18",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "P. Venkateswara Rao",
+          "survey_number": "78/90A",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/3456/789",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-17"
+      },
+      "pricing": {
+        "expected_price": 8000000,
+        "price_per_sq_yd": 40000,
+        "price_per_sq_ft": 4444.44,
+        "fair_price_estimate": {
+          "min": 7500000,
+          "max": 8200000,
+          "confidence_level": "90%"
+        },
+        "price_trend": {
+          "6_months": "+10%",
+          "1_year": "+25%"
+        },
+        "negotiability": "Negotiable"
+      },
+      "seller_information": {
+        "name": "P. Venkateswara Rao",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-10-01",
+        "total_listings": 2,
+        "response_rate": "100%",
+        "response_time": "< 1 hour"
+      },
+      "media": {
+        "images": [
+          "https://imagecdn.99acres.com/media1/30350/11/607011115M-1767376349699.webp",
+          "https://imagecdn.99acres.com/media1/28477/14/569554015M-1767498763869.webp"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61272.30367514852!2d80.41091956169605!3d16.296405645538766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4a755cb1787785%3A0x9f7999dd90f1e694!2sGuntur%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771930860291!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24010",
+      "listing_type": "Commercial Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Commercial Corner Plot on ORR - Exit 7",
+      "description": "High-visibility commercial plot directly on the Outer Ring Road. HMDA approved for commercial use. Ideal for hotel, showroom, or office.",
+      "location": {
+        "address": "ORR Service Road, Exit 7",
+        "city": "Hyderabad",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "500089",
+        "landmark": "Near TCS Synergy Park",
+        "connectivity": {
+          "nearest_airport": "Rajiv Gandhi International Airport (25 km)",
+          "nearest_bus_stop": "Nampally Bus Stand (2 km)",
+          "nearest_it_hub": "Financial District (0.5 km)",
+          "nearest_metro": "Raidurg Metro (6 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.4116,
+          "lng": 78.3519
+        },
+        "zone": "HMDA / ORR Corridor"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 500,
+        "plot_area_sq_ft": 4500,
+        "dimensions": "50 x 90 ft",
+        "facing": "East (Highway Facing)",
+        "permissible_usage": "Commercial",
+        "floor_area_ratio": 2.0,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": "HMDA/COMM/567/2020",
+          "approved_date": "2020-08-01",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "ORR Infra Holdings Pvt Ltd",
+          "survey_number": "12/C",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "municipal_approvals": {
+          "plan_approval": "GHMC/COMM/2021/1234"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/9988/7766",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "HMWSSB",
+            "connection_number": "HMWB/5544/3322",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-19",
+        "report_summary": "Prime commercial plot with high visibility. All approvals in place for commercial construction."
+      },
+      "pricing": {
+        "expected_price": 50000000,
+        "price_per_sq_yd": 100000,
+        "price_per_sq_ft": 11111.11,
+        "fair_price_estimate": {
+          "min": 48000000,
+          "max": 52000000,
+          "confidence_level": "91%"
+        },
+        "price_trend": {
+          "6_months": "+12%",
+          "1_year": "+30%"
+        },
+        "negotiability": "Negotiable for serious buyers"
+      },
+      "seller_information": {
+        "name": "ORR Infra Holdings Pvt Ltd",
+        "type": "Builder/Developer",
+        "verification_badge": "Verified Developer",
+        "member_since": "2020-01-15",
+        "total_listings": 10,
+        "gst_number": "36ORRINF1234F1Z",
+        "response_rate": "100%",
+        "response_time": "< 30 mins"
+      },
+      "media": {
+        "images": [
+          "https://realrupee.com/realestate-api/properties/5545018/images/5545116.jpg",
+          "https://bhuvi.co.in/wp-content/uploads/2024/02/WhatsApp-Image-2024-01-18-at-11.07.24-AM-2-12-870x420.jpeg"
+        ],
+        "video_tour": "https://example.com/videos/commercial-24010.mp4",
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d486809.3342253765!2d78.02845787928288!3d17.59333385036932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb8300028f207b%3A0x4af14880304ec9f4!2sORR%20Exit%20number%207%2C%20Shamirpet!5e0!3m2!1sen!2sin!4v1771931032348!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24011",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "HMDA Approved Plot in Narsingi",
+      "description": "Well-developed residential plot in a bustling locality. Close to schools, hospitals, and shopping malls.",
+      "location": {
+        "address": "Rajiv Gandhi Nagar, Narsingi",
+        "city": "Hyderabad",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "500075",
+        "landmark": "Near Narsingi Bus Depot",
+        "connectivity": {
+          "nearest_airport": "Rajiv Gandhi International Airport (25 km)",
+          "nearest_bus_stop": "Nampally Bus Stand (2 km)",
+          "nearest_it_hub": "Financial District (0.5 km)",
+          "nearest_metro": "Raidurg Metro (25 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.3682,
+          "lng": 78.3518
+        },
+        "zone": "HMDA"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 267,
+        "plot_area_sq_ft": 2403,
+        "dimensions": "26.7 x 90 ft",
+        "facing": "West",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Compound Wall with Gate"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": "HMDA/LRS/789/2021",
+          "approved_date": "2021-09-10",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "Syed Ahmed",
+          "survey_number": "87/65",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/2233/4455",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "HMWSSB",
+            "connection_number": "HMWB/6677/8899",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-18"
+      },
+      "pricing": {
+        "expected_price": 13350000,
+        "price_per_sq_yd": 50000,
+        "price_per_sq_ft": 5555.56,
+        "fair_price_estimate": {
+          "min": 12800000,
+          "max": 13800000,
+          "confidence_level": "89%"
+        },
+        "price_trend": {
+          "6_months": "+6%",
+          "1_year": "+15%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "Syed Ahmed",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2022-02-20",
+        "total_listings": 2,
+        "response_rate": "97%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://img.staticmb.com/mbphoto/property/cropped_images/2025/Oct/06/Photo_h470_w1080/81661947_3_PropertyImage290-21327309560854_470_1080.jpg",
+          "https://imagecdn.99acres.com/media1/33604/15/672095779M-1766514148606.webp"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60919.85148910874!2d78.27255973688753!3d17.38822245451806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb94441108a247%3A0x38289e4326f13333!2sNarsingi%2C%20Hyderabad%2C%20Narsingi%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771931240181!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-CHI-24012",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Approved Plot Near Srikalahasti Temple",
+      "description": "Quiet residential plot near the famous temple town. DTCP approved. Ideal for devotees and investors.",
+      "location": {
+        "address": "Srikalahasti Road",
+        "city": "Chittoor",
+        "district": "Chittoor",
+        "state": "Andhra Pradesh",
+        "pincode": "517644",
+        "landmark": "Near Srikalahasti Temple (5 km)",
+        "connectivity": {
+          "nearest_airport": "Tirupati (15 km)",
+          "nearest_bus_stop": "Srikalahasti (5 km)",
+          "nearest_railway": "Chittoor Metro (25 km)"
+        },
+        "gps_coordinates": {
+          "lat": 13.7570,
+          "lng": 79.7052
+        },
+        "zone": "DTCP"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 250,
+        "plot_area_sq_ft": 2250,
+        "dimensions": "25 x 90 ft",
+        "facing": "North",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "DTCP Chittoor",
+          "approval_number": "DTCP/CHI/890/2022",
+          "approved_date": "2022-03-22",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "L. Raja",
+          "survey_number": "54/23",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/1112/1314",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 9,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-16"
+      },
+      "pricing": {
+        "expected_price": 8750000,
+        "price_per_sq_yd": 35000,
+        "price_per_sq_ft": 3888.89,
+        "fair_price_estimate": {
+          "min": 8500000,
+          "max": 9000000,
+          "confidence_level": "86%"
+        },
+        "price_trend": {
+          "1_year": "+9%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "L. Raja",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-05-30",
+        "total_listings": 1,
+        "response_rate": "98%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://imagecdn.99acres.com/media1/34885/19/697719391M-1768188973114.webp",
+          "https://dyimg2.realestateindia.com/prop_images/1128215/660268_1-200x200.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d124030.96885907104!2d79.6236249854948!3d13.720400721333204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4d3e543dbbc769%3A0xc759d83ecf891652!2sSrikalahasti%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771931524131!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-KMR-24013",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "DTCP Approved Plot in Khammam City",
+      "description": "Good investment opportunity in Khammam city. Close to railway station and bus stand. All approvals in place.",
+      "location": {
+        "address": "Wyra Road",
+        "city": "Khammam",
+        "district": "Khammam",
+        "state": "Telangana",
+        "pincode": "507003",
+        "landmark": "Near Wyra Bridge",
+        "connectivity": {
+          "nearest_airport": "Hyderabad (45 km)",
+          "nearest_bus_stop": "Khammam (5 km)",
+          "nearest_railway": "Khammam Metro (25 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.2534,
+          "lng": 80.1526
+        },
+        "zone": "DTCP"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 200,
+        "plot_area_sq_ft": 1800,
+        "dimensions": "20 x 90 ft",
+        "facing": "South",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "DTCP Khammam",
+          "approval_number": "DTCP/KMM/456/2023",
+          "approved_date": "2023-11-01",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "B. Madhavi",
+          "survey_number": "34/12",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSK/5678/9012",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-19"
+      },
+      "pricing": {
+        "expected_price": 6000000,
+        "price_per_sq_yd": 30000,
+        "price_per_sq_ft": 3333.33,
+        "fair_price_estimate": {
+          "min": 5800000,
+          "max": 6200000,
+          "confidence_level": "88%"
+        },
+        "price_trend": {
+          "6_months": "+4%",
+          "1_year": "+8%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "B. Madhavi",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2024-02-14",
+        "total_listings": 1,
+        "response_rate": "100%",
+        "response_time": "< 3 hours"
+      },
+      "media": {
+        "images": [
+          "https://dynamic.realestateindia.com/prop_images/1338410/946706_1-350x350.jpg",
+          "https://sthiraainfra.com/wp-content/uploads/2022/08/5-700x464.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121932.38381041514!2d80.06803167205435!3d17.248502422665393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3459d0d5cf738d%3A0xe18da4ae6d89da01!2sKhammam%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771931762720!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-KRN-24014",
+      "listing_type": "Agricultural Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Certified Agricultural Land with Borewell - Kurnool",
+      "description": "Productive agricultural land with clear Meebhoomi records. Ideal for farming or future conversion.",
+      "location": {
+        "address": "Nandyal Road",
+        "city": "Kurnool",
+        "district": "Kurnool",
+        "state": "Andhra Pradesh",
+        "pincode": "518002",
+        "landmark": "Near Nandyal Bridge",
+        "connectivity": {
+          "nearest_airport": "Kurnool (45 km)",
+          "nearest_bus_stop": "Kurnool (15 km)",
+          "nearest_railway": "Kurnool Metro (25 km)"
+        },
+        "gps_coordinates": {
+          "lat": 15.8185,
+          "lng": 78.0334
+        },
+        "zone": "Rural"
+      },
+      "property_details": {
+        "total_land_area_acres": 2.0,
+        "convertible_to_sq_yards": 9680,
+        "land_use": "Agricultural",
+        "soil_type": "Red Soil",
+        "water_source": "Borewell (working)",
+        "electricity": "Agricultural Connection"
+      },
+      "government_approvals": {
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "T. Krishna Reddy",
+          "survey_numbers": ["123/AA", "124/BB"],
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "revenue_records": {
+          "pahani_verified": true
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-17"
+      },
+      "pricing": {
+        "expected_price": 50000000,
+        "price_per_acre": 25000000,
+        "fair_price_estimate": {
+          "min": 48000000,
+          "max": 52000000,
+          "confidence_level": "84%"
+        },
+        "price_trend": {
+          "1_year": "+5%"
+        },
+        "negotiability": "Negotiable"
+      },
+      "seller_information": {
+        "name": "T. Krishna Reddy",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-08-22",
+        "total_listings": 2,
+        "response_rate": "96%",
+        "response_time": "< 4 hours"
+      },
+      "media": {
+        "images": [
+          "https://rei.wlimg.com/prop_images/215009/1046292_9-200x200.jpeg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw4nTSsz17Z5ci_LQPy6GGhKNa3ABppa9BvA&s"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61418.72251637338!2d78.00252115870482!3d15.821336896440004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb5ddf506b7c6c9%3A0x19a7ac74f858d6f2!2sKurnool%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771932450401!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-NZB-24015",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Residential Plot in Nizamabad Town",
+      "description": "Centrally located plot in Nizamabad. Close to Nizamabad Medical College. DTCP approved.",
+      "location": {
+        "address": "Armoor Road",
+        "city": "Nizamabad",
+        "district": "Nizamabad",
+        "state": "Telangana",
+        "pincode": "503001",
+        "landmark": "Near Nizamabad Fort",
+        "connectivity": {
+          "nearest_airport": "Nizamabad (30 km)",
+          "nearest_bus_stop": "Nizamabad (15 km)",
+          "nearest_railway": "Nizamabad (25 km)"
+        },
+        "gps_coordinates": {
+          "lat": 18.6735,
+          "lng": 78.1007
+        },
+        "zone": "DTCP"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 225,
+        "plot_area_sq_ft": 2025,
+        "dimensions": "22.5 x 90 ft",
+        "facing": "East",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "DTCP Nizamabad",
+          "approval_number": "DTCP/NZB/123/2022",
+          "approved_date": "2022-10-05",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "K. Sagar",
+          "survey_number": "67/89A",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSN/1234/5678",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "NWS&SB",
+            "connection_number": "NZB/9876/5432",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-18"
+      },
+      "pricing": {
+        "expected_price": 7200000,
+        "price_per_sq_yd": 32000,
+        "price_per_sq_ft": 3555.56,
+        "fair_price_estimate": {
+          "min": 7000000,
+          "max": 7400000,
+          "confidence_level": "87%"
+        },
+        "price_trend": {
+          "1_year": "+7%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "K. Sagar",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-11-11",
+        "total_listings": 1,
+        "response_rate": "100%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOJM161srLY7-uCsKXhwXvOkrwoFbaK8OtGQ&s",
+          "https://svsgkrealty.com/wp-content/uploads/2025/03/DJI_20250304170840_0201_D-scaled.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120947.93730397575!2d78.00483681364402!3d18.68090429944727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcddb27a9a89045%3A0x9f38c4351a15bbf2!2sNizamabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771932593200!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24016",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "HMDA Approved Plot in Bandlaguda",
+      "description": "Affordable plot in a developing area. Good connectivity to the city via ORR. All approvals secured.",
+      "location": {
+        "address": "Bandlaguda Jagir",
+        "city": "Hyderabad",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "500086",
+        "landmark": "Near Aparna Sarovar",
+        "connectivity": {
+          "nearest_airport": "Hyderabad (25 km)",
+          "nearest_bus_stop": "Bandlaguda (5 km)",
+          "nearest_railway": "ORR (15 km)",
+          "nearest_metro": "Raidurg Metro (30 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.3489,
+          "lng": 78.3921
+        },
+        "zone": "HMDA"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 150,
+        "plot_area_sq_ft": 1350,
+        "dimensions": "15 x 90 ft",
+        "facing": "North",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": "HMDA/LRS/234/2022",
+          "approved_date": "2022-12-12",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "M. Naresh",
+          "survey_number": "45/67",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/4321/8765",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 9,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-20"
+      },
+      "pricing": {
+        "expected_price": 6000000,
+        "price_per_sq_yd": 40000,
+        "price_per_sq_ft": 4444.44,
+        "fair_price_estimate": {
+          "min": 5800000,
+          "max": 6200000,
+          "confidence_level": "85%"
+        },
+        "price_trend": {
+          "6_months": "+5%",
+          "1_year": "+12%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "M. Naresh",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-04-18",
+        "total_listings": 1,
+        "response_rate": "95%",
+        "response_time": "< 3 hours"
+      },
+      "media": {
+        "images": [
+          "https://imagecdn.99acres.com/media1/35054/12/701092685M-1768818678656.jpg",
+          "https://imagecdn.99acres.com/media1/35273/7/705467497M-1769672916765.webp"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60930.96338435273!2d78.31912253542848!3d17.354818592244722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb960b412fc8e9%3A0x992dd92b063ad2a0!2sBandlaguda%20Jagir%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771934222686!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-ANP-24017",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "VUDA Approved Plot in Anakapalle",
+      "description": "Spacious plot in the industrial hub near Vizag. Growing area due to new investments. Clear title.",
+      "location": {
+        "address": "Narsipatnam Road",
+        "city": "Anakapalle",
+        "district": "Anakapalle",
+        "state": "Andhra Pradesh",
+        "pincode": "531001",
+        "landmark": "Near Anakapalle Market",
+        "connectivity": {
+          "nearest_airport": "Vizag (25 km)",
+          "nearest_bus_stop": "Anakapalle (5 km)",
+          "nearest_railway": "Anakapalle (15 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.6915,
+          "lng": 83.0130
+        },
+        "zone": "VUDA"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 250,
+        "plot_area_sq_ft": 2250,
+        "dimensions": "25 x 90 ft",
+        "facing": "West",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "VUDA",
+          "approval_number": "VUDA/ANP/567/2021",
+          "approved_date": "2021-04-01",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "P. Satyanarayana",
+          "survey_number": "89/10",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/7890/1234",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-17"
+      },
+      "pricing": {
+        "expected_price": 10000000,
+        "price_per_sq_yd": 40000,
+        "price_per_sq_ft": 4444.44,
+        "fair_price_estimate": {
+          "min": 9500000,
+          "max": 10500000,
+          "confidence_level": "86%"
+        },
+        "price_trend": {
+          "6_months": "+6%",
+          "1_year": "+14%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "P. Satyanarayana",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2022-07-07",
+        "total_listings": 2,
+        "response_rate": "100%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://imagecdn.99acres.com/media1/34027/11/680551187M-1766099177742.jpg",
+          "https://realrupee.com/realestate-api/properties/5545018/images/5545116.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60821.905183099094!2d82.98132212098405!3d17.680016793314874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3970d40f7ea039%3A0x1b149268d4586096!2sAnakapalli%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771934391543!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-KNR-24018",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "DTCP Approved Plot in Karimnagar",
+      "description": "Prime plot in Karimnagar city. Close to Manair River project. Good for residential construction.",
+      "location": {
+        "address": "Manair Colony",
+        "city": "Karimnagar",
+        "district": "Karimnagar",
+        "state": "Telangana",
+        "pincode": "505001",
+        "landmark": "Near Manair Dam",
+        "connectivity": {
+          "nearest_airport": "Hyderabad (85 km)",
+          "nearest_bus_stop": "Karimnagar (5 km)",
+          "nearest_railway": "Karimnagar (15 km)"
+        },
+        "gps_coordinates": {
+          "lat": 18.4365,
+          "lng": 79.1483
+        },
+        "zone": "DTCP"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 200,
+        "plot_area_sq_ft": 1800,
+        "dimensions": "20 x 90 ft",
+        "facing": "East",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Compound Wall"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "DTCP Karimnagar",
+          "approval_number": "DTCP/KNR/890/2023",
+          "approved_date": "2023-03-08",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "G. Raju",
+          "survey_number": "12/34",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSK/3456/7890",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "KMWSSB",
+            "connection_number": "KNR/1234/5678",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-19"
+      },
+      "pricing": {
+        "expected_price": 7000000,
+        "price_per_sq_yd": 35000,
+        "price_per_sq_ft": 3888.89,
+        "fair_price_estimate": {
+          "min": 6800000,
+          "max": 7200000,
+          "confidence_level": "87%"
+        },
+        "price_trend": {
+          "1_year": "+9%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "G. Raju",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-09-25",
+        "total_listings": 1,
+        "response_rate": "99%",
+        "response_time": "< 1 hour"
+      },
+      "media": {
+        "images": [
+          "https://content.jdmagicbox.com/v2/comp/hyderabad/t2/040pxx40.xx40.240822123735.u7t2/catalogue/w50e9qwtyf8u8l3-h4kvb1qz2p.jpg",
+          "https://imagecdn.99acres.com/media1/23172/6/463446160M-1767595333609.webp"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60561.20757559746!2d79.09194802641152!3d18.434882035124406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bccd910bcf48931%3A0x4889b0398ed69f07!2sKarimnagar%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771934534605!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-NEL-24019",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Approved Plot in Nellore City",
+      "description": "Centrally located plot in Nellore. Close to RTC Bus Stand and railway station. All approvals from local bodies.",
+      "location": {
+        "address": "Magunta Layout",
+        "city": "Nellore",
+        "district": "Nellore",
+        "state": "Andhra Pradesh",
+        "pincode": "524001",
+        "landmark": "Near SAI Baba Temple",
+        "connectivity": {
+          "nearest_airport": "Tirupati (90 km)",
+          "nearest_bus_stop": "Nellore (5 km)",
+          "nearest_railway": "Nellore (15 km)"
+        },
+        "gps_coordinates": {
+          "lat": 14.4498,
+          "lng": 79.9902
+        },
+        "zone": "Nellore Municipal Corporation"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 300,
+        "plot_area_sq_ft": 2700,
+        "dimensions": "30 x 90 ft",
+        "facing": "West",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.75,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "Nellore Municipal Corporation",
+          "approval_number": "NMC/LRS/123/2021",
+          "approved_date": "2021-05-01",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "D. Prasad",
+          "survey_number": "90/12",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/5678/9012",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "NMC",
+            "connection_number": "NMC/3456/7890",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-18"
+      },
+      "pricing": {
+        "expected_price": 10500000,
+        "price_per_sq_yd": 35000,
+        "price_per_sq_ft": 3888.89,
+        "fair_price_estimate": {
+          "min": 10000000,
+          "max": 10800000,
+          "confidence_level": "88%"
+        },
+        "price_trend": {
+          "1_year": "+8%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "D. Prasad",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2022-03-01",
+        "total_listings": 2,
+        "response_rate": "100%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://myhitha.com/blog/wp-content/uploads/2021/04/DTCP-approved-plots-in-Nellore-City.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeyhTgmYTDyvvxIzvKbcecMqHmHlcLK7yXLg&s"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d123641.11811863256!2d79.89094315129381!3d14.439553841391346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4c8cca0e958771%3A0xd3036c2025161f55!2sNellore%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771934611586!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24020",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "HMDA Approved Plot in Mokila",
+      "description": "Luxury plot in the upcoming Mokila area. Close to Shankarpally and upcoming theme parks. HMDA approved layout.",
+      "location": {
+        "address": "Mokila Village",
+        "city": "Hyderabad",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "501203",
+        "landmark": "Near TCS Mokila Campus",
+        "connectivity":{
+          "nearest_airport":"Hyderabad (25 km)",
+          "nearest_bus_stop":"Gachibowli (29 km)",
+          "nearest_metro":"Raidurg Metro (20 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.4251,
+          "lng": 78.1834
+        },
+        "zone": "HMDA"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 400,
+        "plot_area_sq_ft": 3600,
+        "dimensions": "40 x 90 ft",
+        "facing": "South",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": "HMDA/LRS/345/2023",
+          "approved_date": "2023-06-14",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "V. Reddy",
+          "survey_number": "78/90",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/9876/5432",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 1,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-20"
+      },
+      "pricing": {
+        "expected_price": 28000000,
+        "price_per_sq_yd": 70000,
+        "price_per_sq_ft": 7777.78,
+        "fair_price_estimate": {
+          "min": 27000000,
+          "max": 29000000,
+          "confidence_level": "90%"
+        },
+        "price_trend": {
+          "6_months": "+10%",
+          "1_year": "+22%"
+        },
+        "negotiability": "No"
+      },
+      "seller_information": {
+        "name": "V. Reddy",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-12-01",
+        "total_listings": 3,
+        "response_rate": "100%",
+        "response_time": "< 30 mins"
+      },
+      "media": {
+        "images": [
+          "https://subhagruha.com/uploads/1653215609.jpeg",
+          "https://www.puravankaragroups.com/projects-in-hyderabad/purva-plots-hyderabad/images/purva-plots-hyderabad-banner.jpg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d487293.477870827!2d78.07836166993249!3d17.41273323166305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99daeaebd2c7%3A0xae93b78392bafbc2!2sHyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771934851376!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-ONG-24021",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "DTCP Approved Plot in Ongole",
+      "description": "Well-located plot in Ongole town. Close to Ongole Railway Station. Ideal for investment or construction.",
+      "location": {
+        "address": "Gandhi Nagar",
+        "city": "Ongole",
+        "district": "Prakasam",
+        "state": "Andhra Pradesh",
+        "pincode": "523001",
+        "landmark": "Near Ongole Bus Stand",
+        "connectivity":{
+          "nearest_airport":"Vijayawada (90 km)",
+          "nearest_bus_stop": "Ongole (10 km)"
+        },
+        "gps_coordinates": {
+          "lat": 15.5061,
+          "lng": 80.0481
+        },
+        "zone": "DTCP"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 200,
+        "plot_area_sq_ft": 1800,
+        "dimensions": "20 x 90 ft",
+        "facing": "North",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "DTCP Ongole",
+          "approval_number": "DTCP/ONG/456/2022",
+          "approved_date": "2022-08-20",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "K. Lakshmi",
+          "survey_number": "23/45",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/2345/6789",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-17"
+      },
+      "pricing": {
+        "expected_price": 7000000,
+        "price_per_sq_yd": 35000,
+        "price_per_sq_ft": 3888.89,
+        "fair_price_estimate": {
+          "min": 6800000,
+          "max": 7200000,
+          "confidence_level": "86%"
+        },
+        "price_trend": {
+          "1_year": "+7%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "K. Lakshmi",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-02-14",
+        "total_listings": 1,
+        "response_rate": "100%",
+        "response_time": "< 3 hours"
+      },
+      "media": {
+        "images": [
+          "https://www.puravankaragroups.com/projects-in-hyderabad/purva-plots-hyderabad/images/purva-plots-hyderabad-banner.jpg",
+          "https://www.nanubhaiproperty.com/images/thumbs/property/649342_200-sq-yrd-residential-plot-land-for-sale-throvagunta-in-ongole_800.jpeg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61512.78654315105!2d79.98014705679145!3d15.508664141969707!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4b011c10366c03%3A0x6ee40296fd2dbcc5!2sOngole%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771935092650!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24022",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "HMDA Approved Plot in Kollur",
+      "description": "Rapidly developing area with excellent social infrastructure. HMDA approved plot, clear title.",
+      "location": {
+        "address": "Kollur",
+        "city": "Hyderabad",
+        "district": "Medchal-Malkajgiri",
+        "state": "Telangana",
+        "pincode": "500075",
+        "landmark": "Near Sri Chaitanya School",
+        "connectivity": {
+          "nearest_airport":"Hyderabad (25 km)",
+          "nearest_bus_stop": "Malkajgiri (5 km)",
+          "nearest_metro": "Secunderabad Metro (30 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.4683,
+          "lng": 78.3467
+        },
+        "zone": "HMDA"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 200,
+        "plot_area_sq_ft": 1800,
+        "dimensions": "20 x 90 ft",
+        "facing": "West",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.75,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": "HMDA/LRS/678/2022",
+          "approved_date": "2022-04-10",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "A. Reddy",
+          "survey_number": "56/78",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/8765/4321",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "HMWSSB",
+            "connection_number": "HMWB/1357/2468",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-19"
+      },
+      "pricing": {
+        "expected_price": 10000000,
+        "price_per_sq_yd": 50000,
+        "price_per_sq_ft": 5555.56,
+        "fair_price_estimate": {
+          "min": 9800000,
+          "max": 10500000,
+          "confidence_level": "88%"
+        },
+        "price_trend": {
+          "6_months": "+7%",
+          "1_year": "+16%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "A. Reddy",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-06-15",
+        "total_listings": 2,
+        "response_rate": "98%",
+        "response_time": "< 1 hour"
+      },
+      "media": {
+        "images": [
+          "https://imagecdn.99acres.com/media1/34697/10/693950545M-1767433293400.webp",
+          "https://imagecdn.99acres.com/media1/35592/2/711842489M-1770829250233.webp"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60898.25177772074!2d78.45581988972403!3d17.452976831357073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9bcbae0e1275%3A0x3de1a899ac941fd3!2sMalkajgiri%2C%20Secunderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771935292461!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-KKD-24023",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Approved Plot in Kakinada",
+      "description": "Prime location plot near the beach road. Good for residential or commercial use. Kakinada Municipal Corporation approved.",
+      "location": {
+        "address": "Beach Road",
+        "city": "Kakinada",
+        "district": "Kakinada",
+        "state": "Andhra Pradesh",
+        "pincode": "533001",
+        "landmark": "Near Kakinada Port",
+        "connectivity": {
+          "nearest_airport":"Kakinada (25 km)",
+          "nearest_bus_stop": "Kakinada (5 km)",
+          "nearest_railway": "Kakinada Metro (30 km)"
+        },
+        "gps_coordinates": {
+          "lat": 16.9604,
+          "lng": 82.2623
+        },
+        "zone": "Kakinada Municipal Corporation"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 300,
+        "plot_area_sq_ft": 2700,
+        "dimensions": "30 x 90 ft",
+        "facing": "East (Beach Facing)",
+        "permissible_usage": "Residential/Commercial",
+        "floor_area_ratio": 2.0,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "Kakinada Municipal Corporation",
+          "approval_number": "KMC/LRS/234/2020",
+          "approved_date": "2020-09-01",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "S. Varma",
+          "survey_number": "34/56",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/4567/8901",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "KMC",
+            "connection_number": "KMC/7890/1234",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 1,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-18"
+      },
+      "pricing": {
+        "expected_price": 15000000,
+        "price_per_sq_yd": 50000,
+        "price_per_sq_ft": 5555.56,
+        "fair_price_estimate": {
+          "min": 14500000,
+          "max": 15800000,
+          "confidence_level": "89%"
+        },
+        "price_trend": {
+          "1_year": "+10%"
+        },
+        "negotiability": "Negotiable"
+      },
+      "seller_information": {
+        "name": "S. Varma",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2021-10-10",
+        "total_listings": 1,
+        "response_rate": "100%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://imagecdn.99acres.com/media1/34226/4/684524433M-1765960740163.webp",
+          "https://dyimg1.realestateindia.com/prop_images/2447261/1031556_1-200x200.jpeg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61064.394434718095!2d82.1997997659683!3d16.948724274938098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3827ddaf59b4f7%3A0x92f8ddb9c89a4803!2sKakinada%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771935529718!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24024",
+      "listing_type": "Industrial Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Industrial Plot in Hardware Park",
+      "description": "Rare industrial plot available in Hardware Park. All necessary approvals from TSIIC. Ideal for manufacturing or R&D.",
+      "location": {
+        "address": "Hardware Park, Maheshwaram",
+        "city": "Hyderabad",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "501359",
+        "landmark": "Near Hyderabad Pharma City",
+        "connectivity": {
+          "nearest_airport":"Hyderabad (25 km)",
+          "nearest_bus_stop": "Hyderabad (5 km)",
+          "nearest_railway": "Hyderabad (30 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.1172,
+          "lng": 78.4698
+        },
+        "zone": "TSIIC"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 1000,
+        "plot_area_sq_ft": 9000,
+        "dimensions": "100 x 90 ft",
+        "permissible_usage": "Industrial",
+        "floor_area_ratio": 2.5,
+        "power_load": "High Tension Available"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "TSIIC",
+          "approval_number": "TSIIC/IND/123/2019",
+          "approved_date": "2019-03-15",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "Tech Industries Pvt Ltd",
+          "survey_number": "99/AA",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL (HT)",
+            "service_number": "TSHT/1122/3344",
+            "dues_status": "Clear"
+          },
+          "water": {
+            "verified": true,
+            "provider": "HMWS&SB Industrial",
+            "connection_number": "IND/5566/7788",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 1,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-15"
+      },
+      "pricing": {
+        "expected_price": 80000000,
+        "price_per_sq_yd": 80000,
+        "price_per_sq_ft": 8888.89,
+        "fair_price_estimate": {
+          "min": 78000000,
+          "max": 85000000,
+          "confidence_level": "85%"
+        },
+        "price_trend": {
+          "1_year": "+12%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "Tech Industries Pvt Ltd",
+        "type": "Company",
+        "verification_badge": "Verified Owner",
+        "member_since": "2020-01-01",
+        "total_listings": 3,
+        "gst_number": "36TECH1234F1Z5",
+        "response_rate": "95%",
+        "response_time": "< 1 hour"
+      },
+      "media": {
+        "images": [
+          "https://a1township.com/admin/images/AcoGmIlz4pDtgq5Rabout-2.jpg",
+          "https://housing-images.n7net.in/4f2250e8/d8645127eb1a3ed8129686b22fc0cfb9/v0/medium/asta_meadows-beeramguda_2-hyderabad-vsma_hyderabad_propex_private_limited.jpeg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d487293.477870827!2d78.07836166993249!3d17.41273323166305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99daeaebd2c7%3A0xae93b78392bafbc2!2sHyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771935667790!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "AP-ATP-24025",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "Approved Plot in Anantapur City",
+      "description": "Central location plot in Anantapur. Close to Anantapur Medical College. DTCP approved.",
+      "location": {
+        "address": "Subhash Road",
+        "city": "Anantapur",
+        "district": "Anantapur",
+        "state": "Andhra Pradesh",
+        "pincode": "515001",
+        "landmark": "Near Anantapur Clock Tower",
+        "connectivity": {
+          "nearest_airport": "Kurnool (105 km)",
+          "nearest_bus_stop": "Anantapur (10 km)",
+          "nearest_railway_station": "Chitradurga"
+        },
+        "gps_coordinates": {
+          "lat": 14.6819,
+          "lng": 77.6006
+        },
+        "zone": "DTCP"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 150,
+        "plot_area_sq_ft": 1350,
+        "dimensions": "15 x 90 ft",
+        "facing": "South",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "DTCP Anantapur",
+          "approval_number": "DTCP/ATP/789/2022",
+          "approved_date": "2022-10-25",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Meebhoomi",
+          "pattadar_name": "M. Reddy",
+          "survey_number": "12/34A",
+          "adangal_verified": true,
+          "1b_record_verified": true,
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "AP/6789/0123",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 10,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-20"
+      },
+      "pricing": {
+        "expected_price": 5250000,
+        "price_per_sq_yd": 35000,
+        "price_per_sq_ft": 3888.89,
+        "fair_price_estimate": {
+          "min": 5000000,
+          "max": 5500000,
+          "confidence_level": "86%"
+        },
+        "price_trend": {
+          "1_year": "+6%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "M. Reddy",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-03-20",
+        "total_listings": 1,
+        "response_rate": "100%",
+        "response_time": "< 2 hours"
+      },
+      "media": {
+        "images": [
+          "https://skandhanshi.com/wp-content/uploads/2025/06/Residential-Plots.jpeg"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d123507.34377243118!2d77.43877372177045!3d14.678372655601267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb14ac2e6404f37%3A0xb810d064e2ce70e8!2sAnantapur%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1771935938218!5m2!1sen!2sin"
+      }
+    },
+    {
+      "property_id": "TS-HYD-24026",
+      "listing_type": "Plot",
+      "status": "active",
+      "verified_badge": "Fully Verified",
+      "title": "HMDA Approved Layout Plot - Adibatla",
+      "description": "Affordable plot near the Pharma City and ITIR. Good potential for future growth. HMDA approved layout.",
+      "location": {
+        "address": "Adibatla",
+        "city": "Hyderabad",
+        "district": "Rangareddy",
+        "state": "Telangana",
+        "pincode": "501510",
+        "landmark": "Near RGIA Airport (8 km)",
+        "connectivity": {
+          "nearest_metro": "Raidurg Metro (20 km)",
+          "nearest_it_hub": "Financial District (0.5 km)",
+          "nearest_airport": "Rajiv Gandhi International Airport (25 km)",
+          "nearest_bus_stop": "Nampally Bus Stand (2 km)"
+        },
+        "gps_coordinates": {
+          "lat": 17.2356,
+          "lng": 78.5541
+        },
+        "zone": "HMDA"
+      },
+      "property_details": {
+        "plot_area_sq_yards": 200,
+        "plot_area_sq_ft": 1800,
+        "dimensions": "20 x 90 ft",
+        "facing": "North",
+        "permissible_usage": "Residential",
+        "floor_area_ratio": 1.5,
+        "boundary": "Open Plot"
+      },
+      "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": "HMDA/LRS/890/2023",
+          "approved_date": "2023-01-05",
+          "status": "Approved"
+        },
+        "land_ownership": {
+          "primary_authority": "Dharani",
+          "pattadar_name": "B. Laxmi",
+          "survey_number": "45/67B",
+          "verification_status": "Clear Title",
+          "encumbrance_status": "No Encumbrances"
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSS/2468/1357",
+            "dues_status": "Clear"
+          }
+        }
+      },
+      "verification_report_card": {
+        "overall_risk_score": 2,
+        "document_completeness_score": 9,
+        "owner_verification": "Passed",
+        "title_verification": "Clear",
+        "last_verified_date": "2024-05-19"
+      },
+      "pricing": {
+        "expected_price": 8000000,
+        "price_per_sq_yd": 40000,
+        "price_per_sq_ft": 4444.44,
+        "fair_price_estimate": {
+          "min": 7800000,
+          "max": 8200000,
+          "confidence_level": "87%"
+        },
+        "price_trend": {
+          "6_months": "+5%",
+          "1_year": "+12%"
+        },
+        "negotiability": "Yes"
+      },
+      "seller_information": {
+        "name": "B. Laxmi",
+        "type": "Individual",
+        "verification_badge": "Verified Owner",
+        "member_since": "2023-08-08",
+        "total_listings": 1,
+        "response_rate": "100%",
+        "response_time": "< 3 hours"
+      },
+      "media": {
+        "images": [
+          "https://imagecdn.99acres.com/media1/32673/1/653461111M-1766970412073.webp"
+        ],
+        "map_view": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d487293.477870827!2d78.07836166993249!3d17.41273323166305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99daeaebd2c7%3A0xae93b78392bafbc2!2sHyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1771935667790!5m2!1sen!2sin"
+      }
+    }
+  ],
+  "verified_agents": [
+    {
+      "agent_id": "AG-TS-001",
+      "name": "Srikanth Properties",
+      "verified_badge": true,
+      "rera_license": "RERA/AG/TS/12345/2023",
+      "experience_years": 12,
+      "total_deals": 150,
+      "rating": 4.8,
+      "specialization": "Hyderabad, Plots & Villas",
+      "phone": "+91 98765 43210",
+      "email": "srikanth@propertyverify.in"
+    },
+    {
+      "agent_id": "AG-AP-002",
+      "name": "Vizag Realty Hub",
+      "verified_badge": true,
+      "rera_license": "RERA/AG/AP/67890/2022",
+      "experience_years": 8,
+      "total_deals": 95,
+      "rating": 4.7,
+      "specialization": "Visakhapatnam, Beach Properties",
+      "phone": "+91 99887 66554",
+      "email": "contact@vizagrealty.in"
+    }
+  ]
+}
