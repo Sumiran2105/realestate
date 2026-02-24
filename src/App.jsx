@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import Properties from "./pages/Properties";
 import PropertyDetail from "./pages/PropertyDetail";
 import Wishlist from "./pages/Wishlist";
+import Auth from "./pages/Auth";
 
 function App() {
   return (
@@ -20,15 +21,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
-<<<<<<< HEAD
           <Route path="/auth" element={<Auth />} />
-=======
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/property/:id" element={<PropertyDetail />} />
           <Route path="/wishlist" element={<Wishlist />} />
->>>>>>> fc7002a79545c789349be798b2303703e59d3897
         </Routes>
       </div>
 

@@ -248,7 +248,7 @@ const Services = () => {
       title: "Price Estimator",
       description: "AI-powered fair price estimates for any property",
       icon: <FaCalculator className="text-2xl" />,
-      bgColor: "bg-brand-soft",
+      bgColor: "bg-gray-50",
       textColor: "text-brand-dark"
     },
     {
@@ -544,53 +544,7 @@ const Services = () => {
         </div>
       </div>
 
-      {/* Testimonials - FROM PAGE 52 */}
-      <div className="bg-gray-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              What Our <span className="text-brand-dark">Users Say</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Real stories from people who found their dream homes safely
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className={`${testimonial.bgColor} rounded-2xl p-6 shadow-lg relative hover:shadow-xl transition-shadow`}>
-                <div className="absolute -top-3 left-6 text-6xl text-brand-dark opacity-20">"</div>
-                
-                <div className="relative">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-xl shadow-md">
-                      {testimonial.avatar}
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-sm">{testimonial.name}</h4>
-                      <div className="flex items-center gap-1 text-xs text-gray-600">
-                        <FaMapMarkerAlt className="text-xs text-brand-dark" /> {testimonial.location}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-1 text-amber-400 mb-2">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <FaStar key={i} className="text-xs" />
-                    ))}
-                  </div>
-                  
-                  <p className="text-gray-700 text-sm mb-3 italic">"{testimonial.text}"</p>
-                  
-                  <div className="inline-block px-2 py-1 bg-white text-brand-dark rounded-full text-xs font-semibold shadow-sm">
-                    {testimonial.service}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      
 
       {/* CTA Section - FROM PAGE 55 */}
       <div className="bg-brand-dark text-white py-16 relative overflow-hidden">
