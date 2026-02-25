@@ -38,6 +38,10 @@ import Properties from './pages/Properties';
 import PropertyDetail from './pages/PropertyDetail';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import LegalAssistance from './pages/services/LegalAssistance';
+import VerifyProperty from './pages/services/VerifyProperty';
+import HomeLoan from './pages/services/HomeLoan';
+import RentalAgreements from './pages/services/RentalAgreements';
 import Wishlist from './pages/Wishlist';
 import AgentProfile from './pages/dashboard/agent/AgentProfile';
 import AgentInquiries from './pages/dashboard/agent/AgentInquiries';
@@ -100,6 +104,10 @@ function AppContent() {
           <Route path="/properties" element={<Properties />} />
           <Route path="/property/:id" element={<PropertyDetail />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/legal-assistance" element={<LegalAssistance />} />
+          <Route path="/services/verify-property" element={<VerifyProperty />} />
+          <Route path="/services/home-loan" element={<HomeLoan />} />
+          <Route path="/services/rental-agreements" element={<RentalAgreements />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/wishlist" element={<Wishlist />} />
           

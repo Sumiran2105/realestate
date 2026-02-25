@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 
 export default function HeroDropdown() {
@@ -27,6 +27,22 @@ export default function HeroDropdown() {
       Property: ["Verify Property", "Legal Assistance", "Documentation", "Home Loans","Rental Agreements"],
       Support: ["Customer Care", "FAQs", "Contact Us"],
     },
+  };
+
+  const serviceLinks = {
+    "Ready to Move": "/properties",
+    "Owner Properties": "/properties",
+    "Budget Homes": "/properties",
+    "Under ₹50 Lac": "/properties",
+    "₹50 Lac - ₹1 Cr": "/properties",
+    "Above ₹1 Cr": "/properties",
+    "Verify Property": "/services/verify-property",
+    "Legal Assistance": "/services/legal-assistance",
+    "Home Loans": "/services/home-loan",
+    "Rental Agreements": "/services/rental-agreements",
+    "Customer Care": "/contact",
+    "FAQs": "/contact",
+    "Contact Us": "/contact",
   };
 
   return (
@@ -77,11 +93,20 @@ export default function HeroDropdown() {
                     </h4>
                     <ul className="space-y-3 text-gray-600">
                       {items.map((item, index) => (
-                        <li
-                          key={index}
-                          className="hover:text-red-600 cursor-pointer transition text-sm"
-                        >
-                          {item}
+                        <li key={index} className="text-sm">
+                          {serviceLinks[item] ? (
+                            <Link
+                              to={serviceLinks[item]}
+                              onClick={() => setActive(null)}
+                              className="hover:text-red-600 transition"
+                            >
+                              {item}
+                            </Link>
+                          ) : (
+                            <span className="hover:text-red-600 cursor-pointer transition">
+                              {item}
+                            </span>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -130,7 +155,17 @@ export default function HeroDropdown() {
                   <ul className="space-y-1">
                     {items.map((item, index) => (
                       <li key={index} className="text-gray-600 text-xs">
-                        {item}
+                        {serviceLinks[item] ? (
+                          <Link
+                            to={serviceLinks[item]}
+                            onClick={() => setMobileOpen(null)}
+                            className="hover:text-red-600 transition"
+                          >
+                            {item}
+                          </Link>
+                        ) : (
+                          item
+                        )}
                       </li>
                     ))}
                   </ul>
