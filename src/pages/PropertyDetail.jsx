@@ -24,6 +24,7 @@ import {
   FaExternalLinkAlt,
   FaCalendarAlt,
   FaUserTie,
+  FaUser,
   FaAward,
   FaBolt,
   FaTint,
@@ -171,7 +172,7 @@ const PropertyDetail = () => {
   // Get color based on property type
   const getTypeColor = (type) => {
     switch(type) {
-      case 'Plot': return 'from-blue-500 to-blue-600';
+      case 'Plot': return 'from-blue-300 to-blue-500';
       case 'Agricultural Plot': return 'from-green-500 to-green-600';
       case 'Commercial Plot': return 'from-purple-500 to-purple-600';
       case 'Industrial Plot': return 'from-amber-500 to-amber-600';
@@ -785,7 +786,7 @@ const PropertyDetail = () => {
                 <div className="p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <div className={`w-10 h-10 bg-gradient-to-br ${typeGradient} rounded-full flex items-center justify-center text-white text-lg`}>
-                      {property.seller_information?.type === 'Individual' ? '👤' : '🏢'}
+                      {property.seller_information?.type === 'Individual' ? <FaUser className="text-sm" /> : <FaBuilding className="text-sm" />}
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900 text-sm">{property.seller_information?.name}</div>
