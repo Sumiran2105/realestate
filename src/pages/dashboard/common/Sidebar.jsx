@@ -41,7 +41,7 @@ const Sidebar = ({ role, isOpen, onClose }) => {
     seller: [
       { path: "/dashboard/seller", icon: <FaChartBar />, label: "Dashboard", exact: true },
       { path: "/dashboard/seller/properties", icon: <FaHome />, label: "My Properties" },
-      { path: "/dashboard/seller/add-property", icon: <FaPlus />, label: "Add Property" },
+      { path: "/dashboard/seller/add-property", icon: <FaPlus />, label: "List Property" },
       { path: "/dashboard/seller/inquiries", icon: <FaComments />, label: "Inquiries" },
       { path: "/dashboard/seller/profile", icon: <FaUser />, label: "Profile" },
     ],

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 
@@ -66,13 +67,21 @@ const SellerDashboard = () => {
   return (
     <DashboardLayout title="Seller Dashboard">
       {/* Welcome Section */}
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">
-          Welcome back, {user?.name?.split(" ")[0]}!
-        </h2>
-        <p className="text-gray-600 mt-1">
-          Manage your properties and track performance.
-        </p>
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Welcome back, {user?.name?.split(" ")[0]}!
+          </h2>
+          <p className="text-gray-600 mt-1">
+            Manage your properties and track performance.
+          </p>
+        </div>
+        <Link
+          to="/dashboard/seller/add-property"
+          className="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
+          List Property
+        </Link>
       </div>
 
       {/* Stats Grid */}
