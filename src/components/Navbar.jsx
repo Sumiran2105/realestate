@@ -34,7 +34,7 @@ export default function Navbar() {
 
         {/* Auth Buttons (desktop) */}
         <div className="hidden md:flex items-center gap-4">
-          <Link to="/auth" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Login</Link>
+          <Link to="/auth" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Login/Signup</Link>
         </div>
 
         {/* Mobile menu overlay */}

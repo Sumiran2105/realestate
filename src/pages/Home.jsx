@@ -13,6 +13,7 @@ import {
   import { motion } from "framer-motion";
   import PropertyCard from "../components/properties/PropertyCard";
   import propertiesData from "../data/properties.json";
+  import HeroDropdown from "../components/HeroDropdown";
   import { Link } from "react-router-dom";
 export default function Home() {
 
@@ -205,12 +206,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      <HeroDropdown />
+
       {/* ================= Featured Properties (NEW) ================= */}
       <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
-        <div className="text-center max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-blue-900   ">Featured Properties</h2>
-            <Link to="/properties" className="text-sm text-blue-600  font-medium hover:underline">View All</Link>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 flex flex-col items-center gap-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-blue-900">Featured Properties</h2>
+            <p className="text-dark">Discover our top picks for you</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
