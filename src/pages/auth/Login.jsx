@@ -74,34 +74,13 @@ const Login = () => {
           <p className="text-gray-600 mt-2">Sign in to your account</p>
         </div>
 
-        {/* Role Selection */}
-        <div className="flex justify-center space-x-4 mb-8">
-          {roles.map((role) => (
-            <button
-              key={role.value}
-              onClick={() => setFormData({ ...formData, role: role.value })}
-              className={`flex flex-col items-center p-3 rounded-lg transition-all ${
-                formData.role === role.value
-                  ? 'bg-blue-600 text-white shadow-lg scale-105'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <span className="text-2xl mb-1">{role.icon}</span>
-              <span className="text-sm font-medium">{role.label}</span>
-            </button>
-          ))}
-        </div>
+        
 
         {/* Quick Demo Login */}
         <div className="mb-6 p-4 bg-blue-50 rounded-lg">
           <p className="text-sm text-blue-800 font-medium mb-2">Quick Demo Access:</p>
           <div className="flex gap-2 flex-wrap">
-            <button
-              onClick={() => fillDemoCredentials('buyer')}
-              className="text-xs bg-white px-3 py-1 rounded-full text-blue-600 hover:bg-blue-100"
-            >
-              Buyer Demo
-            </button>
+            
             <button
               onClick={() => fillDemoCredentials('agent')}
               className="text-xs bg-white px-3 py-1 rounded-full text-blue-600 hover:bg-blue-100"

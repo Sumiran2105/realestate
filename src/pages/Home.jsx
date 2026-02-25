@@ -13,7 +13,6 @@ import {
   import { motion } from "framer-motion";
   import PropertyCard from "../components/properties/PropertyCard";
   import propertiesData from "../data/properties.json";
-  import HeroDropdown from "../components/HeroDropdown";
   import { Link } from "react-router-dom";
 export default function Home() {
 
@@ -207,8 +206,6 @@ export default function Home() {
         </div>
       </section>
       
-      <HeroDropdown />
-
       {/* ================= Featured Properties (NEW) ================= */}
       <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -506,7 +503,7 @@ export default function Home() {
 
         <div className="flex items-center gap-4">
           <img
-            src="/TG logo.png"
+            src="/TG Logo.png"
             alt="Telangana Government"
             className="h-20 object-contain opacity-90"
           />

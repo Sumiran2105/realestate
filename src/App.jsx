@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // Components
 import Navbar from './components/Navbar';
+import HeroDropdown from './components/HeroDropdown';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -36,6 +37,7 @@ import About from './pages/About';
 import Properties from './pages/Properties';
 import PropertyDetail from './pages/PropertyDetail';
 import Services from './pages/Services';
+import Contact from './pages/Contact';
 import Wishlist from './pages/Wishlist';
 import AgentProfile from './pages/dashboard/agent/AgentProfile';
 import AgentInquiries from './pages/dashboard/agent/AgentInquiries';
@@ -89,6 +91,7 @@ function AppContent() {
   return (
     <div className="min-h-screen flex flex-col">
       {showNavFooter && <Navbar />}
+      {showNavFooter && <HeroDropdown />}
       <main className={`flex-grow ${!showNavFooter ? 'pt-0' : ''}`}>
         <Routes>
           {/* Public Routes - Accessible to everyone */}
@@ -97,6 +100,7 @@ function AppContent() {
           <Route path="/properties" element={<Properties />} />
           <Route path="/property/:id" element={<PropertyDetail />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/wishlist" element={<Wishlist />} />
           
           {/* Auth Routes - Redirect to dashboard if already logged in */}

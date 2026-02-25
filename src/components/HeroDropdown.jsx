@@ -1,22 +1,27 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 
 export default function HeroDropdown() {
   const [active, setActive] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(null);
+  const location = useLocation();
+
+  // Only make sticky on home page
+  const isHomePage = location.pathname === "/";
 
   const menus = {
     Buy: {
       Popular: ["Ready to Move", "Owner Properties", "Budget Homes"],
       Budget: ["Under ₹50 Lac", "₹50 Lac - ₹1 Cr", "Above ₹1 Cr"],
     },
+    Rent: {
+      Popular: ["Apartments", "Independent Houses", "Villas"],
+      Budget: ["Under ₹20K", "₹20K - ₹50K", "Above ₹50K"],
+    },
     Sell: {
       Owner: ["Post Property", "Dashboard"],
       Tools: ["Property Valuation", "Find Agent"],
-    },
-    Loans: {
-      Apply: ["Home Loan", "Balance Transfer"],
-      Explore: ["EMI Calculator", "Eligibility Check"],
     },
     Services: {
       Property: ["Verification", "Legal Assistance", "Home Inspection"],
@@ -25,31 +30,45 @@ export default function HeroDropdown() {
   };
 
   return (
-    <div className="w-full bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-6">
+    <div className={`w-full bg-white border-b border-slate-200 ${isHomePage ? "sticky top-16 z-40" : ""} shadow-sm`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex justify-center gap-12 py-4 text-gray-800 font-medium">
+        {/* Desktop Menu - Centered */}
+        <div className="hidden md:flex justify-center items-center gap-2 sm:gap-4 lg:gap-8">
           {Object.keys(menus).map((menu) => (
             <div
               key={menu}
-              className="relative cursor-pointer flex items-center gap-1 hover:text-blue-600"
+              className="relative cursor-pointer"
               onMouseEnter={() => setActive(menu)}
               onMouseLeave={() => setActive(null)}
             >
-              {menu}
-              <ChevronDown size={16} />
+              <button className={`relative px-3 sm:px-4 lg:px-6 py-4 font-semibold text-sm sm:text-base transition-colors flex items-center gap-2
+                ${
+                  active === menu
+                    ? "text-red-600"
+                    : "text-gray-700 hover:text-gray-900"
+                }
+              `}>
+                {menu}
+              </button>
+
+              {/* Active Underline */}
+              {active === menu && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-600 transition-all"></div>
+              )}
 
               {/* Glass Mega Dropdown */}
               <div
-                className={`absolute left-1/2 -translate-x-1/2 top-10 w-[900px]
-                bg-white/70 backdrop-blur-xl border border-white/40
-                rounded-2xl shadow-2xl p-8 grid grid-cols-3 gap-8
-                transition-all duration-300
+                className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 w-max min-w-[600px]
+                bg-white backdrop-blur-xl border border-slate-200
+                rounded-2xl shadow-2xl p-8 grid grid-cols-2 gap-8
+                transition-all duration-300 origin-top z-50
                 ${active === menu
-                    ? "opacity-100 translate-y-0 visible"
-                    : "opacity-0 -translate-y-5 invisible"
+                    ? "opacity-100 translate-y-0 visible pointer-events-auto"
+                    : "opacity-0 -translate-y-2 invisible pointer-events-none"
                   }`}
+                onMouseEnter={() => setActive(menu)}
+                onMouseLeave={() => setActive(null)}
               >
                 {Object.entries(menus[menu]).map(([title, items]) => (
                   <div key={title}>
@@ -60,7 +79,7 @@ export default function HeroDropdown() {
                       {items.map((item, index) => (
                         <li
                           key={index}
-                          className="hover:text-blue-600 cursor-pointer transition"
+                          className="hover:text-red-600 cursor-pointer transition text-sm"
                         >
                           {item}
                         </li>
@@ -73,47 +92,52 @@ export default function HeroDropdown() {
           ))}
         </div>
 
-        {/* Mobile Accordion */}
-        <div className="md:hidden py-4">
+        {/* Mobile Tabs - Centered */}
+        <div className="md:hidden flex justify-center items-center gap-1 overflow-x-auto py-2 px-2">
           {Object.keys(menus).map((menu) => (
-            <div key={menu} className="border-b">
-              <button
-                onClick={() =>
-                  setMobileOpen(mobileOpen === menu ? null : menu)
+            <button
+              key={menu}
+              onClick={() =>
+                setMobileOpen(mobileOpen === menu ? null : menu)
+              }
+              className={`relative px-3 py-3 font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap
+                ${
+                  mobileOpen === menu
+                    ? "text-red-600"
+                    : "text-gray-700 hover:text-gray-900"
                 }
-                className="w-full flex justify-between items-center py-4 font-medium"
-              >
-                {menu}
-                <ChevronDown
-                  size={18}
-                  className={`transition-transform ${
-                    mobileOpen === menu ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
+              `}
+            >
+              {menu}
 
-              <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  mobileOpen === menu ? "max-h-96 pb-4" : "max-h-0"
-                }`}
-              >
-                {Object.entries(menus[menu]).map(([title, items]) => (
-                  <div key={title} className="pl-4 mb-4">
-                    <h4 className="font-semibold text-gray-800 mb-2">
-                      {title}
-                    </h4>
-                    <ul className="space-y-2 text-gray-600">
-                      {items.map((item, index) => (
-                        <li key={index} className="text-sm">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+              {/* Active Underline */}
+              {mobileOpen === menu && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-600"></div>
+              )}
+            </button>
           ))}
+        </div>
+
+        {/* Mobile Accordion */}
+        <div className="md:hidden">
+          {mobileOpen && (
+            <div className="bg-slate-50 py-4 px-4 grid grid-cols-2 gap-4">
+              {Object.entries(menus[mobileOpen]).map(([title, items]) => (
+                <div key={title}>
+                  <h4 className="font-semibold text-gray-800 mb-2 text-sm">
+                    {title}
+                  </h4>
+                  <ul className="space-y-1">
+                    {items.map((item, index) => (
+                      <li key={index} className="text-gray-600 text-xs">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
       </div>
