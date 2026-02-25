@@ -150,6 +150,10 @@ export default function Home() {
                 <option>Apartment</option>
                 <option>Villa</option>
                 <option>Land</option>
+                <option>Plot</option>
+                <option>Office Space</option>
+                <option>Industrial Space</option>
+                <option>Commercial Space</option>
               </select>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
@@ -167,10 +171,12 @@ export default function Home() {
                 <option>2000+</option>
               </select>
               <select className="px-4 py-3 sm:px-5 sm:py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full">
-                <option>Furnishing Status</option>
-                <option>Unfurnished</option>
-                <option>Semi Furnished</option>
-                <option>Fully Furnished</option>
+                <option>Listed by</option>
+                <option>Agent</option>
+                <option>Owner</option>
+                <option>Builder</option>
+                <option>Developer</option>
+                
               </select>
             </div>
             <div className="mt-8 flex flex-wrap gap-3 justify-center">
@@ -277,9 +283,9 @@ export default function Home() {
       {/* RIGHT SIDE - Image */}
       <div className="relative flex justify-center items-center w-full mb-10 lg:mb-0">
         <img
-          src="/Land.png"
+          src="/Building.png"
           alt="Legal Land Documentation"
-          className="rounded-2xl shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg object-cover"
+          className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg object-cover"
         />
         {/* Optional subtle floating effect */}
         <div className="absolute -z-10 top-4 left-4 w-full h-full bg-brand/10 rounded-2xl hidden sm:block"></div>

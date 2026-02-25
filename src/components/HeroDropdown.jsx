@@ -24,7 +24,7 @@ export default function HeroDropdown() {
       Tools: ["Property Valuation", "Find Agent"],
     },
     Services: {
-      Property: ["Verification", "Legal Assistance", "Home Inspection"],
+      Property: ["Verify Property", "Legal Assistance", "Documentation", "Home Loans","Rental Agreements"],
       Support: ["Customer Care", "FAQs", "Contact Us"],
     },
   };

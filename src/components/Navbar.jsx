@@ -52,13 +52,8 @@ export default function Navbar() {
           <Link to="/about" onClick={() => setOpen(false)}>About</Link>
           <Link to="/contact" onClick={() => setOpen(false)}>Contact</Link>
 
-          <Link
-            to="/auth"
-            onClick={() => setOpen(false)}
-            className="mt-3 bg-slate-800 text-white px-4 py-2 rounded-lg text-center"
-          >
-            Login / Sign Up
-          </Link>
+          <Link to="/login" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Login</Link>
+          <Link to="/register" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Sign Up</Link>
         </div>
       </div>
     </nav>
