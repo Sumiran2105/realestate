@@ -280,7 +280,7 @@ export default function Home() {
       {/* RIGHT SIDE - Image */}
       <div className="relative flex justify-center items-center w-full mb-10 lg:mb-0">
         <img
-          src="public/Land.png"
+          src="/Land.png"
           alt="Legal Land Documentation"
           className="rounded-2xl shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg object-cover"
         />
@@ -506,7 +506,7 @@ export default function Home() {
 
         <div className="flex items-center gap-4">
           <img
-            src="public/TG logo.png"
+            src="/TG logo.png"
             alt="Telangana Government"
             className="h-20 object-contain opacity-90"
           />
@@ -539,7 +539,7 @@ export default function Home() {
 
         <div className="flex items-center gap-4">
           <img
-            src="public/Ap logo2 .png"
+            src="/Ap logo2 .png"
             alt="Andhra Pradesh Government"
             className="h-20 object-contain opacity-90"
           />
