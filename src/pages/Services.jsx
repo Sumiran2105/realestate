@@ -78,7 +78,7 @@ const Services = () => {
       badge: "Most Popular",
       color: "brand-dark",
       lightColor: "brand-soft",
-      gradient: "from-brand-dark to-blue-800"
+      
     },
     {
       id: 2,
@@ -97,7 +97,7 @@ const Services = () => {
       badge: "AI Powered",
       color: "blue-600",
       lightColor: "blue-50",
-      gradient: "from-blue-600 to-blue-800"
+   
     },
     {
       id: 3,
@@ -116,7 +116,7 @@ const Services = () => {
       badge: "For Agents",
       color: "indigo-600",
       lightColor: "indigo-50",
-      gradient: "from-indigo-600 to-indigo-800"
+      
     },
     {
       id: 4,
@@ -135,7 +135,7 @@ const Services = () => {
       badge: "Secure",
       color: "purple-600",
       lightColor: "purple-50",
-      gradient: "from-purple-600 to-purple-800"
+    
     },
     {
       id: 5,
@@ -154,7 +154,7 @@ const Services = () => {
       badge: "Legal",
       color: "amber-600",
       lightColor: "amber-50",
-      gradient: "from-amber-600 to-amber-800"
+      
     },
     {
       id: 6,
@@ -173,7 +173,7 @@ const Services = () => {
       badge: "Support",
       color: "red-600",
       lightColor: "red-50",
-      gradient: "from-red-600 to-red-800"
+      
     }
   ];
 
@@ -350,71 +350,13 @@ const Services = () => {
         </div>
       </div>
 
-      {/* Government Portal Integrations - FROM PAGE 7 */}
-      <div className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Direct <span className="text-brand-dark">Government API Integration</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The cornerstone of our platform is seamless integration with government databases 
-              across Telangana and Andhra Pradesh.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Telangana Integrations */}
-            <div className="bg-gradient-to-br from-brand-soft to-blue-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-brand-dark mb-6 flex items-center gap-2">
-                <FaRegBuilding /> Telangana Integrations
-              </h3>
-              <div className="space-y-4">
-                {governmentIntegrations.telangana.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <FaCheckCircle className="text-brand-dark mt-1 flex-shrink-0" />
-                    <div>
-                      <span className="font-semibold text-gray-900">{item.name}:</span>
-                      <span className="text-gray-600 ml-2">{item.description}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Andhra Pradesh Integrations */}
-            <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-purple-700 mb-6 flex items-center gap-2">
-                <FaRegMap /> Andhra Pradesh Integrations
-              </h3>
-              <div className="space-y-4">
-                {governmentIntegrations.andhraPradesh.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <FaCheckCircle className="text-purple-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <span className="font-semibold text-gray-900">{item.name}:</span>
-                      <span className="text-gray-600 ml-2">{item.description}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <p className="text-gray-600 bg-gray-50 p-4 rounded-xl">
-              <span className="font-semibold">Additional Third-Party Integrations:</span> Karza, Surepass for document authentication, 
-              DigiLocker for Aadhaar and PAN verification, and CERSAI for SARFAESI property checks.
-            </p>
-          </div>
-        </div>
-      </div>
+   
 
       {/* Main Services Grid - FROM PAGE 3 */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Our <span className="text-brand-dark">Comprehensive</span> Services
+          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+            Our <span className="text-blue-900">Comprehensive</span> Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             A revolutionary platform that addresses every pain point in the real estate transaction journey.
@@ -425,7 +367,7 @@ const Services = () => {
           {mainServices.map((service) => (
             <div
               key={service.id}
-              className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              className="group relative bg-white rounded-2xl shadow-lg border border-gray-500 overflow-hidden hover:shadow-2xl transition-all duration-300 transform  hover:-translate-y-2"
             >
               {service.badge === "Most Popular" && (
                 <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-400 to-orange-400 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 z-10">
@@ -447,8 +389,8 @@ const Services = () => {
                   )}
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{service.title}</h3>
-                <p className="text-sm text-brand-dark font-medium mb-3">{service.tagline}</p>
+                <h3 className="text-xl font-bold text-blue-900 mb-1">{service.title}</h3>
+                <p className="text-sm text-blue-700 font-medium mb-3">{service.tagline}</p>
                 <p className="text-gray-600 text-sm mb-4">{service.description}</p>
                 
                 <div className="space-y-2 mb-4">
@@ -462,7 +404,7 @@ const Services = () => {
                 
                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
                   <span className="text-lg font-bold text-gray-900">{service.price}</span>
-                  <button className={`flex items-center gap-1 text-${service.color} font-medium hover:gap-2 transition-all`}>
+                  <button className={`flex items-center gap-1 text-gray-600 font-medium hover:gap-2 transition-all`}>
                     Learn More <FaArrowRight className="text-sm" />
                   </button>
                 </div>
@@ -476,8 +418,8 @@ const Services = () => {
       <div className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Transaction & <span className="text-brand-dark">Support Services</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+              Transaction & <span className="text-blue-900">Support Services</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Complete financial and post-purchase support for peace of mind
@@ -514,8 +456,8 @@ const Services = () => {
       <div className="bg-brand-soft py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Free <span className="text-brand-dark">Intelligence Tools</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+              Free <span className="text-blue-900">Intelligence Tools</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Make data-backed decisions with our free market intelligence tools

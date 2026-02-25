@@ -15,165 +15,25 @@ import {
   FaList,
   FaUserTie,
 } from "react-icons/fa";
- 
+
 const AboutPage = () => {
-  const styleTag = `
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    * {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+  const marqueeStyle = `
+    @keyframes scroll-left {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
     }
-    .section {
-      width: 100%;
-      padding: 4rem 2rem;
-    }
-    .section-light {
-      background-color: #f9fafb;
-    }
-    .section-white {
-      background-color: #ffffff;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    /* Base card styles - REDUCED SIZES */
-    .stat-card {
-      background: white;
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border: 1px solid #eef2f6;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-    .stat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.2);
-      border-color: #3b82f6;
-    }
-    .feature-card {
-      background: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border: 1px solid #eef2f6;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.2);
-      border-color: #3b82f6;
-    }
-    .pill {
-      background: #f1f5f9;
-      border-radius: 40px;
-      padding: 0.4rem 1.2rem;
-      font-size: 0.9rem;
-      color: #1e293b;
-      border: 1px solid #e2e8f0;
-      transition: all 0.2s ease;
-      cursor: default;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .pill:hover {
-      background: #3b82f6;
-      color: white;
-      border-color: #3b82f6;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
-    }
-    .pill svg {
-      font-size: 1rem;
-    }
-    .roadmap-item {
-      background: white;
-      border-radius: 12px;
-      padding: 1.25rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border: 1px solid #eef2f6;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-    .roadmap-item:hover {
-      transform: translateY(-4px) translateX(4px);
-      box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.2);
-      border-color: #3b82f6;
-    }
-    .btn-primary {
-      background: #3b82f6;
-      color: white;
-      padding: 0.8rem 3rem;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 1.2rem;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
-    }
-    .btn-primary:hover {
-      background: #2563eb;
-      transform: scale(1.05);
-      box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4);
-    }
- 
-    /* Marquee animation */
     .marquee-wrapper {
       overflow: hidden;
       width: 100%;
     }
     .marquee-content {
       display: flex;
-      gap: 0.75rem;
-      animation: scroll 30s linear infinite;
+      gap: 1rem;
+      animation: scroll-left 50s linear infinite;
       will-change: transform;
       width: fit-content;
     }
-    @keyframes scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
- 
-    /* Step cards for lead marketplace */
-    .step-card {
-      background: white;
-      border-radius: 12px;
-      padding: 1.25rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border: 1px solid #eef2f6;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .step-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.2);
-      border-color: #3b82f6;
-    }
-    .step-number {
-      width: 32px;
-      height: 32px;
-      background: #3b82f6;
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-    }
   `;
- 
-  const containerStyle = {
-    maxWidth: "1200px",
-    margin: "0 auto",
-  };
  
   // Data with React Icons
   const stats = [
@@ -234,195 +94,237 @@ const AboutPage = () => {
   ];
  
   return (
-<>
-<style>{styleTag}</style>
-      {/* Hero Section - Full Width with Very Light Blue Overlay (Image Visible) */}
-<div
-        className="section section-white"
+    <>
+      <style>{marqueeStyle}</style>
+      {/* Hero Section */}
+      <section
+        className="w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6"
         style={{
-          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(219, 234, 254, 0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80%27)`,
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(219, 234, 254, 0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
->
-<div style={containerStyle}>
-<div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
-<span style={{ color: "#3b82f6", fontWeight: "600", letterSpacing: "2px" }}>OUR PURPOSE</span>
-<h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: "800", lineHeight: 1.2, margin: "1rem 0 1.5rem" }}>
-              Trust, <span style={{ color: "#3b82f6" }}>Verified.</span>
-<br />
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl mx-auto text-center">
+            <span className="text-dark font-semibold tracking-widest text-sm">
+              OUR PURPOSE
+            </span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mt-4 mb-6 text-slate-900">
+              Trust, <span className="text-blue-600">Verified.</span>
+              <br />
               Real Estate, Simplified.
-</h1>
-<p style={{ fontSize: "1.2rem", color: "#1e293b", maxWidth: "700px", margin: "0 auto 2rem" }}>
-              Eliminating fraud and restoring confidence in property transactions across Telangana and Andhra Pradesh.
-</p>
-<div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
-<span className="pill"><FaHome /> 50K+ Properties Verified</span>
-<span className="pill"><FaList /> 500+ Listings</span>
-<span className="pill"><FaUserTie /> 100+ Agents</span>
-</div>
-</div>
-</div>
-</div>
+            </h1>
+            <p className="text-lg text-slate-800 max-w-2xl mx-auto mb-8">
+              Eliminating fraud and restoring confidence in property transactions across
+              Telangana and Andhra Pradesh.
+            </p>
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+              <span className="inline-flex items-center gap-2 bg-slate-100 rounded-full px-3 sm:px-4 py-2 text-sm font-medium text-slate-800 border border-slate-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">
+                <FaHome className="text-base" /> 50K+ Properties Verified
+              </span>
+              <span className="inline-flex items-center gap-2 bg-slate-100 rounded-full px-3 sm:px-4 py-2 text-sm font-medium text-slate-800 border border-slate-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">
+                <FaList className="text-base" /> 500+ Listings
+              </span>
+              <span className="inline-flex items-center gap-2 bg-slate-100 rounded-full px-3 sm:px-4 py-2 text-sm font-medium text-slate-800 border border-slate-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">
+                <FaUserTie className="text-base" /> 100+ Agents
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
  
-      {/* Stats Section - Light Background */}
-<div className="section section-light">
-<div style={containerStyle}>
-<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.5rem" }}>
+      {/* Stats Section */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {stats.map((stat, idx) => (
-<div key={idx} className="stat-card" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-<span style={{ fontSize: "2rem", color: "#3b82f6" }}>{stat.icon}</span>
-<div>
-<div style={{ fontSize: "1.6rem", fontWeight: "700", color: "#1e293b" }}>{stat.value}</div>
-<div style={{ fontSize: "0.9rem", color: "#64748b" }}>{stat.label}</div>
-</div>
-</div>
+              <div
+                key={idx}
+                className="bg-white rounded-lg p-4 sm:p-5 shadow-sm border border-blue-100 hover:shadow-md hover:border-blue-600 transition-all hover:-translate-y-1"
+              >
+                <span className="text-2xl text-blue-600 flex mb-3">{stat.icon}</span>
+                <div className="text-xl sm:text-2xl font-bold text-slate-900 mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-slate-600">{stat.label}</div>
+              </div>
             ))}
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </section>
  
-      {/* Problem & Solution - White Background */}
-<div className="section section-white">
-<div style={containerStyle}>
-<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
-<div className="feature-card">
-<span style={{ fontSize: "2.5rem", color: "#3b82f6" }}><FaExclamationTriangle /></span>
-<h2 style={{ fontSize: "1.8rem", fontWeight: "700", margin: "0.8rem 0", color: "#1e293b" }}>The Problem</h2>
-<p style={{ fontSize: "0.95rem", color: "#475569" }}>Over 60% of disputes involve fraudulent sellers. Disconnected portals. Legal costs ₹5–15L on average.</p>
-</div>
-<div className="feature-card">
-<span style={{ fontSize: "2.5rem", color: "#3b82f6" }}><FaCheckCircle /></span>
-<h2 style={{ fontSize: "1.8rem", fontWeight: "700", margin: "0.8rem 0", color: "#1e293b" }}>Our Solution</h2>
-<p style={{ fontSize: "0.95rem", color: "#475569" }}>Unified platform integrating Dharani, Meebhoomi, IGRS, RERA – verified ownership, price intelligence, end‑to‑end support.</p>
-</div>
-</div>
-</div>
-</div>
+      
  
-      {/* Features - Light Background - 3 COLUMNS */}
-<div className="section section-light">
-<div style={containerStyle}>
-<h2 style={{ fontSize: "2.2rem", fontWeight: "700", textAlign: "center", marginBottom: "2.5rem", color: "#1e293b" }}>How We Deliver Trust</h2>
-<div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}>
+      {/* Features Section */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-blue-900 mb-12 sm:mb-16">
+            How We Deliver Trust
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feat, idx) => (
-<div key={idx} className="feature-card">
-<div style={{ fontSize: "2.5rem", marginBottom: "0.8rem", color: "#3b82f6" }}>{feat.icon}</div>
-<h3 style={{ fontSize: "1.2rem", fontWeight: "700", marginBottom: "0.4rem", color: "#1e293b" }}>{feat.title}</h3>
-<p style={{ fontSize: "0.9rem", color: "#475569" }}>{feat.desc}</p>
-</div>
+              <div
+                key={idx}
+                className="bg-white rounded-lg p-6 shadow-sm border border-blue-100 hover:shadow-md hover:border-blue-600 transition-all hover:-translate-y-1"
+              >
+                <div className="text-3xl text-blue-600 mb-4">{feat.icon}</div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{feat.title}</h3>
+                <p className="text-slate-600 text-sm">{feat.desc}</p>
+              </div>
             ))}
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </section>
  
-      {/* Builder & Developer Onboarding - White Background */}
-<div className="section section-white">
-<div style={containerStyle}>
-<h2 style={{ fontSize: "2.2rem", fontWeight: "700", textAlign: "center", marginBottom: "0.5rem", color: "#1e293b" }}>Builder & Developer Onboarding</h2>
-<p style={{ fontSize: "1rem", textAlign: "center", color: "#64748b", maxWidth: "800px", margin: "0 auto 2.5rem" }}>
-            Builders and developers represent a significant opportunity for platform growth and revenue. Our onboarding process ensures that only legitimate, RERA-compliant developers can list projects, protecting buyers while providing builders with powerful marketing tools.
-</p>
-<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.5rem" }}>
+      {/* Builder Onboarding Section */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-blue-900 mb-2">
+            Builder & Developer Onboarding
+          </h2>
+          <p className="text-center text-slate-600 max-w-2xl mx-auto mb-12 sm:mb-16">
+            Builders and developers represent a significant opportunity for platform growth
+            and revenue. Our onboarding process ensures that only legitimate, RERA-compliant
+            developers can list projects, protecting buyers while providing builders with
+            powerful marketing tools.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {builderSteps.map((step, idx) => (
-<div key={idx} className="feature-card" style={{ textAlign: "center" }}>
-<span style={{ fontSize: "2rem", fontWeight: "700", color: "#3b82f6" }}>{step.step}</span>
-<h3 style={{ fontSize: "1.2rem", fontWeight: "700", margin: "0.5rem 0", color: "#1e293b" }}>{step.title}</h3>
-<p style={{ fontSize: "0.9rem", color: "#475569" }}>{step.desc}</p>
-</div>
+              <div
+                key={idx}
+                className="bg-white rounded-lg p-6 shadow-sm border border-blue-100 hover:shadow-md hover:border-blue-600 transition-all hover:-translate-y-1 text-center"
+              >
+                <span className="text-2xl font-bold text-blue-600 block mb-2">
+                  {step.step}
+                </span>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">{step.title}</h3>
+                <p className="text-sm text-slate-600">{step.desc}</p>
+              </div>
             ))}
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </section>
  
-      {/* Lead Marketplace Innovation - Light Background */}
-<div className="section section-light">
-<div style={containerStyle}>
-<h2 style={{ fontSize: "2.2rem", fontWeight: "700", textAlign: "center", marginBottom: "0.5rem", color: "#1e293b" }}>Lead Marketplace Innovation</h2>
-<p style={{ fontSize: "1rem", textAlign: "center", color: "#64748b", maxWidth: "800px", margin: "0 auto 2.5rem" }}>
-            Not all buyers want direct contact with multiple agents. Our lead marketplace allows buyers to submit requirements anonymously while agents bid for the opportunity to serve them. This creates a buyer-centric model where agents compete on service quality rather than aggressive marketing.
-</p>
-<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
+      {/* Lead Marketplace Section */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-blue-900 mb-2">
+            Lead Marketplace Innovation
+          </h2>
+          <p className="text-center text-slate-600 max-w-2xl mx-auto mb-12 sm:mb-16">
+            Not all buyers want direct contact with multiple agents. Our lead marketplace
+            allows buyers to submit requirements anonymously while agents bid for the
+            opportunity to serve them. This creates a buyer-centric model where agents
+            compete on service quality rather than aggressive marketing.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8">
             {leadSteps.map((step) => (
-<div key={step.number} className="step-card">
-<div className="step-number">{step.number}</div>
-<h3 style={{ fontSize: "1.1rem", fontWeight: "700", marginBottom: "0.4rem", color: "#1e293b" }}>{step.title}</h3>
-<p style={{ fontSize: "0.85rem", color: "#475569" }}>{step.desc}</p>
-</div>
+              <div
+                key={step.number}
+                className="bg-white rounded-lg p-6 shadow-sm border border-blue-100 hover:shadow-md hover:border-blue-600 transition-all hover:-translate-y-1 flex flex-col items-center text-center"
+              >
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mb-3">
+                  {step.number}
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mb-2">{step.title}</h3>
+                <p className="text-xs text-slate-600">{step.desc}</p>
+              </div>
             ))}
-</div>
-<div style={{ background: "#ffffff", borderRadius: "12px", padding: "1.5rem", border: "1px solid #e2e8f0" }}>
-<p style={{ fontSize: "0.95rem", color: "#1e293b", lineHeight: 1.6 }}>
-<strong style={{ color: "#3b82f6" }}>Lead quality scoring:</strong> Buyers with verified budgets (bank statement uploaded) receive +20 points, loan pre-approval adds +30 points, serious timeframe under three months adds +15 points, and complete profiles add +10 points. High-score leads are priced at ₹2,000+ while low-score leads cost ₹500, aligning agent investment with lead quality.
-</p>
-</div>
-</div>
-</div>
+          </div>
+          <div className="bg-white rounded-lg p-6 border border-slate-200">
+            <p className="text-slate-900 text-sm leading-relaxed">
+              <strong className="text-blue-600">Lead quality scoring:</strong> Buyers with
+              verified budgets (bank statement uploaded) receive +20 points, loan pre-approval
+              adds +30 points, serious timeframe under three months adds +15 points, and
+              complete profiles add +10 points. High-score leads are priced at ₹2,000+ while
+              low-score leads cost ₹500, aligning agent investment with lead quality.
+            </p>
+          </div>
+        </div>
+      </section>
  
-      {/* Integrations - White Background with Scrolling Marquee */}
-<div className="section section-white">
-<div style={containerStyle}>
-<h2 style={{ fontSize: "2rem", fontWeight: "700", textAlign: "center", marginBottom: "2rem", color: "#1e293b" }}>Government Integrations</h2>
-<div className="marquee-wrapper">
-<div className="marquee-content">
+      {/* Integrations Section */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-blue-900 mb-12">
+            Government Integrations
+          </h2>
+          <div className="marquee-wrapper">
+            <div className="marquee-content">
               {[...techItems, ...techItems].map((item, idx) => (
-<span key={idx} className="pill">{item}</span>
+                <span
+                  key={idx}
+                  className="inline-flex items-center bg-slate-100 rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-slate-800 border border-slate-200 whitespace-nowrap"
+                >
+                  {item}
+                </span>
               ))}
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </section>
  
-      {/* Roadmap - Light Background */}
-<div className="section section-light">
-<div style={containerStyle}>
-<h2 style={{ fontSize: "2.2rem", fontWeight: "700", textAlign: "center", marginBottom: "2.5rem", color: "#1e293b" }}>Our Roadmap</h2>
-<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.2rem" }}>
+      {/* Roadmap Section */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-blue-900 mb-12 sm:mb-16">
+            Our Roadmap
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {roadmap.map((item, idx) => (
-<div key={idx} className="roadmap-item">
-<span style={{ color: "#3b82f6", fontWeight: "600", fontSize: "0.9rem" }}>{item.year}</span>
-<h3 style={{ fontSize: "1.3rem", fontWeight: "700", margin: "0.3rem 0", color: "#1e293b" }}>{item.title}</h3>
-<p style={{ fontSize: "0.9rem", color: "#475569" }}>{item.desc}</p>
-</div>
+              <div
+                key={idx}
+                className="bg-white rounded-lg p-6 shadow-sm border border-blue-100 hover:shadow-md hover:border-blue-600 transition-all hover:-translate-y-1"
+              >
+                <span className="text-blue-600 font-semibold text-xs">{item.year}</span>
+                <h3 className="text-lg font-bold text-slate-900 mt-2 mb-2">{item.title}</h3>
+                <p className="text-sm text-slate-600">{item.desc}</p>
+              </div>
             ))}
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </section>
  
-      {/* Vision - White Background */}
-<div className="section section-white">
-<div style={containerStyle}>
-<div style={{ background: "#f1f5f9", borderRadius: "32px", padding: "2.5rem 2rem", textAlign: "center" }}>
-<h2 style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "1.2rem", color: "#1e293b" }}>Vision for Tomorrow</h2>
-<div style={{ display: "flex", justifyContent: "center", gap: "2.5rem", flexWrap: "wrap", marginBottom: "1.2rem" }}>
+      {/* Vision Section */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-slate-100 rounded-3xl p-8 sm:p-12 text-center">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-8">
+              Vision for Tomorrow
+            </h2>
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mb-6">
               {visionStats.map((item, idx) => (
-<div key={idx}>
-<div style={{ fontSize: "2.5rem", fontWeight: "800", color: "#3b82f6" }}>{item.value}</div>
-<div style={{ fontSize: "1rem", color: "#475569" }}>{item.label}</div>
-</div>
+                <div key={idx}>
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-600">
+                    {item.value}
+                  </div>
+                  <div className="text-slate-600 text-sm sm:text-base">{item.label}</div>
+                </div>
               ))}
-</div>
-<p style={{ fontSize: "1.1rem", maxWidth: "700px", margin: "0 auto", color: "#475569" }}>
-              From Telangana & Andhra Pradesh to a trusted verification standard across India.
-</p>
-</div>
-</div>
-</div>
+            </div>
+            <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto">
+              From Telangana & Andhra Pradesh to a trusted verification standard across
+              India.
+            </p>
+          </div>
+        </div>
+      </section>
  
-      {/* CTA - Light Background */}
-<div className="section section-light">
-<div style={containerStyle}>
-<div style={{ textAlign: "center" }}>
-<h2 style={{ fontSize: "1.8rem", fontWeight: "700", marginBottom: "1rem", color: "#1e293b" }}>Ready to experience trusted real estate?</h2>
-<button className="btn-primary">
-              Get Started
-</button>
-</div>
-</div>
-</div>
-</>
+      {/* CTA Section */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-slate-50">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+            Ready to experience trusted real estate?
+          </h2>
+          <button className="bg-blue-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-blue-700 transition-all hover:scale-105 shadow-md hover:shadow-lg">
+            Get Started
+          </button>
+        </div>
+      </section>
+    </>
   );
 };
- 
+
 export default AboutPage;

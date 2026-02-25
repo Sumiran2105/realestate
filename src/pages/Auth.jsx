@@ -71,6 +71,7 @@ export default function Auth() {
             <Input label="Username" />
             <Input label="Email" type="email" />
             <Input label="Password" type="password" />
+            <Select label="Role" options={["Seller", "Buyer", "Agent"]} />
 
             <button className="w-full h-[45px] bg-blue-600 rounded-full 
               text-white font-semibold hover:bg-blue-700 transition">
@@ -131,6 +132,34 @@ function Input({ label, type = "text" }) {
         className="peer w-full h-full bg-transparent border-b-2 border-gray-400 
         text-gray-800 font-semibold outline-none focus:border-blue-600"
       />
+      <label className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-500 transition-all 
+        peer-focus:-top-2 peer-focus:text-sm peer-focus:text-blue-600
+        peer-valid:-top-2 peer-valid:text-sm">
+        {label}
+      </label>
+    </div>
+  );
+}
+
+/* ================= Role Select ================= */
+function Select({ label, options = [] }) {
+  return (
+    <div className="relative w-full h-[50px]">
+      <select
+        defaultValue=""
+        required
+        className="peer w-full h-full bg-transparent border-b-2 border-gray-400 
+        text-gray-800 font-semibold outline-none focus:border-blue-600 appearance-none"
+      >
+        <option value="" disabled>
+          Select role
+        </option>
+        {options.map((opt) => (
+          <option key={opt} value={opt.toLowerCase()}>
+            {opt}
+          </option>
+        ))}
+      </select>
       <label className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-500 transition-all 
         peer-focus:-top-2 peer-focus:text-sm peer-focus:text-blue-600
         peer-valid:-top-2 peer-valid:text-sm">

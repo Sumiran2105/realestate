@@ -11,6 +11,9 @@ import {
   import ScrollToTopButton from "../components/ScrollToTopButton";
   import OCRSection from "../components/OCRSection";
   import { motion } from "framer-motion";
+  import PropertyCard from "../components/properties/PropertyCard";
+  import propertiesData from "../data/properties.json";
+  import { Link } from "react-router-dom";
 export default function Home() {
 
   /* ================= HERO PARALLAX (UNCHANGED) ================= */
@@ -199,6 +202,36 @@ export default function Home() {
             >
               Search Verified Properties
             </button>
+          </div>
+        </div>
+      </section>
+      {/* ================= Featured Properties (NEW) ================= */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
+        <div className="text-center max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-blue-900   ">Featured Properties</h2>
+            <Link to="/properties" className="text-sm text-blue-600  font-medium hover:underline">View All</Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {propertiesData?.listings?.slice(0, 4).map((prop) => (
+              <PropertyCard
+                key={prop.property_id}
+                property={prop}
+                viewMode="card"
+                isFavorite={false}
+                onToggleFavorite={() => {}}
+                formatPrice={(n) =>
+                  typeof n === 'number'
+                    ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n)
+                    : n
+                }
+              />
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link to="/properties" className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">View All Properties</Link>
           </div>
         </div>
       </section>
