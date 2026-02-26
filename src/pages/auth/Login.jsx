@@ -68,7 +68,8 @@ const handleSubmit = async (e) => {
     const demos = {
       buyer: { email: 'buyer@example.com', password: 'password123' },
       agent: { email: 'agent@example.com', password: 'password123' },
-      seller: { email: 'seller@example.com', password: 'password123' }
+      seller: { email: 'seller@example.com', password: 'password123' },
+      admin: { email: 'admin@example.com', password: 'password123' }
     };
     setFormData({ ...formData, ...demos[role], role });
   };
@@ -105,6 +106,12 @@ const handleSubmit = async (e) => {
               className="text-xs bg-white px-3 py-1 rounded-full text-blue-600 hover:bg-blue-100"
             >
               Seller Demo
+            </button>
+            <button
+                onClick={() => fillDemoCredentials('admin')}
+                className="text-xs bg-white px-3 py-1 rounded-full text-purple-600 hover:bg-purple-100"
+            >
+                Admin Demo
             </button>
           </div>
         </div>

@@ -45,12 +45,14 @@ const Sidebar = ({ role, isOpen, onClose }) => {
       { path: "/dashboard/seller/inquiries", icon: <FaComments />, label: "Inquiries" },
       { path: "/dashboard/seller/profile", icon: <FaUser />, label: "Profile" },
     ],
-    buyer: [
-      { path: "/dashboard/buyer", icon: <FaChartBar />, label: "Dashboard", exact: true },
-      { path: "/dashboard/buyer/favorites", icon: <FaHeart />, label: "Favorites" },
-      { path: "/dashboard/buyer/searches", icon: <FaSearch />, label: "Saved Searches" },
-      { path: "/dashboard/buyer/profile", icon: <FaUser />, label: "Profile" },
-    ],
+    admin: [
+        { path: "/dashboard/admin", icon: <FaChartBar />, label: "Dashboard", exact: true },
+        { path: "/dashboard/admin/kyc", icon: <FaCheckCircle />, label: "KYC Verification" },
+        { path: "/dashboard/admin/properties", icon: <FaHome />, label: "Properties" },
+        { path: "/dashboard/admin/users", icon: <FaUsers />, label: "Users" },
+        { path: "/dashboard/admin/reports", icon: <FaChartLine />, label: "Reports" },
+        { path: "/dashboard/admin/settings", icon: <FaUser />, label: "Settings" },
+    ]
   };
 
   const currentMenu = menuItems[role] || menuItems.buyer;

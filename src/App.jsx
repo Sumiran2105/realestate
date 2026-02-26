@@ -349,6 +349,12 @@ import AgentInquiries from './pages/dashboard/agent/AgentInquiries';
 import AgentTransactions from './pages/dashboard/agent/AgentTransactions';
 import ScrollToTop from './pages/ScrollToTop';
 import OTPVerification from './pages/auth/OTPVerification';
+import AdminDashboard from './pages/dashboard/admin/AdminDashboard';
+import AdminKYC from './pages/dashboard/admin/AdminKYC';
+import AdminProperties from './pages/dashboard/admin/AdminProperties';
+import AdminUsers from './pages/dashboard/admin/AdminUsers';
+import AdminSettings from './pages/dashboard/admin/AdminSettings';
+import AdminReports from './pages/dashboard/admin/AdminReports';
 
 // Loading Component
 const LoadingSpinner = () => (
@@ -372,7 +378,7 @@ const isDashboardPath = (pathname) => {
 
 // Helper function to check if user is agent or seller
 const isAgentOrSeller = (user) => {
-  return user && (user.role === 'agent' || user.role === 'seller');
+  return user && (user.role === 'agent' || user.role === 'seller' || user.role === 'admin');
 };
 
 function AppContent() {
@@ -511,7 +517,43 @@ function AppContent() {
               <AddProperty />
             </ProtectedRoute>
           } />
-          
+
+          <Route path="/dashboard/admin" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/dashboard/admin/kyc" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminKYC />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/dashboard/admin/properties" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminProperties />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/dashboard/admin/users" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminUsers />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/dashboard/admin/settings" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminSettings />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/dashboard/admin/reports" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminReports />
+            </ProtectedRoute>
+          } />
+
           {/* Generic Dashboard Redirect - Based on user role */}
           <Route path="/dashboard" element={
             <ProtectedRoute>
@@ -538,6 +580,7 @@ const getDashboardPath = (role) => {
     case 'agent': return '/dashboard/agent';
     case 'seller': return '/dashboard/seller';
     case 'buyer': return '/buyer/home';
+    case 'admin': return '/dashboard/admin';
     default: return '/';
   }
 };
