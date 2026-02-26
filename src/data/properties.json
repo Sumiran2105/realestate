@@ -45,35 +45,45 @@
           "authority": "HMDA",
           "approval_number": "HMDA/LRS/123/2022",
           "approved_date": "2022-05-15",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "rera_details": {
           "applicable": false,
-          "reason": "Plot in an approved layout (< 1000 sq mtrs), RERA registration not mandatory but layout is HMDA approved."
+          "reason": "Plot in an approved layout (< 1000 sq mtrs), RERA registration not mandatory but layout is HMDA approved.",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "K. Srinivas Reddy",
           "survey_number": "123/45",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "municipal_approvals": {
           "plan_approval": "GHMC/BPS/2022/789",
-          "occupancy_certificate": "Not Applicable for Plot"
+          "occupancy_certificate": "Not Applicable for Plot",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL",
             "service_number": "TSS/1234/567",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           },
           "water": {
             "verified": true,
             "provider": "HMWSSB",
             "connection_number": "HMWB/9876/543",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -83,7 +93,14 @@
         "owner_verification": "Passed",
         "title_verification": "Clear",
         "last_verified_date": "2024-05-20",
-        "report_summary": "All government records match. No liens or disputes. HMDA approved layout. Ready for registration."
+        "report_summary": "All government records match. No liens or disputes. HMDA approved layout. Ready for registration.",
+        "verified_documents": [
+          "HMDA Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills",
+          "Water Bills"
+        ]
       },
       "pricing": {
         "expected_price": 15000000,
@@ -158,35 +175,45 @@
           "authority": "HMDA/DTCP",
           "approval_number": "HMDA/DTCP/LRS/456/2023",
           "approved_date": "2023-02-10",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "rera_details": {
           "applicable": false,
-          "reason": "Plot in an approved layout. Developer has obtained HMDA approval."
+          "reason": "Plot in an approved layout. Developer has obtained HMDA approval.",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "Neopolis Infra Developers Pvt Ltd",
           "survey_number": "67/89",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "municipal_approvals": {
           "plan_approval": "GHMC/BPS/2023/1122",
-          "occupancy_certificate": "Not Applicable"
+          "occupancy_certificate": "Not Applicable",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL",
             "service_number": "TSS/3456/789",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           },
           "water": {
             "verified": true,
             "provider": "HMWSSB",
             "connection_number": "HMWB/2345/678",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -196,7 +223,17 @@
         "owner_verification": "Passed",
         "title_verification": "Clear",
         "last_verified_date": "2024-05-19",
-        "report_summary": "Prime location corner plot with all approvals. Clear title and no dues."
+        "report_summary": "Prime location corner plot with all approvals. Clear title and no dues.",
+        "verified_documents": [
+          "HMDA Layout Approval",
+          "DTCP Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills",
+          "Water Bills",
+          "GST Certificate",
+          "RERA License"
+        ]
       },
       "pricing": {
         "expected_price": 22500000,
@@ -273,25 +310,31 @@
           "authority": "DTCP Warangal",
           "approval_number": "DTCP/WGL/789/2023",
           "approved_date": "2023-09-20",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "G. Rajamouli",
           "survey_number": "101/22",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL",
             "service_number": "TSN/7890/123",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           },
           "water": {
             "verified": false,
-            "details": "Borewell water available in layout, pending individual connection"
+            "details": "Borewell water available in layout, pending individual connection",
+            "document_provided": false
           }
         }
       },
@@ -300,7 +343,16 @@
         "document_completeness_score": 9,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-18"
+        "last_verified_date": "2024-05-18",
+        "verified_documents": [
+          "DTCP Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ],
+        "missing_documents": [
+          "Water Connection Bill/Receipt"
+        ]
       },
       "pricing": {
         "expected_price": 6000000,
@@ -373,7 +425,9 @@
           "authority": "VUDA",
           "approval_number": "VUDA/BHEEM/456/2021",
           "approved_date": "2021-12-01",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -382,14 +436,17 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/4567/890",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -399,7 +456,14 @@
         "owner_verification": "Passed",
         "title_verification": "Clear",
         "igrs_cross_verification": "Match Found",
-        "last_verified_date": "2024-05-20"
+        "last_verified_date": "2024-05-20",
+        "verified_documents": [
+          "VUDA Layout Approval",
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ]
       },
       "pricing": {
         "expected_price": 17500000,
@@ -471,7 +535,9 @@
           "authority": "Tirupati Development Authority",
           "approval_number": "TDA/LRS/567/2022",
           "approved_date": "2022-08-15",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -480,14 +546,17 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/8901/234",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -496,7 +565,14 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-19"
+        "last_verified_date": "2024-05-19",
+        "verified_documents": [
+          "TDA Layout Approval",
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ]
       },
       "pricing": {
         "expected_price": 12000000,
@@ -572,37 +648,47 @@
           "authority": "HMDA",
           "approval_number": "HMDA/LRS/999/2022",
           "approved_date": "2022-11-20",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "rera_details": {
           "applicable": true,
           "rera_number": "RERA/TS/67890/2023",
           "project_name": "Sattva Enclave",
           "status": "Active",
-          "compliance_status": "No Violations"
+          "compliance_status": "No Violations",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "Sattva Infra Pvt Ltd",
           "survey_number": "34/AA",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "municipal_approvals": {
-          "plan_approval": "GHMC/BPS/2023/4567"
+          "plan_approval": "GHMC/BPS/2023/4567",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL",
             "service_number": "TSS/5566/7788",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           },
           "water": {
             "verified": true,
             "provider": "HMWSSB",
             "connection_number": "HMWB/1122/3344",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -612,7 +698,17 @@
         "owner_verification": "Passed",
         "title_verification": "Clear",
         "rera_compliance": "Compliant",
-        "last_verified_date": "2024-05-20"
+        "last_verified_date": "2024-05-20",
+        "verified_documents": [
+          "HMDA Layout Approval",
+          "RERA Registration",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Municipal Plan Approval",
+          "Electricity Bills",
+          "Water Bills",
+          "GST Certificate"
+        ]
       },
       "pricing": {
         "expected_price": 28000000,
@@ -689,7 +785,9 @@
           "authority": "VUDA",
           "approval_number": "VUDA/RUSH/123/2021",
           "approved_date": "2021-05-05",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -698,14 +796,17 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/6543/210",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -714,7 +815,14 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-18"
+        "last_verified_date": "2024-05-18",
+        "verified_documents": [
+          "VUDA Layout Approval",
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ]
       },
       "pricing": {
         "expected_price": 28000000,
@@ -751,9 +859,9 @@
       "property_id": "TS-HYD-24008",
       "listing_type": "Agricultural Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Partially Verified",
       "title": "Large Agricultural Land with Dharani Clear Title - Shankarpally",
-      "description": "Vast agricultural land suitable for farmhouse or investment. Dharani records clear, no litigation. Well and electricity connection available.",
+      "description": "Vast agricultural land suitable for farmhouse or investment. Dharani records clear, no litigation. Well and electricity connection available. Layout approval pending verification.",
       "location": {
         "address": "Shankarpally Mandal",
         "city": "Hyderabad (Rural)",
@@ -781,32 +889,71 @@
         "electricity": "Agricultural Connection"
       },
       "government_approvals": {
+        "layout_approval": {
+          "authority": "HMDA",
+          "approval_number": null,
+          "status": "Pending",
+          "document_provided": false,
+          "verification_status": "Not Verified",
+          "remarks": "Seller claims layout approval applied, documents not provided yet"
+        },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "M. Ramesh Yadav",
-          "survey_numbers": ["456/A", "456/B", "457"],
+          "survey_numbers": "456/A3",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "revenue_records": {
           "pattadar_passbook_verified": true,
-          "adangal_verified": true
+          "adangal_verified": true,
+          "document_provided": true
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "TSSPDCL",
+            "service_number": "TSAG/1234/567",
+            "dues_status": "Clear",
+            "bill_provided": true
+          },
+          "water": {
+            "verified": false,
+            "details": "Well exists, no municipal connection",
+            "document_provided": false
+          }
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 10,
+        "overall_risk_score": 5,
+        "document_completeness_score": 6,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-15"
+        "last_verified_date": "2024-05-15",
+        "report_summary": "Land ownership verified with Dharani. Layout approval documents pending. Not approved for non-agricultural use yet.",
+        "verified_documents": [
+          "Dharani Pahani",
+          "Pattadar Passbook",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ],
+        "pending_documents": [
+          "HMDA Layout Approval",
+          "Non-Agricultural Conversion Permission",
+          "Water Connection Documents"
+        ],
+        "verification_notes": "Property is agricultural land. Buyer must verify conversion feasibility before purchase."
       },
       "pricing": {
         "expected_price": 45000000,
         "price_per_acre": 30000000,
         "fair_price_estimate": {
-          "min": 44000000,
+          "min": 40000000,
           "max": 47000000,
-          "confidence_level": "85%"
+          "confidence_level": "70%",
+          "note": "Price dependent on layout approval status"
         },
         "price_trend": {
           "1_year": "+8%"
@@ -868,7 +1015,9 @@
           "authority": "DTCP Guntur",
           "approval_number": "DTCP/GNT/345/2023",
           "approved_date": "2023-04-18",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -877,14 +1026,17 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/3456/789",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -893,7 +1045,14 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-17"
+        "last_verified_date": "2024-05-17",
+        "verified_documents": [
+          "DTCP Layout Approval",
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ]
       },
       "pricing": {
         "expected_price": 8000000,
@@ -967,30 +1126,38 @@
           "authority": "HMDA",
           "approval_number": "HMDA/COMM/567/2020",
           "approved_date": "2020-08-01",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "ORR Infra Holdings Pvt Ltd",
           "survey_number": "12/C",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "municipal_approvals": {
-          "plan_approval": "GHMC/COMM/2021/1234"
+          "plan_approval": "GHMC/COMM/2021/1234",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL",
             "service_number": "TSS/9988/7766",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           },
           "water": {
             "verified": true,
             "provider": "HMWSSB",
             "connection_number": "HMWB/5544/3322",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -1000,7 +1167,16 @@
         "owner_verification": "Passed",
         "title_verification": "Clear",
         "last_verified_date": "2024-05-19",
-        "report_summary": "Prime commercial plot with high visibility. All approvals in place for commercial construction."
+        "report_summary": "Prime commercial plot with high visibility. All approvals in place for commercial construction.",
+        "verified_documents": [
+          "HMDA Commercial Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Municipal Commercial Approval",
+          "Electricity Bills",
+          "Water Bills",
+          "GST Certificate"
+        ]
       },
       "pricing": {
         "expected_price": 50000000,
@@ -1040,9 +1216,9 @@
       "property_id": "TS-HYD-24011",
       "listing_type": "Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Partially Verified",
       "title": "HMDA Approved Plot in Narsingi",
-      "description": "Well-developed residential plot in a bustling locality. Close to schools, hospitals, and shopping malls.",
+      "description": "Well-developed residential plot in a bustling locality. Close to schools, hospitals, and shopping malls. Utility bill verification pending.",
       "location": {
         "address": "Rajiv Gandhi Nagar, Narsingi",
         "city": "Hyderabad",
@@ -1076,45 +1252,64 @@
           "authority": "HMDA",
           "approval_number": "HMDA/LRS/789/2021",
           "approved_date": "2021-09-10",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "Syed Ahmed",
           "survey_number": "87/65",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
-            "verified": true,
+            "verified": false,
             "provider": "TSSPDCL",
             "service_number": "TSS/2233/4455",
-            "dues_status": "Clear"
+            "dues_status": "Pending Verification",
+            "bill_provided": false,
+            "remarks": "Seller provided bill copies, verification with TSSPDCL pending"
           },
           "water": {
-            "verified": true,
+            "verified": false,
             "provider": "HMWSSB",
             "connection_number": "HMWB/6677/8899",
-            "dues_status": "Clear"
+            "dues_status": "Pending Verification",
+            "bill_provided": false,
+            "remarks": "Water connection documents not provided"
           }
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 10,
+        "overall_risk_score": 4,
+        "document_completeness_score": 7,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-18"
+        "last_verified_date": "2024-05-18",
+        "report_summary": "HMDA approval and title documents verified. Utility bills verification in progress. Some discrepancies in electricity bill address.",
+        "verified_documents": [
+          "HMDA Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate"
+        ],
+        "pending_documents": [
+          "Electricity Bill Verification",
+          "Water Connection Documents"
+        ],
+        "verification_notes": "Address on electricity bill doesn't match property address. Owner has applied for correction."
       },
       "pricing": {
         "expected_price": 13350000,
         "price_per_sq_yd": 50000,
         "price_per_sq_ft": 5555.56,
         "fair_price_estimate": {
-          "min": 12800000,
+          "min": 12500000,
           "max": 13800000,
-          "confidence_level": "89%"
+          "confidence_level": "75%"
         },
         "price_trend": {
           "6_months": "+6%",
@@ -1143,9 +1338,9 @@
       "property_id": "AP-CHI-24012",
       "listing_type": "Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Partially Verified",
       "title": "Approved Plot Near Srikalahasti Temple",
-      "description": "Quiet residential plot near the famous temple town. DTCP approved. Ideal for devotees and investors.",
+      "description": "Quiet residential plot near the famous temple town. DTCP approved. Title verification completed, layout approval document verification pending.",
       "location": {
         "address": "Srikalahasti Road",
         "city": "Chittoor",
@@ -1177,7 +1372,10 @@
           "authority": "DTCP Chittoor",
           "approval_number": "DTCP/CHI/890/2022",
           "approved_date": "2022-03-22",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Pending",
+          "remarks": "Document provided but digital verification with DTCP office pending due to technical issues"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -1186,32 +1384,46 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/1112/1314",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 9,
+        "overall_risk_score": 3,
+        "document_completeness_score": 8,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-16"
+        "last_verified_date": "2024-05-16",
+        "report_summary": "Title and ownership verified. DTCP approval document verification pending with government portal.",
+        "verified_documents": [
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ],
+        "pending_documents": [
+          "DTCP Layout Approval (Verification Pending)"
+        ],
+        "verification_notes": "DTCP approval number verified, but document authentication pending with DTCP Chittoor office."
       },
       "pricing": {
         "expected_price": 8750000,
         "price_per_sq_yd": 35000,
         "price_per_sq_ft": 3888.89,
         "fair_price_estimate": {
-          "min": 8500000,
+          "min": 8200000,
           "max": 9000000,
-          "confidence_level": "86%"
+          "confidence_level": "80%"
         },
         "price_trend": {
           "1_year": "+9%"
@@ -1239,9 +1451,9 @@
       "property_id": "TS-KMR-24013",
       "listing_type": "Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Not Verified",
       "title": "DTCP Approved Plot in Khammam City",
-      "description": "Good investment opportunity in Khammam city. Close to railway station and bus stand. All approvals in place.",
+      "description": "Good investment opportunity in Khammam city. Close to railway station and bus stand. Documents under verification - Seller yet to provide complete documentation.",
       "location": {
         "address": "Wyra Road",
         "city": "Khammam",
@@ -1272,41 +1484,60 @@
       "government_approvals": {
         "layout_approval": {
           "authority": "DTCP Khammam",
-          "approval_number": "DTCP/KMM/456/2023",
-          "approved_date": "2023-11-01",
-          "status": "Approved"
+          "approval_number": null,
+          "status": "Verification Required",
+          "document_provided": false,
+          "verification_status": "Not Verified",
+          "remarks": "Seller claims approved layout, documents not yet provided"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "B. Madhavi",
           "survey_number": "34/12",
-          "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "verification_status": "Pending",
+          "encumbrance_status": "Verification Required",
+          "document_provided": false,
+          "document_verified": false,
+          "remarks": "Seller has not provided Dharani documents for verification"
         },
         "utility_connections": {
           "electricity": {
-            "verified": true,
+            "verified": false,
             "provider": "TSSPDCL",
-            "service_number": "TSK/5678/9012",
-            "dues_status": "Clear"
+            "service_number": null,
+            "dues_status": "Unknown",
+            "bill_provided": false,
+            "remarks": "No documents provided"
           }
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 10,
-        "owner_verification": "Passed",
-        "title_verification": "Clear",
-        "last_verified_date": "2024-05-19"
+        "overall_risk_score": 8,
+        "document_completeness_score": 2,
+        "owner_verification": "Pending",
+        "title_verification": "Pending",
+        "last_verified_date": "2024-05-19",
+        "report_summary": "Verification not started. Seller has not provided required documents. Buyer advised to request complete documentation before proceeding.",
+        "verified_documents": [],
+        "pending_documents": [
+          "DTCP Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills",
+          "Sale Deed",
+          "Owner ID Proof"
+        ],
+        "verification_notes": "Property listed without proper documentation. Multiple follow-ups with seller pending."
       },
       "pricing": {
         "expected_price": 6000000,
         "price_per_sq_yd": 30000,
         "price_per_sq_ft": 3333.33,
         "fair_price_estimate": {
-          "min": 5800000,
+          "min": 4500000,
           "max": 6200000,
-          "confidence_level": "88%"
+          "confidence_level": "30%",
+          "note": "Cannot provide accurate estimate without document verification"
         },
         "price_trend": {
           "6_months": "+4%",
@@ -1317,11 +1548,11 @@
       "seller_information": {
         "name": "B. Madhavi",
         "type": "Individual",
-        "verification_badge": "Verified Owner",
+        "verification_badge": "Unverified",
         "member_since": "2024-02-14",
         "total_listings": 1,
-        "response_rate": "100%",
-        "response_time": "< 3 hours"
+        "response_rate": "60%",
+        "response_time": "> 24 hours"
       },
       "media": {
         "images": [
@@ -1372,10 +1603,22 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "revenue_records": {
-          "pahani_verified": true
+          "pahani_verified": true,
+          "document_provided": true
+        },
+        "utility_connections": {
+          "electricity": {
+            "verified": true,
+            "provider": "APSPDCL",
+            "service_number": "APAG/5678/1234",
+            "dues_status": "Clear",
+            "bill_provided": true
+          }
         }
       },
       "verification_report_card": {
@@ -1383,7 +1626,15 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-17"
+        "last_verified_date": "2024-05-17",
+        "verified_documents": [
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills",
+          "Borewell Registration"
+        ]
       },
       "pricing": {
         "expected_price": 50000000,
@@ -1419,9 +1670,9 @@
       "property_id": "TS-NZB-24015",
       "listing_type": "Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Not Verified",
       "title": "Residential Plot in Nizamabad Town",
-      "description": "Centrally located plot in Nizamabad. Close to Nizamabad Medical College. DTCP approved.",
+      "description": "Centrally located plot in Nizamabad. Close to Nizamabad Medical College. Documents under review - Verification in progress.",
       "location": {
         "address": "Armoor Road",
         "city": "Nizamabad",
@@ -1452,47 +1703,65 @@
       "government_approvals": {
         "layout_approval": {
           "authority": "DTCP Nizamabad",
-          "approval_number": "DTCP/NZB/123/2022",
-          "approved_date": "2022-10-05",
-          "status": "Approved"
+          "approval_number": null,
+          "status": "Unknown",
+          "document_provided": false,
+          "verification_status": "Not Verified",
+          "remarks": "Seller claims approval but hasn't provided documents"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "K. Sagar",
           "survey_number": "67/89A",
-          "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "verification_status": "Pending",
+          "encumbrance_status": "Verification Required",
+          "document_provided": true,
+          "document_verified": false,
+          "remarks": "Documents provided but show discrepancies in survey number"
         },
         "utility_connections": {
           "electricity": {
-            "verified": true,
+            "verified": false,
             "provider": "TSSPDCL",
-            "service_number": "TSN/1234/5678",
-            "dues_status": "Clear"
+            "service_number": null,
+            "dues_status": "Unknown",
+            "bill_provided": false
           },
           "water": {
-            "verified": true,
+            "verified": false,
             "provider": "NWS&SB",
-            "connection_number": "NZB/9876/5432",
-            "dues_status": "Clear"
+            "connection_number": null,
+            "dues_status": "Unknown",
+            "bill_provided": false
           }
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 10,
-        "owner_verification": "Passed",
-        "title_verification": "Clear",
-        "last_verified_date": "2024-05-18"
+        "overall_risk_score": 7,
+        "document_completeness_score": 3,
+        "owner_verification": "In Progress",
+        "title_verification": "Discrepancy Found",
+        "last_verified_date": "2024-05-18",
+        "report_summary": "Document verification in progress. Discrepancy found in survey number. Seller requested to provide corrected documents.",
+        "verified_documents": [],
+        "pending_documents": [
+          "DTCP Layout Approval",
+          "Corrected Dharani Documents",
+          "Encumbrance Certificate",
+          "Electricity Bills",
+          "Water Bills"
+        ],
+        "verification_notes": "Survey number in sale deed (67/89A) doesn't match with Dharani records (67/89B). Seller has been asked to clarify."
       },
       "pricing": {
         "expected_price": 7200000,
         "price_per_sq_yd": 32000,
         "price_per_sq_ft": 3555.56,
         "fair_price_estimate": {
-          "min": 7000000,
+          "min": 6000000,
           "max": 7400000,
-          "confidence_level": "87%"
+          "confidence_level": "40%",
+          "note": "Verification incomplete, price estimate not reliable"
         },
         "price_trend": {
           "1_year": "+7%"
@@ -1502,11 +1771,11 @@
       "seller_information": {
         "name": "K. Sagar",
         "type": "Individual",
-        "verification_badge": "Verified Owner",
+        "verification_badge": "Unverified",
         "member_since": "2023-11-11",
         "total_listings": 1,
-        "response_rate": "100%",
-        "response_time": "< 2 hours"
+        "response_rate": "70%",
+        "response_time": "< 24 hours"
       },
       "media": {
         "images": [
@@ -1556,21 +1825,26 @@
           "authority": "HMDA",
           "approval_number": "HMDA/LRS/234/2022",
           "approved_date": "2022-12-12",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "M. Naresh",
           "survey_number": "45/67",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL",
             "service_number": "TSS/4321/8765",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -1579,7 +1853,13 @@
         "document_completeness_score": 9,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-20"
+        "last_verified_date": "2024-05-20",
+        "verified_documents": [
+          "HMDA Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ]
       },
       "pricing": {
         "expected_price": 6000000,
@@ -1617,9 +1897,9 @@
       "property_id": "AP-ANP-24017",
       "listing_type": "Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Partially Verified",
       "title": "VUDA Approved Plot in Anakapalle",
-      "description": "Spacious plot in the industrial hub near Vizag. Growing area due to new investments. Clear title.",
+      "description": "Spacious plot in the industrial hub near Vizag. Growing area due to new investments. VUDA approval verification in progress.",
       "location": {
         "address": "Narsipatnam Road",
         "city": "Anakapalle",
@@ -1652,7 +1932,10 @@
           "authority": "VUDA",
           "approval_number": "VUDA/ANP/567/2021",
           "approved_date": "2021-04-01",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Pending",
+          "remarks": "Document provided but VUDA layout approval verification with original records pending"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -1661,32 +1944,45 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/7890/1234",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 10,
+        "overall_risk_score": 3,
+        "document_completeness_score": 8,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-17"
+        "last_verified_date": "2024-05-17",
+        "report_summary": "Title and ownership verified. VUDA approval document verification in progress with the authority.",
+        "verified_documents": [
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ],
+        "pending_documents": [
+          "VUDA Layout Approval (Verification Pending)"
+        ]
       },
       "pricing": {
         "expected_price": 10000000,
         "price_per_sq_yd": 40000,
         "price_per_sq_ft": 4444.44,
         "fair_price_estimate": {
-          "min": 9500000,
+          "min": 9200000,
           "max": 10500000,
-          "confidence_level": "86%"
+          "confidence_level": "75%"
         },
         "price_trend": {
           "6_months": "+6%",
@@ -1715,9 +2011,9 @@
       "property_id": "TS-KNR-24018",
       "listing_type": "Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Not Verified",
       "title": "DTCP Approved Plot in Karimnagar",
-      "description": "Prime plot in Karimnagar city. Close to Manair River project. Good for residential construction.",
+      "description": "Prime plot in Karimnagar city. Close to Manair River project. Listing under review - Documents not yet provided for verification.",
       "location": {
         "address": "Manair Colony",
         "city": "Karimnagar",
@@ -1748,47 +2044,67 @@
       "government_approvals": {
         "layout_approval": {
           "authority": "DTCP Karimnagar",
-          "approval_number": "DTCP/KNR/890/2023",
-          "approved_date": "2023-03-08",
-          "status": "Approved"
+          "approval_number": null,
+          "status": "Not Provided",
+          "document_provided": false,
+          "verification_status": "Not Verified",
+          "remarks": "Seller requested to provide documents"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "G. Raju",
           "survey_number": "12/34",
-          "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "verification_status": "Pending",
+          "encumbrance_status": "Verification Required",
+          "document_provided": false,
+          "document_verified": false,
+          "remarks": "Awaiting documents from seller"
         },
         "utility_connections": {
           "electricity": {
-            "verified": true,
+            "verified": false,
             "provider": "TSSPDCL",
-            "service_number": "TSK/3456/7890",
-            "dues_status": "Clear"
+            "service_number": null,
+            "dues_status": "Unknown",
+            "bill_provided": false
           },
           "water": {
-            "verified": true,
+            "verified": false,
             "provider": "KMWSSB",
-            "connection_number": "KNR/1234/5678",
-            "dues_status": "Clear"
+            "connection_number": null,
+            "dues_status": "Unknown",
+            "bill_provided": false
           }
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 10,
-        "owner_verification": "Passed",
-        "title_verification": "Clear",
-        "last_verified_date": "2024-05-19"
+        "overall_risk_score": 9,
+        "document_completeness_score": 0,
+        "owner_verification": "Not Started",
+        "title_verification": "Not Started",
+        "last_verified_date": "2024-05-19",
+        "report_summary": "Verification not initiated. Seller has not responded to document requests. Listing may be removed if documents not provided.",
+        "verified_documents": [],
+        "pending_documents": [
+          "DTCP Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills",
+          "Water Bills",
+          "Sale Deed",
+          "Owner ID Proof"
+        ],
+        "verification_notes": "Multiple attempts to contact seller failed. Verification team has sent reminders."
       },
       "pricing": {
         "expected_price": 7000000,
         "price_per_sq_yd": 35000,
         "price_per_sq_ft": 3888.89,
         "fair_price_estimate": {
-          "min": 6800000,
+          "min": 5000000,
           "max": 7200000,
-          "confidence_level": "87%"
+          "confidence_level": "15%",
+          "note": "Cannot provide estimate without verification"
         },
         "price_trend": {
           "1_year": "+9%"
@@ -1798,11 +2114,11 @@
       "seller_information": {
         "name": "G. Raju",
         "type": "Individual",
-        "verification_badge": "Verified Owner",
+        "verification_badge": "Unverified",
         "member_since": "2023-09-25",
         "total_listings": 1,
-        "response_rate": "99%",
-        "response_time": "< 1 hour"
+        "response_rate": "20%",
+        "response_time": "No response"
       },
       "media": {
         "images": [
@@ -1851,7 +2167,9 @@
           "authority": "Nellore Municipal Corporation",
           "approval_number": "NMC/LRS/123/2021",
           "approved_date": "2021-05-01",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -1860,20 +2178,24 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/5678/9012",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           },
           "water": {
             "verified": true,
             "provider": "NMC",
             "connection_number": "NMC/3456/7890",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -1882,7 +2204,15 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-18"
+        "last_verified_date": "2024-05-18",
+        "verified_documents": [
+          "NMC Layout Approval",
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills",
+          "Water Bills"
+        ]
       },
       "pricing": {
         "expected_price": 10500000,
@@ -1954,21 +2284,26 @@
           "authority": "HMDA",
           "approval_number": "HMDA/LRS/345/2023",
           "approved_date": "2023-06-14",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "V. Reddy",
           "survey_number": "78/90",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL",
             "service_number": "TSS/9876/5432",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -1977,7 +2312,13 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-20"
+        "last_verified_date": "2024-05-20",
+        "verified_documents": [
+          "HMDA Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ]
       },
       "pricing": {
         "expected_price": 28000000,
@@ -2049,7 +2390,9 @@
           "authority": "DTCP Ongole",
           "approval_number": "DTCP/ONG/456/2022",
           "approved_date": "2022-08-20",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -2058,14 +2401,17 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/2345/6789",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -2074,7 +2420,14 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-17"
+        "last_verified_date": "2024-05-17",
+        "verified_documents": [
+          "DTCP Layout Approval",
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ]
       },
       "pricing": {
         "expected_price": 7000000,
@@ -2111,9 +2464,9 @@
       "property_id": "TS-HYD-24022",
       "listing_type": "Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Partially Verified",
       "title": "HMDA Approved Plot in Kollur",
-      "description": "Rapidly developing area with excellent social infrastructure. HMDA approved plot, clear title.",
+      "description": "Rapidly developing area with excellent social infrastructure. HMDA approved plot. Electricity bill verification pending.",
       "location": {
         "address": "Kollur",
         "city": "Hyderabad",
@@ -2146,45 +2499,63 @@
           "authority": "HMDA",
           "approval_number": "HMDA/LRS/678/2022",
           "approved_date": "2022-04-10",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "A. Reddy",
           "survey_number": "56/78",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
-            "verified": true,
+            "verified": false,
             "provider": "TSSPDCL",
             "service_number": "TSS/8765/4321",
-            "dues_status": "Clear"
+            "dues_status": "Verification Pending",
+            "bill_provided": true,
+            "remarks": "Bill provided but verification with TSSPDCL portal shows address mismatch"
           },
           "water": {
             "verified": true,
             "provider": "HMWSSB",
             "connection_number": "HMWB/1357/2468",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 10,
+        "overall_risk_score": 4,
+        "document_completeness_score": 8,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-19"
+        "last_verified_date": "2024-05-19",
+        "report_summary": "HMDA approval and title verified. Electricity bill verification failed - address mismatch. Seller requested to provide corrected bill.",
+        "verified_documents": [
+          "HMDA Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Water Bills"
+        ],
+        "pending_documents": [
+          "Corrected Electricity Bill"
+        ],
+        "verification_notes": "Electricity bill shows different survey number. Seller claims it's a clerical error and has applied for correction."
       },
       "pricing": {
         "expected_price": 10000000,
         "price_per_sq_yd": 50000,
         "price_per_sq_ft": 5555.56,
         "fair_price_estimate": {
-          "min": 9800000,
+          "min": 9500000,
           "max": 10500000,
-          "confidence_level": "88%"
+          "confidence_level": "80%"
         },
         "price_trend": {
           "6_months": "+7%",
@@ -2248,7 +2619,9 @@
           "authority": "Kakinada Municipal Corporation",
           "approval_number": "KMC/LRS/234/2020",
           "approved_date": "2020-09-01",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -2257,20 +2630,24 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/4567/8901",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           },
           "water": {
             "verified": true,
             "provider": "KMC",
             "connection_number": "KMC/7890/1234",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -2279,7 +2656,15 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-18"
+        "last_verified_date": "2024-05-18",
+        "verified_documents": [
+          "KMC Layout Approval",
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills",
+          "Water Bills"
+        ]
       },
       "pricing": {
         "expected_price": 15000000,
@@ -2316,9 +2701,9 @@
       "property_id": "TS-HYD-24024",
       "listing_type": "Industrial Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Partially Verified",
       "title": "Industrial Plot in Hardware Park",
-      "description": "Rare industrial plot available in Hardware Park. All necessary approvals from TSIIC. Ideal for manufacturing or R&D.",
+      "description": "Rare industrial plot available in Hardware Park. All necessary approvals from TSIIC. Some documents under verification.",
       "location": {
         "address": "Hardware Park, Maheshwaram",
         "city": "Hyderabad",
@@ -2350,45 +2735,69 @@
           "authority": "TSIIC",
           "approval_number": "TSIIC/IND/123/2019",
           "approved_date": "2019-03-15",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "Tech Industries Pvt Ltd",
           "survey_number": "99/AA",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL (HT)",
             "service_number": "TSHT/1122/3344",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           },
           "water": {
-            "verified": true,
+            "verified": false,
             "provider": "HMWS&SB Industrial",
             "connection_number": "IND/5566/7788",
-            "dues_status": "Clear"
+            "dues_status": "Pending",
+            "bill_provided": false,
+            "remarks": "Water connection bills not provided for last 6 months"
           }
+        },
+        "environmental_clearance": {
+          "required": true,
+          "status": "Verification Pending",
+          "document_provided": false,
+          "remarks": "Seller claims clearance obtained but documents not provided"
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 1,
-        "document_completeness_score": 10,
+        "overall_risk_score": 4,
+        "document_completeness_score": 7,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-15"
+        "last_verified_date": "2024-05-15",
+        "report_summary": "TSIIC approval and title verified. Water bills and environmental clearance documents pending.",
+        "verified_documents": [
+          "TSIIC Layout Approval",
+          "Dharani Pahani",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ],
+        "pending_documents": [
+          "Water Bills (Last 6 months)",
+          "Environmental Clearance Certificate"
+        ]
       },
       "pricing": {
         "expected_price": 80000000,
         "price_per_sq_yd": 80000,
         "price_per_sq_ft": 8888.89,
         "fair_price_estimate": {
-          "min": 78000000,
+          "min": 75000000,
           "max": 85000000,
-          "confidence_level": "85%"
+          "confidence_level": "75%"
         },
         "price_trend": {
           "1_year": "+12%"
@@ -2452,7 +2861,9 @@
           "authority": "DTCP Anantapur",
           "approval_number": "DTCP/ATP/789/2022",
           "approved_date": "2022-10-25",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Meebhoomi",
@@ -2461,14 +2872,17 @@
           "adangal_verified": true,
           "1b_record_verified": true,
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "No Encumbrances",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "APSPDCL",
             "service_number": "AP/6789/0123",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
         }
       },
@@ -2477,7 +2891,14 @@
         "document_completeness_score": 10,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-20"
+        "last_verified_date": "2024-05-20",
+        "verified_documents": [
+          "DTCP Layout Approval",
+          "Meebhoomi Adangal",
+          "Meebhoomi 1B Record",
+          "Encumbrance Certificate",
+          "Electricity Bills"
+        ]
       },
       "pricing": {
         "expected_price": 5250000,
@@ -2513,9 +2934,9 @@
       "property_id": "TS-HYD-24026",
       "listing_type": "Plot",
       "status": "active",
-      "verified_badge": "Fully Verified",
+      "verified_badge": "Partially Verified",
       "title": "HMDA Approved Layout Plot - Adibatla",
-      "description": "Affordable plot near the Pharma City and ITIR. Good potential for future growth. HMDA approved layout.",
+      "description": "Affordable plot near the Pharma City and ITIR. Good potential for future growth. HMDA approved layout. Encumbrance verification pending.",
       "location": {
         "address": "Adibatla",
         "city": "Hyderabad",
@@ -2549,39 +2970,59 @@
           "authority": "HMDA",
           "approval_number": "HMDA/LRS/890/2023",
           "approved_date": "2023-01-05",
-          "status": "Approved"
+          "status": "Approved",
+          "document_provided": true,
+          "verification_status": "Verified"
         },
         "land_ownership": {
           "primary_authority": "Dharani",
           "pattadar_name": "B. Laxmi",
           "survey_number": "45/67B",
           "verification_status": "Clear Title",
-          "encumbrance_status": "No Encumbrances"
+          "encumbrance_status": "Verification Pending",
+          "document_provided": true,
+          "document_verified": true
         },
         "utility_connections": {
           "electricity": {
             "verified": true,
             "provider": "TSSPDCL",
             "service_number": "TSS/2468/1357",
-            "dues_status": "Clear"
+            "dues_status": "Clear",
+            "bill_provided": true
           }
+        },
+        "encumbrance_certificate": {
+          "status": "Pending",
+          "document_provided": false,
+          "remarks": "Seller has applied for EC, expected in 3 days"
         }
       },
       "verification_report_card": {
-        "overall_risk_score": 2,
-        "document_completeness_score": 9,
+        "overall_risk_score": 4,
+        "document_completeness_score": 7,
         "owner_verification": "Passed",
         "title_verification": "Clear",
-        "last_verified_date": "2024-05-19"
+        "last_verified_date": "2024-05-19",
+        "report_summary": "HMDA approval and title verified. Encumbrance Certificate pending from seller.",
+        "verified_documents": [
+          "HMDA Layout Approval",
+          "Dharani Pahani",
+          "Electricity Bills"
+        ],
+        "pending_documents": [
+          "Encumbrance Certificate"
+        ],
+        "verification_notes": "EC application submitted. Will be updated once received."
       },
       "pricing": {
         "expected_price": 8000000,
         "price_per_sq_yd": 40000,
         "price_per_sq_ft": 4444.44,
         "fair_price_estimate": {
-          "min": 7800000,
+          "min": 7500000,
           "max": 8200000,
-          "confidence_level": "87%"
+          "confidence_level": "75%"
         },
         "price_trend": {
           "6_months": "+5%",

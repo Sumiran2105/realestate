@@ -24,7 +24,7 @@ export default function HeroDropdown() {
       Tools: ["Property Valuation", "Find Agent"],
     },
     Services: {
-      Property: ["Verify Property", "Legal Assistance", "Documentation", "Home Loans","Rental Agreements"],
+      Property: ["Verify Property", "Legal Assistance", "Home Loans","Rental Agreements"],
       Support: ["Customer Care", "FAQs", "Contact Us"],
     },
   };
@@ -58,7 +58,7 @@ export default function HeroDropdown() {
               onMouseEnter={() => setActive(menu)}
               onMouseLeave={() => setActive(null)}
             >
-              <button className={`relative px-3 sm:px-4 lg:px-6 py-4 font-semibold text-sm sm:text-base transition-colors flex items-center gap-2
+              <button className={`relative px-3 sm:px-4 lg:px-6 py-2 font-semibold text-sm sm:text-base transition-colors flex items-center gap-2
                 ${
                   active === menu
                     ? "text-red-600"

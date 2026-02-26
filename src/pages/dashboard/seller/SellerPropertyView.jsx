@@ -34,7 +34,7 @@ const SellerPropertyView = () => {
   if (!listing) {
     return (
       <DashboardLayout title="Property Details">
-        <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+        <div className="bg-white rounded-xl border border-gray-200 text-center">
           <h2 className="text-2xl font-bold text-gray-900">Listing Not Found</h2>
           <p className="text-gray-600 mt-2">This listing may have been deleted or is unavailable.</p>
           <Link
@@ -94,7 +94,7 @@ const SellerPropertyView = () => {
 
   return (
     <DashboardLayout title="Property Details">
-      <div className="max-w-6xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <img
             src={listing.image || 'https://via.placeholder.com/1200x350'}

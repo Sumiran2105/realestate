@@ -355,36 +355,7 @@ const Services = () => {
       </div>
 
 
- {/* ================= Featured Properties (NEW) ================= */}
-      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 flex flex-col items-center gap-4">
-            <h2 className="text-2xl sm:text-3xl font-bold text-blue-900">Featured Properties</h2>
-            <p className="text-dark">Discover our top picks for you</p>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {propertiesData?.listings?.slice(0, 4).map((prop) => (
-              <PropertyCard
-                key={prop.property_id}
-                property={prop}
-                viewMode="card"
-                isFavorite={false}
-                onToggleFavorite={() => {}}
-                formatPrice={(n) =>
-                  typeof n === 'number'
-                    ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n)
-                    : n
-                }
-              />
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link to="/properties" className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">View All Properties</Link>
-          </div>
-        </div>
-      </section>
    
 
       {/* Main Services Grid - FROM PAGE 3 */}
@@ -448,6 +419,37 @@ const Services = () => {
           ))}
         </div>
       </div>
+
+ {/* ================= Featured Properties (NEW) ================= */}
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 flex flex-col items-center gap-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-blue-900">Featured Properties</h2>
+            <p className="text-dark">Discover our top picks for you</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {propertiesData?.listings?.slice(0, 4).map((prop) => (
+              <PropertyCard
+                key={prop.property_id}
+                property={prop}
+                viewMode="card"
+                isFavorite={false}
+                onToggleFavorite={() => {}}
+                formatPrice={(n) =>
+                  typeof n === 'number'
+                    ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n)
+                    : n
+                }
+              />
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link to="/properties" className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">View All Properties</Link>
+          </div>
+        </div>
+      </section>
 
       {/* Transaction Services - FROM PAGE 4, 27-30 */}
       <div className="bg-white py-20">

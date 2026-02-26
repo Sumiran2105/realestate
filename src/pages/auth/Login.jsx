@@ -27,16 +27,22 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+  // In Login.js, update handleSubmit:
 
-    try {
-      const result = await login(formData.email, formData.password, formData.role);
-      if (result.success) {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setLoading(true);
+
+  try {
+    const result = await login(formData.email, formData.password);
+    if (result.success) {
+      // Check if KYC is needed
+      if (result.user.kycStatus === 'not_started') {
+        navigate('/kyc');
+      } else {
         // Redirect based on role
-        switch(formData.role) {
+        switch(result.user.role) {
           case 'agent':
             navigate('/dashboard/agent');
             break;
@@ -46,15 +52,16 @@ const Login = () => {
           default:
             navigate('/buyer/home');
         }
-      } else {
-        setError('Invalid credentials');
       }
-    } catch (err) {
-      setError('Login failed. Please try again.');
-    } finally {
-      setLoading(false);
+    } else {
+      setError('Invalid credentials');
     }
-  };
+  } catch (err) {
+    setError('Login failed. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Demo credentials for quick testing
   const fillDemoCredentials = (role) => {

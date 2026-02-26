@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaHeart, FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
+import { IoIosMagnet } from "react-icons/io";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
   const isBuyer = user?.role === "buyer";
+  const isAgent = user?.role === "agent";
 
   const handleLogout = () => {
     logout();
@@ -65,14 +67,36 @@ export default function Navbar() {
               </div>
             </>
           ) : null}
+          
+          {isAgent ? (
+            <div className="hidden md:flex items-center gap-3">
+              <Link
+                to="/"
+                className="w-10 h-10 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition flex items-center justify-center"
+                title="Agent Home"
+              >
+                < FaUserCircle />
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 rounded-lg border border-red-300 text-red-600 hover:bg-red-50 transition"
+              >
+                Logout
+              </button>
+            </div>
+          ) : null 
+          }
+
         </div>
         {/* Mobile Toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-2xl text-slate-700"
-        >
-          {open ? <FaTimes /> : <FaBars />}
-        </button>
+        <div className="md:hidden flex items-center">
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-2xl text-slate-700 "
+          >
+            {open ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -109,6 +133,24 @@ export default function Navbar() {
               <Link to="/register" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Sign Up</Link>
             </>
           ) : null}
+
+          {isAgent ? (
+            <>
+              <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-2">
+                <IoIosMagnet /> Agent Home
+              </Link>
+              <Link to="/agent/profile" onClick={() => setOpen(false)} className="flex items-center gap-2">
+                <FaUserCircle /> Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-left border border-red-300 text-red-600 px-4 py-2 rounded-lg hover:bg-red-50 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : null
+          }
         </div>
       </div>
     </nav>

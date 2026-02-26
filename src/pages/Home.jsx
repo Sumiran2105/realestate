@@ -117,123 +117,230 @@ export default function Home() {
 
       {/* ================= HERO (UNCHANGED) ================= */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center will-change-transform"
-          style={{
-            backgroundImage: "url('/city.jpg')",
-            transform: "translateY(var(--parallax)) scale(1.08)",
-          }}
-        ></div>
-        <div className="relative text-center px-4 sm:px-6 max-w-5xl text-white">
-          <p className="uppercase tracking-[0.3em] text-xs mb-6 text-brand-dark font-medium">
-            ADVANCED SEARCH & DISCOVERY
-          </p>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-dark">
-            Find Verified Properties
-            <span className="block text-brand-dark mt-3">
-              With Complete Transparency
-            </span>
-          </h1>
-          <p className="mt-8 text-base sm:text-lg text-gray-900 max-w-3xl mx-auto leading-relaxed">
-            Search using location intelligence, structured property filters,
-            and government-backed verification criteria designed to
-            eliminate risk and improve decision-making.
-          </p>
-          <div className="mt-16 sm:mt-20 relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl 
-                          shadow-[0_40px_120px_rgba(0,0,0,0.25)] 
-                          border border-white/20 p-4 sm:p-8 md:p-10 text-slate-800 
-                          transition-all duration-500 hover:shadow-[0_50px_150px_rgba(0,0,0,0.35)]">
-            <form onSubmit={handleSurveySearch}>
-              <div className="grid grid-cols-1 gap-4">
-                <input
-                  type="text"
-                  value={surveyInput}
-                  onChange={(e) => setSurveyInput(e.target.value)}
-                  placeholder="ENTER SURVEY NUMBER (e.g., 123/45)"
-                  className="px-4 py-4 sm:px-5 sm:py-5 rounded-2xl border border-slate-200 
-                            focus:ring-2 focus:ring-brand focus:border-brand 
-                            outline-none transition w-full text-base sm:text-lg"
-                />
-              </div>
-              <button
-                type="submit"
-                className="mt-6 w-full bg-brand-dark text-white py-4 sm:py-5 rounded-2xl
-                           hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
-                           transition-all duration-300 font-semibold text-lg 
-                           shadow-xl"
-              >
-                Verify Survey Number
-              </button>
-            </form>
+  <div
+    className="absolute inset-0 bg-cover bg-center will-change-transform"
+    style={{
+      backgroundImage: "url('/city.jpg')",
+      transform: "translateY(var(--parallax)) scale(1.08)",
+    }}
+  ></div>
+  <div className="relative text-center px-4 sm:px-6 max-w-5xl text-white">
+    <p className="uppercase tracking-[0.3em] text-xs mb-6 text-brand-dark font-medium">
+      ADVANCED SEARCH & DISCOVERY
+    </p>
+    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-dark">
+      Find Verified Properties
+      <span className="block text-brand-dark mt-3">
+        With Complete Transparency
+      </span>
+    </h1>
+    <p className="mt-8 text-base sm:text-lg text-gray-900 max-w-3xl mx-auto leading-relaxed">
+      Search using location intelligence, structured property filters,
+      and government-backed verification criteria designed to
+      eliminate risk and improve decision-making.
+    </p>
+    <div className="mt-16 sm:mt-20 relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl 
+                    shadow-[0_40px_120px_rgba(0,0,0,0.25)] 
+                    border border-white/20 p-4 sm:p-8 md:p-10 text-slate-800 
+                    transition-all duration-500 hover:shadow-[0_50px_150px_rgba(0,0,0,0.35)]">
+      <form onSubmit={handleSurveySearch}>
+        <div className="grid grid-cols-1 gap-4">
+          <input
+            type="text"
+            value={surveyInput}
+            onChange={(e) => setSurveyInput(e.target.value)}
+            placeholder="ENTER SURVEY NUMBER (e.g., 123/45)"
+            className="px-4 py-4 sm:px-5 sm:py-5 rounded-2xl border border-slate-200 
+                      focus:ring-2 focus:ring-brand focus:border-brand 
+                      outline-none transition w-full text-base sm:text-lg"
+          />
+        </div>
+        <button
+          type="submit"
+          className="mt-6 w-full bg-brand-dark text-white py-4 sm:py-5 rounded-2xl
+                     hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
+                     transition-all duration-300 font-semibold text-lg 
+                     shadow-xl"
+        >
+          Verify Property
+        </button>
+      </form>
 
-            {searched && !matchedProperty && (
-              <p className="mt-5 text-left text-sm text-red-600 font-medium">
-                No property found for this survey number.
+      {searched && !matchedProperty && (
+        <p className="mt-5 text-left text-sm text-red-600 font-medium">
+          No property found for this survey number.
+        </p>
+      )}
+
+      {matchedProperty && (
+        <div className="mt-6 text-left bg-white rounded-2xl border border-slate-300 overflow-hidden">
+          <div className="p-5 border-b border-slate-200">
+            <p className="font-semibold text-slate-900 text-sm sm:text-base">
+              SURVEY NUMBER: {matchedProperty?.government_approvals?.land_ownership?.survey_number || "-"}
+            </p>
+            <p className="text-sm text-slate-600 mt-2">
+              Village: {matchedProperty?.location?.address?.split(",")?.[0] || "-"} · Mandal: {matchedProperty?.location?.zone || "-"} · District: {matchedProperty?.location?.district || "-"}
+            </p>
+          </div>
+
+          <div className="p-5 border-b border-slate-200">
+            {/* Dynamic verification badge with appropriate color coding */}
+            {matchedProperty?.verified_badge === "Fully Verified" && (
+              <p className="text-green-700 font-bold flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
+                🔵 VERIFICATION STATUS: FULLY VERIFIED
               </p>
             )}
+            {matchedProperty?.verified_badge === "Partially Verified" && (
+              <p className="text-yellow-700 font-bold flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span>
+                🟡 VERIFICATION STATUS: PARTIALLY VERIFIED
+              </p>
+            )}
+            {matchedProperty?.verified_badge === "Not Verified" && (
+              <p className="text-red-700 font-bold flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                🔴 VERIFICATION STATUS: NOT VERIFIED
+              </p>
+            )}
+            <p className="text-sm text-slate-700 mt-1">
+              Risk Level: {
+                matchedProperty?.verification_report_card?.overall_risk_score <= 2 ? "LOW" : 
+                matchedProperty?.verification_report_card?.overall_risk_score <= 5 ? "MEDIUM" : "HIGH"
+              } · Score: {
+                matchedProperty?.verified_badge === "Fully Verified" ? "85-100" :
+                matchedProperty?.verified_badge === "Partially Verified" ? "50-84" : "0-49"
+              }/100
+            </p>
+            {matchedProperty?.verification_report_card?.report_summary && (
+              <p className="text-xs text-slate-500 mt-2 italic">
+                {matchedProperty.verification_report_card.report_summary}
+              </p>
+            )}
+          </div>
 
-            {matchedProperty && (
-              <div className="mt-6 text-left bg-white rounded-2xl border border-slate-300 overflow-hidden">
-                <div className="p-5 border-b border-slate-200">
-                  <p className="font-semibold text-slate-900 text-sm sm:text-base">
-                    SURVEY NUMBER: {matchedProperty?.government_approvals?.land_ownership?.survey_number || "-"}
+          <div className="p-5 border-b border-slate-200">
+            <h4 className="font-semibold text-slate-900 mb-3">OWNERSHIP DETAILS</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <p>Current Owner: {matchedProperty?.government_approvals?.land_ownership?.pattadar_name || "-"}</p>
+              <p>Ownership Type: {matchedProperty?.seller_information?.type || "Individual"}</p>
+              <p>Survey Number: {matchedProperty?.government_approvals?.land_ownership?.survey_number || "-"}</p>
+              <p>Status: {
+                matchedProperty?.government_approvals?.land_ownership?.verification_status || 
+                (matchedProperty?.verified_badge === "Not Verified" ? "Verification Pending" : "-")
+              }</p>
+            </div>
+          </div>
+
+          <div className="relative p-5">
+            <div className={`space-y-4 ${matchedProperty?.verified_badge === "Not Verified" ? "blur-sm select-none pointer-events-none opacity-50" : ""}`}>
+              <div>
+                <h4 className="font-semibold text-slate-900 mb-2">LAND DETAILS</h4>
+                <p className="text-sm text-slate-700">Total Area: {matchedProperty?.property_details?.plot_area_sq_yards || "-"} sq.yds</p>
+                <p className="text-sm text-slate-700">Land Type: {matchedProperty?.property_details?.permissible_usage || "-"}</p>
+                {matchedProperty?.property_details?.dimensions && (
+                  <p className="text-sm text-slate-700">Dimensions: {matchedProperty.property_details.dimensions}</p>
+                )}
+                {matchedProperty?.property_details?.facing && (
+                  <p className="text-sm text-slate-700">Facing: {matchedProperty.property_details.facing}</p>
+                )}
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-slate-900 mb-2">LEGAL STATUS</h4>
+                <p className="text-sm text-slate-700">Encumbrance: {matchedProperty?.government_approvals?.land_ownership?.encumbrance_status || "Not Verified"}</p>
+                <p className="text-sm text-slate-700">Last Verified: {matchedProperty?.verification_report_card?.last_verified_date || "Not Available"}</p>
+                
+                {/* Show approval status if available */}
+                {matchedProperty?.government_approvals?.layout_approval?.status && (
+                  <p className="text-sm text-slate-700">
+                    Layout Approval: {matchedProperty.government_approvals.layout_approval.status}
+                    {matchedProperty.government_approvals.layout_approval.approval_number && 
+                      ` (${matchedProperty.government_approvals.layout_approval.approval_number})`}
                   </p>
-                  <p className="text-sm text-slate-600 mt-2">
-                    Village: {matchedProperty?.location?.address?.split(",")?.[0] || "-"} · Mandal: {matchedProperty?.location?.zone || "-"} · District: {matchedProperty?.location?.district || "-"}
-                  </p>
-                </div>
+                )}
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-slate-900 mb-2">DOCUMENTS AVAILABLE</h4>
+                {matchedProperty?.verification_report_card?.verified_documents && 
+                 matchedProperty.verification_report_card.verified_documents.length > 0 ? (
+                  <ul className="list-disc list-inside text-sm text-slate-700">
+                    {matchedProperty.verification_report_card.verified_documents.slice(0, 4).map((doc, idx) => (
+                      <li key={idx}>{doc}</li>
+                    ))}
+                    {matchedProperty.verification_report_card.verified_documents.length > 4 && (
+                      <li className="text-brand-dark">+{matchedProperty.verification_report_card.verified_documents.length - 4} more</li>
+                    )}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-slate-500 italic">No verified documents available</p>
+                )}
+                
+                {/* Show pending documents for partially verified */}
+                {matchedProperty?.verified_badge === "Partially Verified" && 
+                 matchedProperty?.verification_report_card?.pending_documents && 
+                 matchedProperty.verification_report_card.pending_documents.length > 0 && (
+                  <>
+                    <h4 className="font-semibold text-slate-900 mb-2 mt-3">PENDING DOCUMENTS</h4>
+                    <ul className="list-disc list-inside text-sm text-yellow-700">
+                      {matchedProperty.verification_report_card.pending_documents.slice(0, 3).map((doc, idx) => (
+                        <li key={idx}>{doc}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
+            </div>
 
-                <div className="p-5 border-b border-slate-200">
-                  <p className="text-green-700 font-bold">🟢 VERIFICATION STATUS: {String(matchedProperty?.verified_badge || "FULLY VERIFIED").toUpperCase()}</p>
-                  <p className="text-sm text-slate-700 mt-1">
-                    Risk Level: {matchedProperty?.verification_report_card?.overall_risk_score <= 2 ? "LOW" : "MEDIUM"} · Score: {(100 - (matchedProperty?.verification_report_card?.overall_risk_score || 2) * 5)}/100
-                  </p>
-                </div>
+            {/* Blur overlay for Not Verified - shows message */}
+            {matchedProperty?.verified_badge === "Not Verified" && (
+              <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px] flex flex-col items-center justify-center p-4 rounded-b-2xl">
+                <p className="text-sm sm:text-base font-semibold text-red-600 text-center">
+                  ⚠️ This property is not verified
+                </p>
+                <p className="text-xs text-slate-600 text-center mt-2 max-w-md">
+                  Documents are pending verification or have discrepancies. 
+                  Purchase verification report to understand the risks.
+                </p>
+                <button
+                  onClick={() => navigate(`/verification-report/${matchedProperty.property_id}`)}
+                  className="mt-3 px-5 py-2.5 rounded-lg bg-brand-dark text-white font-medium hover:bg-brand transition"
+                >
+                  View Risk Report - ₹199
+                </button>
+              </div>
+            )}
 
-                <div className="p-5 border-b border-slate-200">
-                  <h4 className="font-semibold text-slate-900 mb-3">OWNERSHIP DETAILS</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
-                    <p>Current Owner: {matchedProperty?.government_approvals?.land_ownership?.pattadar_name || "-"}</p>
-                    <p>Ownership Type: {matchedProperty?.seller_information?.type || "Individual"}</p>
-                    <p>Survey Number: {matchedProperty?.government_approvals?.land_ownership?.survey_number || "-"}</p>
-                    <p>Status: {matchedProperty?.government_approvals?.land_ownership?.verification_status || "-"}</p>
-                  </div>
-                </div>
-
-                <div className="relative p-5">
-                  <div className="space-y-4 blur-sm select-none pointer-events-none">
-                    <div>
-                      <h4 className="font-semibold text-slate-900 mb-2">LAND DETAILS</h4>
-                      <p className="text-sm text-slate-700">Total Area: {matchedProperty?.property_details?.plot_area_sq_yards || "-"} sq.yds</p>
-                      <p className="text-sm text-slate-700">Land Type: {matchedProperty?.property_details?.permissible_usage || "-"}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900 mb-2">LEGAL STATUS</h4>
-                      <p className="text-sm text-slate-700">Encumbrance: {matchedProperty?.government_approvals?.land_ownership?.encumbrance_status || "-"}</p>
-                      <p className="text-sm text-slate-700">Last Verified: {matchedProperty?.verification_report_card?.last_verified_date || "-"}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900 mb-2">DOCUMENTS AVAILABLE</h4>
-                      <p className="text-sm text-slate-700">ROR-1B, Pahani, Encumbrance Certificate, Passbook, Cadastral Map</p>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex flex-col items-center justify-center p-4">
-                    <p className="text-sm sm:text-base font-semibold text-slate-900 text-center">
-                      For full verification details buy complete report
-                    </p>
-                    <button
-                      onClick={() => navigate(`/verification-report/${matchedProperty.property_id}`)}
-                      className="mt-3 px-5 py-2.5 rounded-lg bg-brand-dark text-white font-medium hover:bg-brand transition"
-                    >
-                      Download Full Verification Report - ₹299
-                    </button>
-                  </div>
-                </div>
+            {/* Blur overlay for Fully/Partially Verified - premium feature */}
+            {matchedProperty?.verified_badge !== "Not Verified" && (
+              <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex flex-col items-center justify-center p-4 rounded-b-2xl">
+                <p className="text-sm sm:text-base font-semibold text-slate-900 text-center">
+                  {matchedProperty?.verified_badge === "Fully Verified" 
+                    ? "🔓 Unlock Complete Property Intelligence" 
+                    : "📋 Get Complete Verification Details"}
+                </p>
+                <p className="text-xs text-slate-600 text-center mt-1 max-w-md">
+                  {matchedProperty?.verified_badge === "Fully Verified" 
+                    ? "Full title report, encumbrance details, valuation, and ownership history"
+                    : "Detailed document status, pending items, and risk assessment"}
+                </p>
+                <button
+                  onClick={() => navigate(`/verification-report/${matchedProperty.property_id}`)}
+                  className="mt-3 px-5 py-2.5 rounded-lg bg-brand-dark text-white font-medium hover:bg-brand transition"
+                >
+                  {matchedProperty?.verified_badge === "Fully Verified" 
+                    ? "Download Full Verification Report - ₹299" 
+                    : "Download Partial Report - ₹199"}
+                </button>
               </div>
             )}
           </div>
         </div>
-      </section>
+      )}
+    </div>
+  </div>
+</section>
       
      
 
