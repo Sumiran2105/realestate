@@ -46,6 +46,7 @@ import Wishlist from './pages/Wishlist';
 import AgentProfile from './pages/dashboard/agent/AgentProfile';
 import AgentInquiries from './pages/dashboard/agent/AgentInquiries';
 import AgentTransactions from './pages/dashboard/agent/AgentTransactions';
+import ScrollToTop from './pages/ScrollToTop';
 
 // Loading Component
 const LoadingSpinner = () => (
@@ -97,6 +98,7 @@ function AppContent() {
       {showNavFooter && <Navbar />}
       {showNavFooter && <HeroDropdown />}
       <main className={`flex-grow ${!showNavFooter ? 'pt-0' : ''}`}>
+        <ScrollToTop/>
         <Routes>
           {/* Public Routes - Accessible to everyone */}
           <Route path="/" element={<Home />} />
