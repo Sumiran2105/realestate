@@ -121,12 +121,12 @@ const HomeLoan = () => {
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Why Choose Our Loan Support</h2>
-          <p className="text-slate-600 mt-2">Practical guidance to reduce delays and improve approval readiness.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-blue-900">Why Choose Our Loan Support</h2>
+          <p className="text-slate-900 text-center mt-2">Practical guidance to reduce delays and improve approval readiness.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {loanFeatures.map((item) => (
-            <article key={item.title} className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+            <article key={item.title} className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-500 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
               <div className="w-12 h-12 rounded-xl bg-brand-soft flex items-center justify-center mb-4">{item.icon}</div>
               <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>
               <p className="mt-3 text-slate-600">{item.description}</p>
@@ -137,10 +137,10 @@ const HomeLoan = () => {
 
       <section className="bg-white border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Loan Process in 4 Steps</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-blue-900">Loan Process in 4 Steps</h2>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {processSteps.map((step, index) => (
-              <article key={step.title} className="rounded-2xl border border-slate-200 p-5 bg-slate-50">
+              <article key={step.title} className="rounded-2xl border border-slate-500 p-5 bg-slate-50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <div className="text-xs font-semibold text-brand mb-3">Step {index + 1}</div>
                 <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center mb-3">
                   {step.icon}
@@ -154,15 +154,15 @@ const HomeLoan = () => {
       </section>
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <div className="flex items-center gap-3 mb-8">
-          <FaPercent className="text-brand-dark" />
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Support Plans</h2>
+        <div className="flex items-center justify-center gap-3 mb-8">
+          
+          <h2 className="text-2xl sm:text-3xl font-bold text-blue-900">Support Plans</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((plan, idx) => (
             <article
               key={plan.title}
-              className={`rounded-2xl border p-6 ${idx === 1 ? 'bg-brand-dark text-white border-brand-dark' : 'bg-white border-slate-200'}`}
+              className={`rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${idx === 1 ? 'bg-brand-dark text-white border-brand-dark' : 'bg-white border-slate-500'}`}
             >
               <h3 className="text-xl font-semibold">{plan.title}</h3>
               <p className={`mt-2 text-3xl font-bold ${idx === 1 ? 'text-white' : 'text-slate-900'}`}>{plan.price}</p>
