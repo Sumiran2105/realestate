@@ -24,7 +24,7 @@ const AgentProfile = () => {
 
   return (
     <DashboardLayout title="Profile">
-      <div className="max-w-4xl mx-auto">
+      <div className="space-y-6">
         {/* Profile Header */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">

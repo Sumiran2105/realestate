@@ -355,6 +355,8 @@ import AdminProperties from './pages/dashboard/admin/AdminProperties';
 import AdminUsers from './pages/dashboard/admin/AdminUsers';
 import AdminSettings from './pages/dashboard/admin/AdminSettings';
 import AdminReports from './pages/dashboard/admin/AdminReports';
+import SellerProfile from './pages/dashboard/seller/SellerProfile';
+import SellerInquiries from './pages/dashboard/seller/SellerInquiries';
 
 // Loading Component
 const LoadingSpinner = () => (
@@ -517,6 +519,17 @@ function AppContent() {
               <AddProperty />
             </ProtectedRoute>
           } />
+          <Route path='/dashboard/seller/profile' element={
+            <ProtectedRoute allowedRoles={['seller']}>
+              <SellerProfile />
+            </ProtectedRoute>
+          } />
+          <Route path="/dashboard/seller/inquiries" element={
+            <ProtectedRoute allowedRoles={['seller']}>
+              <SellerInquiries />
+            </ProtectedRoute>
+          } />
+
 
           <Route path="/dashboard/admin" element={
             <ProtectedRoute allowedRoles={['admin']}>

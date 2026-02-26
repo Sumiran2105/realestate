@@ -666,7 +666,7 @@ const AddProperty = () => {
 
   return (
     <DashboardLayout title="List Property">
-      <div className="max-w-5xl mx-auto">
+      <div className="space-y-6">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Seller Listing Flow</h1>
           <p className="text-gray-600 mt-1">Complete the steps below to send your property for verification.</p>
