@@ -81,7 +81,7 @@ export default function Home() {
   const problems = [
     {
       title: "Buyers Cannot Independently Verify Ownership",
-      desc: "Navigating Dharani, Meebhoomi, IGRS, and RERA individually leaves buyers without unified validation."
+      desc: "Navigating Bhu Bharati, Meebhoomi, IGRS, and RERA individually leaves buyers without unified validation."
     },
     {
       title: "Fragmented Documentation Creates Information Asymmetry",
@@ -93,7 +93,7 @@ export default function Home() {
     },
     {
       title: "Financial Exposure Per Transaction",
-      desc: "Legal disputes cost ₹5–15 lakhs per case, creating significant liability."
+      desc: "Legal disputes cost ₹5 - ₹15 lakhs per case, creating significant liability."
     }
   ];
 
@@ -136,8 +136,8 @@ export default function Home() {
     </h1>
     <p className="mt-8 text-base sm:text-lg text-gray-900 max-w-3xl mx-auto leading-relaxed">
       Search using location intelligence, structured property filters,
-      and government-backed verification criteria designed to
-      eliminate risk and improve decision-making.
+      and government backed verification criteria designed to
+      eliminate risk and improve decision making.
     </p>
     <div className="mt-16 sm:mt-20 relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl 
                     shadow-[0_40px_120px_rgba(0,0,0,0.25)] 
@@ -345,7 +345,7 @@ export default function Home() {
      
 
       {/* ================= TIMELINE ================= */}
-      <section className="relative py-32 bg-slate-50 overflow-hidden">
+      <section className="relative py-12 bg-slate-50 overflow-hidden">
 
   <div className="max-w-7xl mx-auto px-4 sm:px-6">
     {/* Title */}
@@ -397,7 +397,7 @@ export default function Home() {
 
 
 {/* ================= OUR COMPREHENSIVE SOLUTION ================= */}
-<section className="relative py-15 bg-slate-50 overflow-hidden">
+<section className="relative py-12 bg-slate-50 overflow-hidden">
 
   
 
@@ -414,7 +414,7 @@ export default function Home() {
       </h2>
 
       <p className="mt-8 text-lg text-slate-600 leading-relaxed">
-        A unified, blockchain-backed verification ecosystem designed to
+        A unified, blockchain backed verification ecosystem designed to
         restore trust, eliminate risk, and modernize property transactions.
       </p>
     </div>
@@ -471,15 +471,15 @@ export default function Home() {
     <p className="mt-6 text-lg text-slate-600 leading-relaxed">
       Direct government API integration enables instant ownership
       verification, encumbrance checks, RERA validation,
-      and document authentication — removing ambiguity
-      from high-value property decisions.
+      and document authentication removing ambiguity
+      from high value property decisions.
     </p>
 
     {/* HIGHLIGHTED FEATURES */}
     <div className="mt-12 grid md:grid-cols-3 gap-6">
 
       {[
-        "Ownership Cross-Verification",
+        "Ownership Cross Verification",
         "Encumbrance Certificate Validation",
         "Survey & Land Record Confirmation"
       ].map((item, index) => (
@@ -520,25 +520,25 @@ export default function Home() {
     {
       icon: <FiTrendingUp />,
       title: "Price Intelligence Engine",
-      desc: "AI-driven valuation models analyze comparable sales and infrastructure growth signals.",
+      desc: "AI driven valuation models analyze comparable sales and infrastructure growth signals.",
       color: "text-purple-600"
     },
     {
       icon: <FiUsers />,
       title: "Trusted Agent Network",
-      desc: "Performance-rated professionals with verified credentials and transaction transparency.",
+      desc: "Performance rated professionals with verified credentials and transaction transparency.",
       color: "text-emerald-600"
     },
     {
       icon: <FiLock />,
       title: "Secure Escrow Framework",
-      desc: "Token-based safeguards protecting buyers and sellers during transactions.",
+      desc: "Token based safeguards protecting buyers and sellers during transactions.",
       color: "text-pink-600"
     },
     {
       icon: <FiFileText />,
       title: "Legal Document Automation",
-      desc: "Auto-generated agreements tailored for TS & AP.",
+      desc: "Auto generated agreements tailored for TS & AP.",
       color: "text-yellow-600"
     },
     {
@@ -582,7 +582,7 @@ export default function Home() {
   </div>
 </section>
 
-<section className="relative py-32 bg-gradient-to-br from-slate-50 to-white overflow-hidden">
+<section className="relative py-12 bg-gradient-to-br from-slate-50 to-white overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
 
     {/* MAIN HEADING */}
@@ -621,7 +621,7 @@ export default function Home() {
 
         <div className="mt-8 space-y-5 text-slate-600">
           {[
-            "Dharani API - Land records & pattadar data",
+            "Bhu Bharati API - Land records & pattadar data",
             "IGRS TS - Registration & stamps department",
             "RERA TS - Project registration compliance",
             "GHMC / HMDA - Municipal approvals",
@@ -674,10 +674,10 @@ export default function Home() {
     <div className="mt-20 max-w-5xl mx-auto">
       <div className="bg-brand-soft/40 rounded-2xl p-8 border border-brand/10 text-center">
         <p className="text-slate-700 leading-relaxed">
-          Beyond government systems, we integrate with trusted third-party
+          Beyond government systems, we integrate with trusted third party
           providers including <strong>Karza</strong>, <strong>Surepass</strong>,
           <strong> DigiLocker</strong>, and <strong>CERSAI</strong> to ensure
-          multi-layered verification across identity, document authentication,
+          multi layered verification across identity, document authentication,
           and SARFAESI compliance checks.
         </p>
       </div>
@@ -689,7 +689,7 @@ export default function Home() {
 
 
 
-<section className="relative py-15 bg-slate-50 overflow-hidden">
+<section className="relative py-12 bg-slate-50 overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
 
     {/* SECTION HEADER */}
@@ -700,7 +700,7 @@ export default function Home() {
 
       <p className="mt-6 text-lg text-slate-600 leading-relaxed">
         Our platform integrates with state RERA authorities, municipal approval
-        systems, and utility boards to ensure complete regulatory validation —
+        systems, and utility boards to ensure complete regulatory validation
         protecting buyers from legal, structural, and financial risks.
       </p>
     </div>
@@ -806,7 +806,7 @@ export default function Home() {
         <p className="text-slate-700 leading-relaxed">
           Properties that pass all compliance layers receive verified badges
           (RERA Verified, Approval Cleared, Utility Verified), enabling buyers
-          to make confident, risk-free property decisions.
+          to make confident, risk free property decisions.
         </p>
       </div>
     </div>
@@ -818,7 +818,7 @@ export default function Home() {
     {/* Document Verification */}
 <OCRSection />
 
-<section className="relative py-15 bg-gradient-to-b from-slate-50 to-white">
+<section className="relative py-12 bg-gradient-to-b from-slate-50 to-white">
 
   <div className="max-w-7xl mx-auto px-8">
 
@@ -830,8 +830,8 @@ export default function Home() {
 
       <p className="mt-6 text-lg text-slate-600 leading-relaxed">
         A structured intelligence report synthesizing ownership validation,
-        compliance checks, legal history, AI-driven risk signals, and market
-        insights into one decision-ready system output.
+        compliance checks, legal history, AI driven risk signals, and market
+        insights into one decision ready system output.
       </p>
     </div>
 
@@ -866,13 +866,13 @@ export default function Home() {
         {
           no: "05",
           title: "Risk Assessment",
-          desc: "AI-derived legal risk score with anomaly detection signals.",
+          desc: "AI derived legal risk score with anomaly detection signals.",
           accent: "bg-red-600"
         },
         {
           no: "06",
           title: "Market Intelligence",
-          desc: "Live price range, 6-month movement trend and comparables.",
+          desc: "Live price range, 6 month movement trend and comparables.",
           accent: "bg-cyan-600"
         }
       ].map((item, index) => (
@@ -927,7 +927,7 @@ export default function Home() {
   </div>
 </section>
 
-<section className="relative py-20 bg-gradient-to-b from-slate-50 via-white to-slate-100 overflow-hidden">
+<section className="relative py-12 bg-gradient-to-b from-slate-50 via-white to-slate-100 overflow-hidden">
 
   {/* Soft Background Accent */}
   <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 

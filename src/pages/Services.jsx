@@ -87,7 +87,7 @@ const Services = () => {
     {
       id: 2,
       title: "Price Intelligence Engine",
-      tagline: "ML-Powered Market Analysis",
+      tagline: "ML Powered Market Analysis",
       description: "ML algorithms analyze market data to provide accurate property valuations and price predictions.",
       icon: <FaChartLine className="text-4xl text-blue-600" />,
       features: [
@@ -111,7 +111,7 @@ const Services = () => {
       icon: <FaUserTie className="text-4xl text-indigo-600" />,
       features: [
         "RERA license verification",
-        "5-star rating system",
+        "5 star rating system",
         "Transaction history tracking",
         "Response rate monitoring",
         "Client reviews and ratings"
@@ -163,7 +163,7 @@ const Services = () => {
     {
       id: 6,
       title: "Post-Sale Services",
-      tagline: "Complete After-Sales Support",
+      tagline: "Complete After Sales Support",
       description: "Mutation tracking, tax payment integration, and ongoing property management support.",
       icon: <FaTools className="text-4xl text-red-600" />,
       features: [
@@ -236,7 +236,7 @@ const Services = () => {
     {
       id: 6,
       title: "Rental Agreements",
-      description: "11-month rental agreements with eStamp and eSign",
+      description: "11 month rental agreements with eStamp and eSign",
       icon: <FaFileSignature className="text-3xl" />,
       price: "₹499",
       bgColor: "bg-red-50",
@@ -250,7 +250,7 @@ const Services = () => {
     {
       id: 1,
       title: "Price Estimator",
-      description: "AI-powered fair price estimates for any property",
+      description: "AI powered fair price estimates for any property",
       icon: <FaCalculator className="text-2xl" />,
       bgColor: "bg-gray-50",
       textColor: "text-brand-dark"
@@ -308,7 +308,7 @@ const Services = () => {
       name: "Rajesh Kumar",
       location: "Vijayawada",
       rating: 5,
-      text: "As an agent, the lead marketplace is a game-changer. Getting high-quality, pre-scored buyer leads.",
+      text: "As an agent, the lead marketplace is a game changer. Getting high quality, pre scored buyer leads.",
       service: "Agent Services",
       avatar: "👨‍💼",
       bgColor: "bg-purple-50"
@@ -335,7 +335,7 @@ const Services = () => {
               <span className="text-brand-light">Intelligence Platform</span>
             </h1>
             <p className="text-xl text-blue-200 max-w-3xl mx-auto mb-12">
-              A comprehensive blockchain-backed, AI-enhanced real estate intelligence platform 
+              A comprehensive blockchain backed, AI enhanced real estate intelligence platform 
               designed specifically for Telangana and Andhra Pradesh.
             </p>
             
@@ -497,7 +497,7 @@ const Services = () => {
               Free <span className="text-blue-900">Intelligence Tools</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Make data-backed decisions with our free market intelligence tools
+              Make data backed decisions with our free market intelligence tools
             </p>
           </div>
 
@@ -550,7 +550,7 @@ const Services = () => {
           </div>
 
           <div className="mt-8 text-sm text-brand-light">
-            <p>From verification through transaction to post-sale services – everything under one platform</p>
+            <p>From verification through transaction to post-sale services everything under one platform</p>
           </div>
         </div>
       </div>

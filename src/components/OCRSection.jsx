@@ -20,7 +20,7 @@ const cardVariants = {
 
 export default function OCRSection() {
   return (
-    <section className="py-24 bg-slate-50">
+    <section className="py-12 bg-slate-50">
       <div className="max-w-6xl mx-auto px-6">
         {/* HEADER */}
         <div className="max-w-3xl mx-auto text-center">
@@ -28,9 +28,9 @@ export default function OCRSection() {
             Document OCR & AI Verification
           </h2>
           <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-            Our AI-powered OCR engine extracts structured data,
+            Our AI powered OCR engine extracts structured data,
             validates it against authoritative records,
-            and detects fraud using multi-layered intelligence models.
+            and detects fraud using multi layered intelligence models.
           </p>
         </div>
         {/* CARDS WITH STAGGER */}
@@ -59,14 +59,14 @@ export default function OCRSection() {
             {
               no: "03",
               title: "Pattadar Passbook",
-              desc: "Extract ownership and cross-match with Dharani API.",
+              desc: "Extract ownership and cross match with Dharani API.",
               color: "text-emerald-600",
               accent: "from-emerald-500 to-emerald-400"
             },
             {
               no: "04",
               title: "Aadhaar Verification",
-              desc: "Validate identity data and perform UIDAI-compliant checks.",
+              desc: "Validate identity data and perform UIDAI compliant checks.",
               color: "text-amber-600",
               accent: "from-amber-500 to-amber-400"
             }
@@ -94,7 +94,7 @@ export default function OCRSection() {
         <div className="mt-16 max-w-4xl mx-auto text-center">
           <p className="text-slate-600 leading-relaxed text-sm">
             The AI fraud detection engine analyzes metadata,
-            detects tampering, and validates chronological consistency —
+            detects tampering, and validates chronological consistency
             significantly reducing documentation risk.
           </p>
         </div>

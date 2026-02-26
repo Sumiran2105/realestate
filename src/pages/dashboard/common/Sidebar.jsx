@@ -96,19 +96,6 @@ const Sidebar = ({ role, isOpen, onClose }) => {
             <p className="text-sm font-medium text-gray-900 truncate">
               {user?.name || "User"}
             </p>
-            <p className="text-xs text-gray-500 flex items-center gap-1">
-              {user?.kycStatus === "completed" ? (
-                <>
-                  <FaCheckCircle className="text-green-500 text-xs" />
-                  Verified
-                </>
-              ) : (
-                <>
-                  <FaHourglassHalf className="text-yellow-500 text-xs" />
-                  KYC Pending
-                </>
-              )}
-            </p>
           </div>
         </div>
       </div>
