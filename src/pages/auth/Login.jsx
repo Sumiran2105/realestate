@@ -44,7 +44,7 @@ const Login = () => {
             navigate('/dashboard/seller');
             break;
           default:
-            navigate('/');
+            navigate('/buyer/home');
         }
       } else {
         setError('Invalid credentials');
@@ -80,6 +80,12 @@ const Login = () => {
         <div className="mb-6 p-4 bg-blue-50 rounded-lg">
           <p className="text-sm text-blue-800 font-medium mb-2">Quick Demo Access:</p>
           <div className="flex gap-2 flex-wrap">
+            <button
+              onClick={() => fillDemoCredentials('buyer')}
+              className="text-xs bg-white px-3 py-1 rounded-full text-blue-600 hover:bg-blue-100"
+            >
+              Buyer Demo
+            </button>
             
             <button
               onClick={() => fillDemoCredentials('agent')}

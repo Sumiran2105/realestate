@@ -1,9 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaHeart, FaUserCircle } from "react-icons/fa";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const isBuyer = user?.role === "buyer";
+
+  const handleLogout = () => {
+    logout();
+    setOpen(false);
+  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -22,14 +30,41 @@ export default function Navbar() {
           <Link to="/contact" className="transition">Contact</Link>
         </div>
 
-        {/* Desktop Auth Buttons */}
-        <div className="flex gap-3">  
-          <div className="hidden md:flex items-center">
-            <Link to="/login" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Login</Link>
-          </div>
-          <div className="hidden md:flex items-center">
-            <Link to="/register" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Sign Up</Link>
-          </div>
+        {/* Desktop Right Controls */}
+        <div className="flex gap-3">
+          {isBuyer ? (
+            <div className="hidden md:flex items-center gap-3">
+              <Link
+                to="/wishlist"
+                className="w-10 h-10 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 transition flex items-center justify-center"
+                title="Wishlist"
+              >
+                <FaHeart />
+              </Link>
+              <Link
+                to="/buyer/profile"
+                className="w-10 h-10 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition flex items-center justify-center"
+                title="Profile"
+              >
+                <FaUserCircle />
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 rounded-lg border border-red-300 text-red-600 hover:bg-red-50 transition"
+              >
+                Logout
+              </button>
+            </div>
+          ) : !user ? (
+            <>
+              <div className="hidden md:flex items-center">
+                <Link to="/login" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Login</Link>
+              </div>
+              <div className="hidden md:flex items-center">
+                <Link to="/register" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Sign Up</Link>
+              </div>
+            </>
+          ) : null}
         </div>
         {/* Mobile Toggle */}
         <button
@@ -52,8 +87,28 @@ export default function Navbar() {
           <Link to="/about" onClick={() => setOpen(false)}>About</Link>
           <Link to="/contact" onClick={() => setOpen(false)}>Contact</Link>
 
-          <Link to="/login" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Login</Link>
-          <Link to="/register" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Sign Up</Link>
+          {isBuyer ? (
+            <>
+              <Link to="/buyer/home" onClick={() => setOpen(false)}>Buyer Home</Link>
+              <Link to="/wishlist" onClick={() => setOpen(false)} className="flex items-center gap-2">
+                <FaHeart /> Wishlist
+              </Link>
+              <Link to="/buyer/profile" onClick={() => setOpen(false)} className="flex items-center gap-2">
+                <FaUserCircle /> Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-left border border-red-300 text-red-600 px-4 py-2 rounded-lg hover:bg-red-50 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : !user ? (
+            <>
+              <Link to="/login" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Login</Link>
+              <Link to="/register" className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition">Sign Up</Link>
+            </>
+          ) : null}
         </div>
       </div>
     </nav>

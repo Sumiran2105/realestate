@@ -29,6 +29,7 @@ import AgentAnalytics from './pages/dashboard/agent/AgentAnalytics';
 // Seller Dashboard Pages
 import SellerDashboard from './pages/dashboard/seller/SellerDashboard';
 import SellerProperties from './pages/dashboard/seller/SellerProperties';
+import SellerPropertyView from './pages/dashboard/seller/SellerPropertyView';
 import AddProperty from './pages/dashboard/seller/AddProperty';
 
 // Existing Pages
@@ -38,11 +39,15 @@ import Properties from './pages/Properties';
 import PropertyDetail from './pages/PropertyDetail';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import VerificationReport from './pages/VerificationReport';
 import LegalAssistance from './pages/services/LegalAssistance';
 import VerifyProperty from './pages/services/VerifyProperty';
 import HomeLoan from './pages/services/HomeLoan';
 import RentalAgreements from './pages/services/RentalAgreements';
 import Wishlist from './pages/Wishlist';
+import BuyerHome from './pages/buyer/BuyerHome';
+import BuyerProfile from './pages/buyer/BuyerProfile';
+import BuyerPropertyView from './pages/buyer/BuyerPropertyView';
 import AgentProfile from './pages/dashboard/agent/AgentProfile';
 import AgentInquiries from './pages/dashboard/agent/AgentInquiries';
 import AgentTransactions from './pages/dashboard/agent/AgentTransactions';
@@ -111,7 +116,27 @@ function AppContent() {
           <Route path="/services/home-loan" element={<HomeLoan />} />
           <Route path="/services/rental-agreements" element={<RentalAgreements />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/verification-report/:propertyId" element={<VerificationReport />} />
+          <Route path="/wishlist" element={
+            <ProtectedRoute allowedRoles={['buyer']}>
+              <Wishlist />
+            </ProtectedRoute>
+          } />
+          <Route path="/buyer/home" element={
+            <ProtectedRoute allowedRoles={['buyer']}>
+              <BuyerHome />
+            </ProtectedRoute>
+          } />
+          <Route path="/buyer/profile" element={
+            <ProtectedRoute allowedRoles={['buyer']}>
+              <BuyerProfile />
+            </ProtectedRoute>
+          } />
+          <Route path="/buyer/property/:id" element={
+            <ProtectedRoute allowedRoles={['buyer']}>
+              <BuyerPropertyView />
+            </ProtectedRoute>
+          } />
           
           {/* Auth Routes - Redirect to dashboard if already logged in */}
           <Route path="/login" element={
@@ -193,6 +218,11 @@ function AppContent() {
               <SellerProperties />
             </ProtectedRoute>
           } />
+          <Route path="/dashboard/seller/properties/:id" element={
+            <ProtectedRoute allowedRoles={['seller']}>
+              <SellerPropertyView />
+            </ProtectedRoute>
+          } />
           <Route path="/dashboard/seller/add-property" element={
             <ProtectedRoute allowedRoles={['seller']}>
               <AddProperty />
@@ -224,6 +254,7 @@ const getDashboardPath = (role) => {
   switch(role) {
     case 'agent': return '/dashboard/agent';
     case 'seller': return '/dashboard/seller';
+    case 'buyer': return '/buyer/home';
     default: return '/';
   }
 };

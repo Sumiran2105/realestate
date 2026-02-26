@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../../layouts/DashboardLayout';
+import { useAuth } from '../../../contexts/AuthContext';
+import { appendSellerListing } from '../../../utils/sellerListings';
 
 const steps = [
   'Property Type',
@@ -57,8 +59,21 @@ const initialFormData = {
   droneFootage: [],
 };
 
+const readFileAsDataUrl = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+const fileName = (file) => (file ? file.name : null);
+
+const fileNames = (files) => (Array.isArray(files) ? files.map((file) => file.name) : []);
+
 const AddProperty = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [surveyValidationStatus, setSurveyValidationStatus] = useState('idle');
@@ -127,23 +142,102 @@ const AddProperty = () => {
   const handleSubmit = () => {
     setLoading(true);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       setLoading(false);
-      navigate('/dashboard/seller/properties', {
-        state: {
-          newListing: {
-            id: Date.now(),
-            title: `${formData.subCategory || 'Property'} - ${formData.propertyCategory || 'Listing'}`,
-            location: formData.pinnedLocation || formData.landmarkReferences || 'Location Pending',
-            price: formData.expectedPrice || 'Price Pending',
-            status: 'under_review',
-            views: 0,
-            inquiries: 0,
-            listedDate: new Date().toISOString().split('T')[0],
-            image: 'https://via.placeholder.com/300x200',
+      let listingImage = 'https://via.placeholder.com/300x200';
+
+      if (formData.photos.length > 0) {
+        try {
+          listingImage = await readFileAsDataUrl(formData.photos[0]);
+        } catch {
+          listingImage = 'https://via.placeholder.com/300x200';
+        }
+      }
+
+      const newListing = {
+        id: Date.now(),
+        title: `${formData.subCategory || 'Property'} - ${formData.propertyCategory || 'Listing'}`,
+        location: formData.pinnedLocation || formData.landmarkReferences || 'Location Pending',
+        price: formData.expectedPrice || 'Price Pending',
+        status: 'under_review',
+        views: 0,
+        inquiries: 0,
+        listedDate: new Date().toISOString().split('T')[0],
+        image: listingImage,
+        propertyCategory: formData.propertyCategory,
+        subCategory: formData.subCategory,
+        gpsEnabled: formData.gpsEnabled,
+        pinnedLocation: formData.pinnedLocation,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+        landmarkReferences: formData.landmarkReferences,
+        zone: formData.zone,
+        saleDeed: fileName(formData.saleDeed),
+        encumbranceCertificate: fileName(formData.encumbranceCertificate),
+        pattadarOrPahani: fileName(formData.pattadarOrPahani),
+        taxReceipts: fileName(formData.taxReceipts),
+        approvals: fileName(formData.approvals),
+        surveyNumber: formData.surveyNumber,
+        totalArea: formData.totalArea,
+        areaUnit: formData.areaUnit,
+        rooms: formData.rooms,
+        amenities: formData.amenities,
+        furnishing: formData.furnishing,
+        propertyAgeCondition: formData.propertyAgeCondition,
+        expectedPrice: formData.expectedPrice,
+        negotiability: formData.negotiability,
+        paymentTerms: formData.paymentTerms,
+        possessionStatus: formData.possessionStatus,
+        photos: fileNames(formData.photos),
+        videosOrTours: fileNames(formData.videosOrTours),
+        floorPlans: fileNames(formData.floorPlans),
+        droneFootage: fileNames(formData.droneFootage),
+        details: {
+          propertyType: {
+            category: formData.propertyCategory,
+            subCategory: formData.subCategory,
+          },
+          locationIntelligence: {
+            gpsEnabled: formData.gpsEnabled,
+            pinnedLocation: formData.pinnedLocation,
+            latitude: formData.latitude,
+            longitude: formData.longitude,
+            landmarkReferences: formData.landmarkReferences,
+            zone: formData.zone,
+          },
+          legalDocuments: {
+            saleDeed: fileName(formData.saleDeed),
+            encumbranceCertificate: fileName(formData.encumbranceCertificate),
+            pattadarOrPahani: fileName(formData.pattadarOrPahani),
+            taxReceipts: fileName(formData.taxReceipts),
+            approvals: fileName(formData.approvals),
+          },
+          propertyDetails: {
+            surveyNumber: formData.surveyNumber,
+            totalArea: formData.totalArea,
+            areaUnit: formData.areaUnit,
+            rooms: formData.rooms,
+            amenities: formData.amenities,
+            furnishing: formData.furnishing,
+            propertyAgeCondition: formData.propertyAgeCondition,
+          },
+          pricing: {
+            expectedPrice: formData.expectedPrice,
+            negotiability: formData.negotiability,
+            paymentTerms: formData.paymentTerms,
+            possessionStatus: formData.possessionStatus,
+          },
+          media: {
+            photos: fileNames(formData.photos),
+            videosOrTours: fileNames(formData.videosOrTours),
+            floorPlans: fileNames(formData.floorPlans),
+            droneFootage: fileNames(formData.droneFootage),
           },
         },
-      });
+      };
+
+      appendSellerListing(user?.id, newListing);
+      navigate('/dashboard/seller');
     }, 1200);
   };
 

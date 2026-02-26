@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import propertiesData from "../data/properties.json";
 import {
   FiShield,
   FiTrendingUp,
@@ -10,11 +12,12 @@ import {
   } from "react-icons/fi";
   import ScrollToTopButton from "../components/ScrollToTopButton";
   import OCRSection from "../components/OCRSection";
-  import { motion } from "framer-motion";
-  import PropertyCard from "../components/properties/PropertyCard";
-  import propertiesData from "../data/properties.json";
-  import { Link } from "react-router-dom";
+ 
 export default function Home() {
+  const navigate = useNavigate();
+  const [surveyInput, setSurveyInput] = useState("");
+  const [searched, setSearched] = useState(false);
+  const [matchedProperty, setMatchedProperty] = useState(null);
 
   /* ================= HERO PARALLAX (UNCHANGED) ================= */
   useEffect(() => {
@@ -94,6 +97,20 @@ export default function Home() {
     }
   ];
 
+  const normalizeSurvey = (value) => String(value || "").toUpperCase().replace(/\s+/g, "");
+
+  const handleSurveySearch = (e) => {
+    e.preventDefault();
+    const needle = normalizeSurvey(surveyInput);
+    const match = propertiesData?.listings?.find((item) => {
+      const survey = item?.government_approvals?.land_ownership?.survey_number;
+      return normalizeSurvey(survey) === needle || normalizeSurvey(survey).includes(needle);
+    });
+
+    setMatchedProperty(match || null);
+    setSearched(true);
+  };
+
   return (
     <div className="bg-white text-slate-800 overflow-x-hidden">
       <ScrollToTopButton />
@@ -126,122 +143,99 @@ export default function Home() {
                           shadow-[0_40px_120px_rgba(0,0,0,0.25)] 
                           border border-white/20 p-4 sm:p-8 md:p-10 text-slate-800 
                           transition-all duration-500 hover:shadow-[0_50px_150px_rgba(0,0,0,0.35)]">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <input
-                type="text"
-                placeholder="City, District, Mandal, Locality..."
-                className="px-4 py-3 sm:px-5 sm:py-4 rounded-2xl border border-slate-200 
-                          focus:ring-2 focus:ring-brand focus:border-brand 
-                          outline-none transition w-full"
-              />
-              <select className="px-4 py-3 sm:px-5 sm:py-4 rounded-2xl border border-slate-200 
-                                focus:ring-2 focus:ring-brand focus:border-brand 
-                                outline-none transition w-full">
-                <option>Budget Range</option>
-                <option>₹10L - ₹25L</option>
-                <option>₹25L - ₹50L</option>
-                <option>₹50L - ₹1Cr</option>
-                <option>₹1Cr - ₹5Cr+</option>
-              </select>
-              <select className="px-4 py-3 sm:px-5 sm:py-4 rounded-2xl border border-slate-200 
-                                focus:ring-2 focus:ring-brand focus:border-brand 
-                                outline-none transition w-full">
-                <option>Property Type</option>
-                <option>Apartment</option>
-                <option>Villa</option>
-                <option>Land</option>
-                <option>Plot</option>
-                <option>Office Space</option>
-                <option>Industrial Space</option>
-                <option>Commercial Space</option>
-              </select>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
-              <select className="px-4 py-3 sm:px-5 sm:py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full">
-                <option>Bedrooms</option>
-                <option>1 BHK</option>
-                <option>2 BHK</option>
-                <option>3 BHK</option>
-                <option>4+ BHK</option>
-              </select>
-              <select className="px-4 py-3 sm:px-5 sm:py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full">
-                <option>Area (sq.ft.)</option>
-                <option>500 - 1000</option>
-                <option>1000 - 2000</option>
-                <option>2000+</option>
-              </select>
-              <select className="px-4 py-3 sm:px-5 sm:py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full">
-                <option>Listed by</option>
-                <option>Agent</option>
-                <option>Owner</option>
-                <option>Builder</option>
-                <option>Developer</option>
-                
-              </select>
-            </div>
-            <div className="mt-8 flex flex-wrap gap-3 justify-center">
-              {[
-                "Verified Owners Only",
-                "Clear Title",
-                "RERA Approved",
-                "Municipal Approved",
-                "Ready for Bank Loan",
-                "Immediate Possession",
-              ].map((item, index) => (
-                <button
-                  key={index}
-                  className="px-5 py-2 rounded-full text-sm 
-                             bg-brand-soft text-brand-dark 
-                             border border-brand-light 
-                             hover:bg-brand-light transition"
-                >
-                  ✓ {item}
-                </button>
-              ))}
-            </div>
-            {/* Search Button */}
-            <button
-              className="mt-10 w-full bg-brand-dark text-white py-4 sm:py-5 rounded-2xl
-                         hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
-                         transition-all duration-300 font-semibold text-lg 
-                         shadow-xl"
-            >
-              Search Verified Properties
-            </button>
+            <form onSubmit={handleSurveySearch}>
+              <div className="grid grid-cols-1 gap-4">
+                <input
+                  type="text"
+                  value={surveyInput}
+                  onChange={(e) => setSurveyInput(e.target.value)}
+                  placeholder="ENTER SURVEY NUMBER (e.g., 123/45)"
+                  className="px-4 py-4 sm:px-5 sm:py-5 rounded-2xl border border-slate-200 
+                            focus:ring-2 focus:ring-brand focus:border-brand 
+                            outline-none transition w-full text-base sm:text-lg"
+                />
+              </div>
+              <button
+                type="submit"
+                className="mt-6 w-full bg-brand-dark text-white py-4 sm:py-5 rounded-2xl
+                           hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
+                           transition-all duration-300 font-semibold text-lg 
+                           shadow-xl"
+              >
+                Verify Survey Number
+              </button>
+            </form>
+
+            {searched && !matchedProperty && (
+              <p className="mt-5 text-left text-sm text-red-600 font-medium">
+                No property found for this survey number.
+              </p>
+            )}
+
+            {matchedProperty && (
+              <div className="mt-6 text-left bg-white rounded-2xl border border-slate-300 overflow-hidden">
+                <div className="p-5 border-b border-slate-200">
+                  <p className="font-semibold text-slate-900 text-sm sm:text-base">
+                    SURVEY NUMBER: {matchedProperty?.government_approvals?.land_ownership?.survey_number || "-"}
+                  </p>
+                  <p className="text-sm text-slate-600 mt-2">
+                    Village: {matchedProperty?.location?.address?.split(",")?.[0] || "-"} · Mandal: {matchedProperty?.location?.zone || "-"} · District: {matchedProperty?.location?.district || "-"}
+                  </p>
+                </div>
+
+                <div className="p-5 border-b border-slate-200">
+                  <p className="text-green-700 font-bold">🟢 VERIFICATION STATUS: {String(matchedProperty?.verified_badge || "FULLY VERIFIED").toUpperCase()}</p>
+                  <p className="text-sm text-slate-700 mt-1">
+                    Risk Level: {matchedProperty?.verification_report_card?.overall_risk_score <= 2 ? "LOW" : "MEDIUM"} · Score: {(100 - (matchedProperty?.verification_report_card?.overall_risk_score || 2) * 5)}/100
+                  </p>
+                </div>
+
+                <div className="p-5 border-b border-slate-200">
+                  <h4 className="font-semibold text-slate-900 mb-3">OWNERSHIP DETAILS</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+                    <p>Current Owner: {matchedProperty?.government_approvals?.land_ownership?.pattadar_name || "-"}</p>
+                    <p>Ownership Type: {matchedProperty?.seller_information?.type || "Individual"}</p>
+                    <p>Survey Number: {matchedProperty?.government_approvals?.land_ownership?.survey_number || "-"}</p>
+                    <p>Status: {matchedProperty?.government_approvals?.land_ownership?.verification_status || "-"}</p>
+                  </div>
+                </div>
+
+                <div className="relative p-5">
+                  <div className="space-y-4 blur-sm select-none pointer-events-none">
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-2">LAND DETAILS</h4>
+                      <p className="text-sm text-slate-700">Total Area: {matchedProperty?.property_details?.plot_area_sq_yards || "-"} sq.yds</p>
+                      <p className="text-sm text-slate-700">Land Type: {matchedProperty?.property_details?.permissible_usage || "-"}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-2">LEGAL STATUS</h4>
+                      <p className="text-sm text-slate-700">Encumbrance: {matchedProperty?.government_approvals?.land_ownership?.encumbrance_status || "-"}</p>
+                      <p className="text-sm text-slate-700">Last Verified: {matchedProperty?.verification_report_card?.last_verified_date || "-"}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-2">DOCUMENTS AVAILABLE</h4>
+                      <p className="text-sm text-slate-700">ROR-1B, Pahani, Encumbrance Certificate, Passbook, Cadastral Map</p>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex flex-col items-center justify-center p-4">
+                    <p className="text-sm sm:text-base font-semibold text-slate-900 text-center">
+                      For full verification details buy complete report
+                    </p>
+                    <button
+                      onClick={() => navigate(`/verification-report/${matchedProperty.property_id}`)}
+                      className="mt-3 px-5 py-2.5 rounded-lg bg-brand-dark text-white font-medium hover:bg-brand transition"
+                    >
+                      Download Full Verification Report - ₹299
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
       
-      {/* ================= Featured Properties (NEW) ================= */}
-      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 flex flex-col items-center gap-4">
-            <h2 className="text-2xl sm:text-3xl font-bold text-blue-900">Featured Properties</h2>
-            <p className="text-dark">Discover our top picks for you</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {propertiesData?.listings?.slice(0, 4).map((prop) => (
-              <PropertyCard
-                key={prop.property_id}
-                property={prop}
-                viewMode="card"
-                isFavorite={false}
-                onToggleFavorite={() => {}}
-                formatPrice={(n) =>
-                  typeof n === 'number'
-                    ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n)
-                    : n
-                }
-              />
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link to="/properties" className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">View All Properties</Link>
-          </div>
-        </div>
-      </section>
+     
 
       {/* ================= TIMELINE ================= */}
       <section className="relative py-32 bg-slate-50 overflow-hidden">

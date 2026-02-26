@@ -1,78 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../common/Sidebar';
 import Header from '../common/Header';
-
-const baseProperties = [
-  {
-    id: 1,
-    title: '3BHK Luxury Apartment',
-    location: 'Gachibowli, Hyderabad',
-    price: '1.2 Cr',
-    status: 'verified',
-    views: 456,
-    inquiries: 12,
-    listedDate: '2024-01-10',
-    image: 'https://via.placeholder.com/300x200',
-  },
-  {
-    id: 2,
-    title: '2BHK Affordable Flat',
-    location: 'Kukatpally, Hyderabad',
-    price: '65 L',
-    status: 'verified',
-    views: 234,
-    inquiries: 8,
-    listedDate: '2024-01-12',
-    image: 'https://via.placeholder.com/300x200',
-  },
-  {
-    id: 3,
-    title: 'Commercial Office Space',
-    location: 'Hitech City, Hyderabad',
-    price: '2.5 Cr',
-    status: 'pending',
-    views: 89,
-    inquiries: 3,
-    listedDate: '2024-01-15',
-    image: 'https://via.placeholder.com/300x200',
-  },
-  {
-    id: 4,
-    title: 'Independent Villa',
-    location: 'Banjara Hills, Hyderabad',
-    price: '3.8 Cr',
-    status: 'sold',
-    views: 789,
-    inquiries: 25,
-    listedDate: '2023-12-20',
-    image: 'https://via.placeholder.com/300x200',
-  },
-  {
-    id: 5,
-    title: 'Plot for Construction',
-    location: 'Miyapur, Hyderabad',
-    price: '85 L',
-    status: 'draft',
-    views: 45,
-    inquiries: 1,
-    listedDate: '2024-01-16',
-    image: 'https://via.placeholder.com/300x200',
-  },
-];
+import { useAuth } from '../../../contexts/AuthContext';
+import { getSellerListings } from '../../../utils/sellerListings';
 
 const SellerProperties = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const [filter, setFilter] = useState('all');
-  const [properties, setProperties] = useState(baseProperties);
+  const [properties, setProperties] = useState([]);
 
   useEffect(() => {
-    if (location.state?.newListing) {
-      setProperties((prev) => [location.state.newListing, ...prev]);
-      navigate(location.pathname, { replace: true, state: {} });
-    }
-  }, [location.pathname, location.state, navigate]);
+    setProperties(getSellerListings(user?.id));
+  }, [user?.id]);
 
   const filteredProperties =
     filter === 'all' ? properties : properties.filter((property) => property.status === filter);
@@ -150,7 +91,10 @@ const SellerProperties = () => {
                     <button className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
                       Edit
                     </button>
-                    <button className="flex-1 px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200">
+                    <button
+                      onClick={() => navigate(`/dashboard/seller/properties/${property.id}`)}
+                      className="flex-1 px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200"
+                    >
                       View
                     </button>
                   </div>

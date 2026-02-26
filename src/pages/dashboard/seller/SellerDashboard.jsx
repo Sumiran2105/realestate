@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 import DashboardLayout from "../../../layouts/DashboardLayout";
+import {
+  getSellerListings,
+  updateSellerListing,
+  deleteSellerListing,
+} from "../../../utils/sellerListings";
 
 import {
   FaHome,
@@ -12,57 +17,71 @@ import {
 
 const SellerDashboard = () => {
   const { user } = useAuth();
+  const [properties, setProperties] = useState([]);
 
-  const stats = [
-    {
-      label: "Total Properties",
-      value: "5",
-      icon: <FaHome className="text-blue-600 text-xl" />,
-      bg: "bg-blue-100",
-    },
-    {
-      label: "Active Listings",
-      value: "3",
-      icon: <FaCheckCircle className="text-green-600 text-xl" />,
-      bg: "bg-green-100",
-    },
-    {
-      label: "Total Views",
-      value: "1,245",
-      icon: <FaEye className="text-purple-600 text-xl" />,
-      bg: "bg-purple-100",
-    },
-    {
-      label: "Inquiries",
-      value: "28",
-      icon: <FaComments className="text-yellow-600 text-xl" />,
-      bg: "bg-yellow-100",
-    },
-  ];
+  useEffect(() => {
+    setProperties(getSellerListings(user?.id));
+  }, [user?.id]);
 
-  const properties = [
-    {
-      name: "3BHK Luxury Apartment",
-      location: "Gachibowli",
-      price: "₹1.2Cr",
-      status: "verified",
-      views: 456,
-    },
-    {
-      name: "2BHK Affordable Flat",
-      location: "Kukatpally",
-      price: "₹65L",
-      status: "verified",
-      views: 234,
-    },
-    {
-      name: "Commercial Space",
-      location: "Hitech City",
-      price: "₹2.5Cr",
-      status: "pending",
-      views: 89,
-    },
-  ];
+  const stats = useMemo(() => {
+    const activeStatuses = new Set(["verified", "pending", "under_review"]);
+    const activeListings = properties.filter((item) => activeStatuses.has(item.status)).length;
+    const totalViews = properties.reduce((sum, item) => sum + (item.views || 0), 0);
+    const totalInquiries = properties.reduce((sum, item) => sum + (item.inquiries || 0), 0);
+
+    return [
+      {
+        label: "Total Properties",
+        value: String(properties.length),
+        icon: <FaHome className="text-blue-600 text-xl" />,
+        bg: "bg-blue-100",
+      },
+      {
+        label: "Active Listings",
+        value: String(activeListings),
+        icon: <FaCheckCircle className="text-green-600 text-xl" />,
+        bg: "bg-green-100",
+      },
+      {
+        label: "Total Views",
+        value: totalViews.toLocaleString("en-IN"),
+        icon: <FaEye className="text-purple-600 text-xl" />,
+        bg: "bg-purple-100",
+      },
+      {
+        label: "Inquiries",
+        value: totalInquiries.toLocaleString("en-IN"),
+        icon: <FaComments className="text-yellow-600 text-xl" />,
+        bg: "bg-yellow-100",
+      },
+    ];
+  }, [properties]);
+
+  const handleEdit = (property) => {
+    const currentTitle = property.title || property.name || "";
+    const currentPrice = property.price || "";
+    const nextTitle = window.prompt("Edit property title", currentTitle);
+    if (nextTitle === null) return;
+
+    const nextPrice = window.prompt("Edit expected price", currentPrice);
+    if (nextPrice === null) return;
+
+    const updated = updateSellerListing(user?.id, property.id, {
+      title: nextTitle.trim() || currentTitle,
+      price: nextPrice.trim() || currentPrice,
+    });
+    setProperties(updated);
+  };
+
+  const handleDelete = (property) => {
+    const confirmed = window.confirm(
+      `Delete listing "${property.title || property.name}"? This cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    const updated = deleteSellerListing(user?.id, property.id);
+    setProperties(updated);
+  };
 
   return (
     <DashboardLayout title="Seller Dashboard">
@@ -131,13 +150,13 @@ const SellerDashboard = () => {
               </thead>
 
               <tbody>
-                {properties.map((property, index) => (
+                {properties.slice(0, 6).map((property, index) => (
                   <tr
-                    key={index}
+                    key={property.id || index}
                     className="border-t border-gray-100 hover:bg-gray-50 transition"
                   >
                     <td className="py-3 text-sm font-medium text-gray-900">
-                      {property.name}
+                      {property.title || property.name}
                     </td>
                     <td className="py-3 text-sm text-gray-600">
                       {property.location}
@@ -151,10 +170,12 @@ const SellerDashboard = () => {
                         className={`px-3 py-1 text-xs font-medium rounded-full ${
                           property.status === "verified"
                             ? "bg-green-100 text-green-600"
+                            : property.status === "under_review"
+                            ? "bg-indigo-100 text-indigo-600"
                             : "bg-yellow-100 text-yellow-600"
                         }`}
                       >
-                        {property.status}
+                        {property.status === "under_review" ? "under review" : property.status}
                       </span>
                     </td>
 
@@ -163,8 +184,17 @@ const SellerDashboard = () => {
                     </td>
 
                     <td className="py-3">
-                      <button className="text-sm text-blue-600 hover:text-blue-800 transition">
+                      <button
+                        onClick={() => handleEdit(property)}
+                        className="text-sm text-blue-600 hover:text-blue-800 transition mr-3"
+                      >
                         Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(property)}
+                        className="text-sm text-red-600 hover:text-red-800 transition"
+                      >
+                        Delete
                       </button>
                     </td>
                   </tr>

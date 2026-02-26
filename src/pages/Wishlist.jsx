@@ -26,6 +26,8 @@ const Wishlist = () => {
     loadWishlist();
   }, []);
 
+  const getItemId = (property) => property?.property_id ?? property?.id;
+
   const loadWishlist = () => {
     setLoading(true);
     try {
@@ -47,7 +49,7 @@ const Wishlist = () => {
   // Remove property from wishlist
   const removeFromWishlist = (propertyId) => {
     // Filter out the property
-    const updatedWishlist = wishlistedProperties.filter(p => p.property_id !== propertyId);
+    const updatedWishlist = wishlistedProperties.filter(p => String(getItemId(p)) !== String(propertyId));
     
     // Update state
     setWishlistedProperties(updatedWishlist);
@@ -180,13 +182,13 @@ const Wishlist = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {wishlistedProperties.map((property) => (
               <div
-                key={property.property_id}
+                key={getItemId(property)}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group"
               >
                 {/* Image Section */}
                 <div className="relative h-40 overflow-hidden">
                   <img
-                    src={property?.media?.images?.[0] || 'https://via.placeholder.com/400x300?text=No+Image'}
+                    src={property?.media?.images?.[0] || property?.image || 'https://via.placeholder.com/400x300?text=No+Image'}
                     alt={property?.title || 'Property'}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -198,7 +200,7 @@ const Wishlist = () => {
 
                   {/* Remove Button */}
                   <button
-                    onClick={() => removeFromWishlist(property.property_id)}
+                    onClick={() => removeFromWishlist(getItemId(property))}
                     className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform hover:bg-red-50"
                     title="Remove from wishlist"
                   >
@@ -222,7 +224,7 @@ const Wishlist = () => {
                   <div className="flex items-center gap-1 text-gray-500 text-xs mb-3">
                     <FaMapMarkerAlt className="text-brand-dark text-xs flex-shrink-0" />
                     <span className="line-clamp-1">
-                      {property?.location?.city || 'City'}, {property?.location?.district || 'District'}
+                      {property?.location?.city || property?.location || 'City'}
                     </span>
                   </div>
 
@@ -256,7 +258,9 @@ const Wishlist = () => {
                   <div className="flex justify-between items-center mb-3">
                     <div>
                       <span className="text-base font-bold text-gray-900">
-                        {property?.pricing?.expected_price ? formatPrice(property.pricing.expected_price) : 'Price on Request'}
+                        {property?.pricing?.expected_price
+                          ? formatPrice(property.pricing.expected_price)
+                          : property?.price || 'Price on Request'}
                       </span>
                     </div>
                     {property?.pricing?.negotiability === 'Yes' && (
@@ -297,13 +301,13 @@ const Wishlist = () => {
                   {/* Action Buttons */}
                   <div className="flex gap-2">
                     <Link
-                      to={`/property/${property.property_id}`}
+                      to={`/buyer/property/${getItemId(property)}`}
                       className="flex-1 bg-gradient-to-r from-brand-dark to-blue-800 text-white text-center py-2 rounded-lg text-xs font-medium hover:from-blue-800 hover:to-brand-dark transition-all flex items-center justify-center gap-1"
                     >
                       View Details <FaArrowRight className="text-xs" />
                     </Link>
                     <button
-                      onClick={() => removeFromWishlist(property.property_id)}
+                      onClick={() => removeFromWishlist(getItemId(property))}
                       className="px-3 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors text-xs flex items-center gap-1"
                       title="Remove from wishlist"
                     >
