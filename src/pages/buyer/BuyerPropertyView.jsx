@@ -130,7 +130,7 @@ const BuyerPropertyView = () => {
         </div>
 
         <section className="bg-white rounded-2xl border border-slate-300 p-6">
-          <h2 className="text-2xl font-bold text-slate-900 mb-5">1. Photo Gallery</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-5"> Photo Gallery</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {imageGallery.map((img, idx) => (
               <img key={`${img}-${idx}`} src={img} alt={`Property ${idx + 1}`} className="w-full h-48 object-cover rounded-lg border border-slate-300" />
@@ -144,7 +144,7 @@ const BuyerPropertyView = () => {
         </section>
 
         <section className="bg-white rounded-2xl border border-slate-300 p-6">
-          <h2 className="text-2xl font-bold text-slate-900 mb-5">2. Verification Report Card</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-5">Verification Report Card</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="rounded-lg bg-slate-50 border border-slate-300 p-4">
               <p className="text-xs uppercase text-slate-500">Status Badge</p>
@@ -166,7 +166,7 @@ const BuyerPropertyView = () => {
         </section>
 
         <section className="bg-white rounded-2xl border border-slate-300 p-6">
-          <h2 className="text-2xl font-bold text-slate-900 mb-5">3. Property Highlights</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-5">Property Highlights</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h3 className="font-semibold text-slate-900 mb-3">Key Features</h3>
@@ -189,7 +189,7 @@ const BuyerPropertyView = () => {
         </section>
 
         <section className="bg-white rounded-2xl border border-slate-300 p-6">
-          <h2 className="text-2xl font-bold text-slate-900 mb-5">4. Price Intelligence</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-5">Price Intelligence</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="rounded-lg bg-slate-50 border border-slate-300 p-4"><p className="text-xs uppercase text-slate-500">Current Asking Price</p><p className="mt-1 font-semibold text-slate-900">{formatCurrency(askingPrice)}</p></div>
             <div className="rounded-lg bg-slate-50 border border-slate-300 p-4"><p className="text-xs uppercase text-slate-500">Price / sq.ft.</p><p className="mt-1 font-semibold text-slate-900">{pricePerSqFt ? `${formatCurrency(pricePerSqFt)}` : 'N/A'}</p></div>
@@ -220,7 +220,7 @@ const BuyerPropertyView = () => {
         </section>
 
         <section className="bg-white rounded-2xl border border-slate-300 p-6">
-          <h2 className="text-2xl font-bold text-slate-900 mb-5">5. Legal Summary</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-5"> Legal Summary</h2>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div><p className="text-xs uppercase text-slate-500">Survey Number</p><p className="mt-1 text-sm font-semibold">{propertyDetails.surveyNumber || listing.surveyNumber || '-'}</p></div>
             <div><p className="text-xs uppercase text-slate-500">Land Use Zone</p><p className="mt-1 text-sm font-semibold">{location.zone || listing.zone || '-'}</p></div>
@@ -231,7 +231,7 @@ const BuyerPropertyView = () => {
         </section>
 
         <section className="bg-white rounded-2xl border border-slate-300 p-6">
-          <h2 className="text-2xl font-bold text-slate-900 mb-5">6. Seller Information</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-5">Seller Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div><p className="text-xs uppercase text-slate-500">Seller Name</p><p className="mt-1 text-sm font-semibold">{listing.sellerName || 'Verified Seller'}</p></div>
             <div><p className="text-xs uppercase text-slate-500">Verification Badge</p><p className="mt-1 text-sm font-semibold flex items-center gap-1"><FaShieldAlt className="text-green-600" /> Verified</p></div>
@@ -242,7 +242,7 @@ const BuyerPropertyView = () => {
         </section>
 
         <section className="bg-white rounded-2xl border border-slate-300 p-6">
-          <h2 className="text-2xl font-bold text-slate-900 mb-5">7. Action Buttons</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-5"> Action Buttons</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             <button onClick={() => buttonAction('Contact owner')} className="px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm flex items-center justify-center gap-2"><FaPhoneAlt /> Contact Owner</button>
             <button onClick={() => buttonAction('Chat with seller')} className="px-4 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm flex items-center justify-center gap-2"><FaComments /> Chat</button>
