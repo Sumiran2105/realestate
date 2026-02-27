@@ -46,7 +46,7 @@ export default function HeroDropdown() {
   };
 
   return (
-    <div className={`w-full bg-white border-b border-slate-200 ${isHomePage ? "sticky top-16 z-40" : ""} shadow-sm`}>
+    <div className={`w-full bg-gray-50 border-b border-slate-200 sticky top-16 z-50 shadow-sm`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Desktop Menu - Centered */}
