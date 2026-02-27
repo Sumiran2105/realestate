@@ -6,6 +6,12 @@ import propertiesData from '../data/properties.json';
 const VerificationReport = () => {
   const { propertyId } = useParams();
   const property = propertiesData?.listings?.find((item) => item.property_id === propertyId);
+  const passbookNumber =
+    property?.government_approvals?.land_ownership?.pattadar_passbook_number ||
+    property?.government_approvals?.revenue_records?.pattadar_passbook_number ||
+    property?.government_approvals?.land_ownership?.passbook_number ||
+    property?.government_approvals?.revenue_records?.passbook_number ||
+    '-';
 
   const handlePrint = () => window.print();
 
@@ -133,6 +139,7 @@ const VerificationReport = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-sm text-slate-700">
             <p><span className="font-semibold text-slate-900">Current Owner:</span> {property?.government_approvals?.land_ownership?.pattadar_name || '-'}</p>
             <p><span className="font-semibold text-slate-900">Ownership Type:</span> {property?.seller_information?.type || '-'}</p>
+            <p><span className="font-semibold text-slate-900">Pattadar Passbook Number:</span> {passbookNumber}</p>
             <p><span className="font-semibold text-slate-900">Verification Status:</span> {
               <span className={`inline-flex items-center gap-1 ${
                 property?.government_approvals?.land_ownership?.verification_status === 'Clear Title' ? 'text-green-700' : 
