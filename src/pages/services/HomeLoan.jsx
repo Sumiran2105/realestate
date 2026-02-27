@@ -318,7 +318,7 @@ const HomeLoan = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-10 ">
         <div className="mb-12 text-center">
           <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Why Trust Us</span>
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">Why Choose Our Loan Support</h2>
@@ -327,8 +327,8 @@ const HomeLoan = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {whyChooseData.map((item, index) => (
-            <div key={index} className="rounded-xl p-6 border border-slate-200 hover:shadow-lg transition-all">
-              <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+            <div key={index} className={`${item.bgColor} rounded-xl p-6 border border-slate-300 hover:shadow-lg transition-all`}>
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-4">
                 {item.icon}
               </div>
               <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
@@ -351,7 +351,7 @@ const HomeLoan = () => {
           {loanFeatures.map((item) => (
             <article 
               key={item.title} 
-              className="group bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="group bg-white rounded-2xl p-6 sm:p-8 border border-slate-600 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className={`w-14 h-14 rounded-xl bg-${item.color}-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
@@ -368,8 +368,8 @@ const HomeLoan = () => {
               <ul className="space-y-2 mb-4">
                 {item.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                    <FaCheckCircle className="text-green-500 mt-0.5 flex-shrink-0" size={12} />
-                    <span>{feature}</span>
+                    <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" size={12} />
+                    <span className='text-[16px]'>{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -382,25 +382,6 @@ const HomeLoan = () => {
           ))}
         </div>
       </section>
-
-      {/* Trust Points Section */}
-      {/* <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {trustPoints.map((item) => (
-            <article 
-              key={item.title} 
-              className="bg-white border border-slate-200 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-4">
-                {item.icon}
-              </div>
-              <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
-              <p className="text-sm text-slate-600 mb-3">{item.description}</p>
-              <p className="text-xs font-semibold text-blue-600">{item.stat}</p>
-            </article>
-          ))}
-        </div>
-      </section> */}
 
       {/* Process Section */}
       <section className="bg-white border-y border-slate-200">
@@ -417,9 +398,6 @@ const HomeLoan = () => {
                 key={step.title} 
                 className="relative rounded-2xl border border-slate-200 p-6 bg-white hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="absolute -top-3 left-6 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
-                  {index + 1}
-                </div>
                 
                 {/* Time Badge */}
                 <div className="absolute top-4 right-4 bg-slate-100 px-2 py-1 rounded-full text-xs font-medium text-slate-600">
@@ -437,8 +415,8 @@ const HomeLoan = () => {
                 <ul className="space-y-1.5 border-t border-slate-100 pt-3 mt-2">
                   {step.details.map((detail, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-xs text-slate-500">
-                      <FaRegCheckCircle className="text-blue-500 mt-0.5 flex-shrink-0" size={10} />
-                      <span>{detail}</span>
+                      <FaRegCheckCircle className="text-blue-500 mt-1 flex-shrink-0" size={11} />
+                      <span className='text-[14px]'>{detail}</span>
                     </li>
                   ))}
                 </ul>

@@ -1,6 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.hardgreen {
+  background-color: #1F4B43;
+}
+
+.hardorange {
+  background-color: #FFF8F6;
+}
 
 /* ===== Apple Smooth Scroll Timeline ===== */
 

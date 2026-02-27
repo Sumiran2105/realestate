@@ -13,6 +13,9 @@ module.exports = {
           soft: '#dbeafe',
         },
       },
+      fontFamily: {
+        roboto: ['Roboto'],
+      },
     },
   },
   plugins: [],

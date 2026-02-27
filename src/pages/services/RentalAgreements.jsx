@@ -233,44 +233,29 @@ const whyChooseData = [
     title: '5+ Years Expertise',
     description: 'Specialized in rental agreements',
     icon: <FaHistory className="text-blue-600" />,
-    stat: '10,000+ agreements'
+    stat: '10,000+ agreements',
+    bgColor: 'bg-blue-50'
   },
   {
     title: 'Legal Expert Team',
     description: 'Qualified property lawyers',
     icon: <FaUsers className="text-purple-600" />,
-    stat: '20+ legal experts'
+    stat: '20+ legal experts',
+    bgColor: 'bg-purple-50'
   },
   {
     title: 'Pan-India Coverage',
     description: 'Valid across all states',
     icon: <FaBuilding className="text-emerald-600" />,
-    stat: '28 states covered'
+    stat: '28 states covered',
+    bgColor: 'bg-emerald-50'
   },
   {
     title: '99% Satisfaction',
     description: 'Trusted by thousands',
     icon: <FaRegSmile className="text-amber-600" />,
-    stat: '4.9/5 rating'
-  }
-];
-
-const faqs = [
-  {
-    question: 'What details are needed for rental agreement?',
-    answer: 'Owner & tenant names, property address, monthly rent, security deposit amount, lock-in period, and notice period terms.'
-  },
-  {
-    question: 'How long does it take to get the agreement?',
-    answer: 'Basic plan delivers in 24 hours, Standard in 48 hours, and Premium includes express delivery with unlimited revisions.'
-  },
-  {
-    question: 'Is the agreement legally valid?',
-    answer: 'Yes, all agreements are drafted as per Indian Rental Laws and are court admissible with proper stamp paper.'
-  },
-  {
-    question: 'Can I make changes after draft is ready?',
-    answer: 'Yes, revisions are included in all plans. Basic includes 1 revision, Standard includes 2, and Premium includes unlimited revisions.'
+    stat: '4.9/5 rating',
+    bgColor: 'bg-amber-50'
   }
 ];
 
@@ -346,8 +331,8 @@ const RentalAgreements = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {whyChooseData.map((item, index) => (
-            <div key={index} className="bg-white rounded-xl p-6 border border-slate-200 hover:shadow-lg transition-all">
-              <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+            <div key={index} className={` ${item.bgColor} rounded-xl p-6 border border-slate-300 hover:shadow-lg transition-all`}>
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-4">
                 {item.icon}
               </div>
               <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
@@ -370,7 +355,7 @@ const RentalAgreements = () => {
           {features.map((item) => (
             <article 
               key={item.title} 
-              className="group bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="group bg-white rounded-2xl p-6 sm:p-8 border border-slate-600 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className={`w-14 h-14 rounded-xl bg-${item.color}-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
@@ -387,8 +372,8 @@ const RentalAgreements = () => {
               <ul className="space-y-2 mb-4">
                 {item.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                    <FaCheckCircle className="text-green-500 mt-0.5 flex-shrink-0" size={12} />
-                    <span>{feature}</span>
+                    <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" size={12} />
+                    <span className='text-[16px]'>{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -417,9 +402,6 @@ const RentalAgreements = () => {
                 key={step.title} 
                 className="relative rounded-2xl border border-slate-200 p-6 bg-white hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="absolute -top-3 left-6 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
-                  {index + 1}
-                </div>
                 
                 {/* Time Badge */}
                 <div className="absolute top-4 right-4 bg-slate-100 px-2 py-1 rounded-full text-xs font-medium text-slate-600">
@@ -437,8 +419,8 @@ const RentalAgreements = () => {
                 <ul className="space-y-1.5 border-t border-slate-100 pt-3 mt-2">
                   {step.details.map((detail, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-xs text-slate-500">
-                      <FaRegCheckCircle className="text-blue-500 mt-0.5 flex-shrink-0" size={10} />
-                      <span>{detail}</span>
+                      <FaRegCheckCircle className="text-blue-500 mt-1 flex-shrink-0" size={11} />
+                      <span className='text-[14px]'>{detail}</span>
                     </li>
                   ))}
                 </ul>
@@ -464,67 +446,70 @@ const RentalAgreements = () => {
           <p className="text-slate-600 mt-2">Choose the perfect plan for your rental agreement needs</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((plan, idx) => (
             <div
               key={plan.title}
-              className={`relative rounded-2xl border-2 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${
-                plan.popular 
-                  ? 'border-blue-400 shadow-blue-100' 
+              className={`relative rounded-2xl border-2 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl flex flex-col h-full ${plan.popular
+                  ? 'border-blue-400 shadow-blue-100'
                   : plan.borderColor
-              } ${plan.bgColor} p-8`}
+                } ${plan.bgColor} p-5`}
             >
               {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-medium shadow-lg">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-medium shadow-lg z-10">
                   Recommended
                 </div>
               )}
-              
-              {/* Icon & Title */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className={`w-14 h-14 rounded-2xl ${plan.iconBg} flex items-center justify-center`}>
-                  {plan.icon}
+
+              {/* Content Container - takes all available space */}
+              <div className="flex flex-col flex-grow">
+                {/* Icon & Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`w-14 h-14 rounded-2xl ${plan.iconBg} flex items-center justify-center flex-shrink-0`}>
+                    {plan.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-slate-900">{plan.title}</h3>
+                    <p className="text-sm text-slate-500">{plan.summary}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900">{plan.title}</h3>
-                  <p className="text-sm text-slate-500">{plan.summary}</p>
+
+                {/* Price */}
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-slate-900">{plan.price}</span>
+                  <span className="text-sm text-slate-500 ml-2">/one-time</span>
                 </div>
+
+                {/* Best For Tag */}
+                <div className="mb-6">
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Best for</span>
+                  <p className="text-sm font-semibold text-slate-800 mt-1">{plan.bestFor}</p>
+                </div>
+
+                {/* Features List - with reduced line height */}
+                <ul className="space-y-2 mb-8 flex-grow">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <FaCheckCircle className="text-green-500 mt-0.5 flex-shrink-0" size={13} />
+                      <span className="text-sm text-slate-700 leading-tight">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              {/* Price */}
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-slate-900">{plan.price}</span>
-                <span className="text-sm text-slate-500 ml-2">/one-time</span>
+              {/* CTA Button - always at bottom */}
+              <div className="mt-auto pt-4">
+                <Link
+                  to="/contact"
+                  className={`block text-center py-3 px-4 rounded-xl font-medium transition-all w-full ${plan.popular
+                      ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg'
+                      : 'bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 hover:text-blue-600'
+                    }`}
+                >
+                  {plan.cta}
+                </Link>
               </div>
-
-              {/* Best For Tag */}
-              <div className="mb-6">
-                <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Best for</span>
-                <p className="text-sm font-semibold text-slate-800 mt-1">{plan.bestFor}</p>
-              </div>
-
-              {/* Features List */}
-              <ul className="space-y-4 mb-8">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <FaCheckCircle className="text-green-500 mt-0.5 flex-shrink-0" size={16} />
-                    <span className="text-sm text-slate-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA Button */}
-              <Link
-                to="/contact"
-                className={`block text-center py-3 px-4 rounded-xl font-medium transition-all ${
-                  plan.popular
-                    ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg'
-                    : 'bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 hover:text-blue-600'
-                }`}
-              >
-                {plan.cta}
-              </Link>
             </div>
           ))}
         </div>

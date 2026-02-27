@@ -245,9 +245,9 @@ const Contact = () => {
 
             {/* Info */}
             <div className="space-y-8">
-              <div>
+              <div className=''>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Business Hours</h3>
-                <div className="space-y-3 bg-blue-50 p-6 rounded-lg">
+                <div className="space-y-3 hardorange p-6 rounded-lg">
                   <div className="flex items-center gap-3">
                     <FaClock className="text-blue-600" />
                     <div>
@@ -289,13 +289,24 @@ const Contact = () => {
                   </a>
                 </div>
               </div>
+              <div>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2899.35390722865!2d78.385621!3d17.443851!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x873dde7736fdeff1%3A0x88d3af212bf885bc!2sLevitica%20Technologies%20PVT%20LTD!5e1!3m2!1sen!2sin!4v1772191062705!5m2!1sen!2sin"
+                  width="600"
+                  height="350"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 hardorange">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Frequently Asked Questions</h2>
           <div className="space-y-4">
