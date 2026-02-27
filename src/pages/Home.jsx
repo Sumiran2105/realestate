@@ -1267,37 +1267,37 @@ export default function Home() {
           no: "01",
           title: "Property Identity",
           desc: "Survey number, address, GPS coordinates and property classification.",
-          accent: "bg-blue-600"
+          accent: "bg-blue-400"
         },
         {
           no: "02",
           title: "Ownership Verification",
           desc: "Current owner, ownership type and validation confidence score.",
-          accent: "bg-purple-600"
+          accent: "bg-purple-400"
         },
         {
           no: "03",
           title: "Legal History",
           desc: "Transaction trail, encumbrance mapping and litigation checks.",
-          accent: "bg-emerald-600"
+          accent: "bg-emerald-400"
         },
         {
           no: "04",
           title: "Compliance Status",
           desc: "RERA validation, municipal approvals and utility authentication.",
-          accent: "bg-orange-500"
+          accent: "bg-orange-400"
         },
         {
           no: "05",
           title: "Risk Assessment",
           desc: "AI derived legal risk score with anomaly detection signals.",
-          accent: "bg-red-600"
+          accent: "bg-red-400"
         },
         {
           no: "06",
           title: "Market Intelligence",
           desc: "Live price range, 6 month movement trend and comparables.",
-          accent: "bg-cyan-600"
+          accent: "bg-cyan-400"
         }
       ].map((item, index) => (
         <div
