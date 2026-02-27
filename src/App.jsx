@@ -303,7 +303,6 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // Components
 import Navbar from './components/Navbar';
-import HeroDropdown from './components/HeroDropdown';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -406,7 +405,6 @@ function AppContent() {
   return (
     <div className="min-h-screen flex flex-col">
       {showNavFooter && <Navbar />}
-      {showNavFooter && <HeroDropdown />}
       <main className={`flex-grow ${!showNavFooter ? 'pt-0' : ''}`}>
         <ScrollToTop/>
         <Routes>

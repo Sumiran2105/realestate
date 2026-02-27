@@ -349,7 +349,7 @@ export default function Home() {
       </p>
     </div>
 
-    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-dark">
+    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl font-bold text-brand-dark">
       Find Verified Properties
       <span className="block text-brand-dark mt-3">
         With Complete Transparency
@@ -401,9 +401,9 @@ export default function Home() {
       </div>
     </div>
 
-    <div className="mt-4 relative z-10 max-w-4xl mr-auto text-left bg-white/95 backdrop-blur-xl rounded-3xl 
+    <div className="mt-3 relative z-10 max-w-4xl mr-auto text-left bg-white/95 backdrop-blur-xl rounded-3xl 
                     shadow-[0_40px_120px_rgba(0,0,0,0.25)] 
-                    border border-white/20 p-4 sm:p-8 md:p-10 text-slate-800 
+                    border border-white/20 p-6 sm:p-8 md:p-8 text-slate-800 
                     transition-all duration-500 hover:shadow-[0_50px_150px_rgba(0,0,0,0.35)]">
       <form onSubmit={handleSurveySearch}>
         {searchMode === "survey" && (
