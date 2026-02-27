@@ -22,7 +22,13 @@ const formatPrice = (value) => {
 const BuyerHome = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [surveyInput, setSurveyInput] = useState("");
+  const [searchMode, setSearchMode] = useState("survey");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedCityMandal, setSelectedCityMandal] = useState("");
+  const [selectedVillage, setSelectedVillage] = useState("");
+  const [selectedSurvey, setSelectedSurvey] = useState("");
+  const [passbookInput, setPassbookInput] = useState("");
   const [searched, setSearched] = useState(false);
   const [matchedProperty, setMatchedProperty] = useState(null);
   const [listings, setListings] = useState([]);
@@ -90,44 +96,136 @@ const BuyerHome = () => {
     localStorage.setItem(WISHLIST_KEY, JSON.stringify(next));
   };
 
-  // Helper function to normalize survey number for comparison
   const normalizeSurvey = (value) => {
     if (!value) return "";
     return String(value).toUpperCase().replace(/\s+/g, "").replace(/[^A-Z0-9/]/g, "");
   };
+  const normalizePassbook = (value) => String(value || "").toUpperCase().replace(/\s+/g, "");
+  const getVillage = (item) => String(item?.location?.address || "").split(",")[0]?.trim() || "";
+  const getCityOrMandal = (item) => String(item?.location?.city || item?.location?.zone || "").trim();
+  const getPassbookNumber = (item) => {
+    const revenue = item?.government_approvals?.revenue_records || {};
+    const ownership = item?.government_approvals?.land_ownership || {};
+    const candidates = [
+      revenue?.pattadar_passbook_number,
+      revenue?.passbook_number,
+      ownership?.pattadar_passbook_number,
+      ownership?.passbook_number,
+      item?.pattadar_passbook_number,
+      item?.passbook_number,
+    ];
+    return String(candidates.find(Boolean) || "").trim();
+  };
+  const getSurveyNumbers = (item) => {
+    const landOwnership = item?.government_approvals?.land_ownership || {};
+    const surveys = [];
+    if (landOwnership?.survey_number) {
+      surveys.push(String(landOwnership.survey_number).trim());
+    }
+    if (Array.isArray(landOwnership?.survey_numbers)) {
+      landOwnership.survey_numbers.forEach((survey) => surveys.push(String(survey).trim()));
+    }
+    return surveys.filter(Boolean);
+  };
+  const uniqueSorted = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
 
-  // Enhanced search function to handle all survey number formats
+  const stateOptions = useMemo(
+    () => uniqueSorted((propertiesData?.listings || []).map((item) => String(item?.location?.state || "").trim())),
+    []
+  );
+
+  const districtOptions = useMemo(
+    () =>
+      uniqueSorted(
+        (propertiesData?.listings || [])
+          .filter((item) => String(item?.location?.state || "").trim() === selectedState)
+          .map((item) => String(item?.location?.district || "").trim())
+      ),
+    [selectedState]
+  );
+
+  const cityMandalOptions = useMemo(
+    () =>
+      uniqueSorted(
+        (propertiesData?.listings || [])
+          .filter((item) => String(item?.location?.state || "").trim() === selectedState)
+          .filter((item) => String(item?.location?.district || "").trim() === selectedDistrict)
+          .map((item) => getCityOrMandal(item))
+      ),
+    [selectedState, selectedDistrict]
+  );
+
+  const villageOptions = useMemo(
+    () =>
+      uniqueSorted(
+        (propertiesData?.listings || [])
+          .filter((item) => String(item?.location?.state || "").trim() === selectedState)
+          .filter((item) => String(item?.location?.district || "").trim() === selectedDistrict)
+          .filter((item) => getCityOrMandal(item) === selectedCityMandal)
+          .map((item) => getVillage(item))
+      ),
+    [selectedState, selectedDistrict, selectedCityMandal]
+  );
+
+  const surveyOptions = useMemo(
+    () =>
+      uniqueSorted(
+        (propertiesData?.listings || [])
+          .filter((item) => String(item?.location?.state || "").trim() === selectedState)
+          .filter((item) => String(item?.location?.district || "").trim() === selectedDistrict)
+          .filter((item) => getCityOrMandal(item) === selectedCityMandal)
+          .filter((item) => getVillage(item) === selectedVillage)
+          .flatMap((item) => getSurveyNumbers(item))
+      ),
+    [selectedState, selectedDistrict, selectedCityMandal, selectedVillage]
+  );
+
+  const clearSearchResult = () => {
+    setMatchedProperty(null);
+    setSearched(false);
+  };
+
+  const resetFilters = () => {
+    setSearchMode("survey");
+    setSelectedState("");
+    setSelectedDistrict("");
+    setSelectedCityMandal("");
+    setSelectedVillage("");
+    setSelectedSurvey("");
+    setPassbookInput("");
+    clearSearchResult();
+  };
+
   const handleSurveySearch = (e) => {
     e.preventDefault();
-    const needle = normalizeSurvey(surveyInput);
-    
-    if (!needle) {
-      setMatchedProperty(null);
-      setSearched(true);
-      return;
-    }
+    let match = null;
 
-    // Search through propertiesData listings
-    const match = propertiesData?.listings?.find((item) => {
-      // Check single survey number
-      const singleSurvey = item?.government_approvals?.land_ownership?.survey_number;
-      if (singleSurvey && normalizeSurvey(singleSurvey) === needle) {
-        return true;
+    if (searchMode === "survey") {
+      const needle = normalizeSurvey(selectedSurvey);
+      if (!needle) {
+        setMatchedProperty(null);
+        setSearched(true);
+        return;
       }
-      
-      // Check array of survey numbers (for agricultural land with multiple surveys)
-      const surveyArray = item?.government_approvals?.land_ownership?.survey_numbers;
-      if (surveyArray && Array.isArray(surveyArray)) {
-        return surveyArray.some(s => normalizeSurvey(s) === needle);
-      }
-      
-      // Partial match for search (contains)
-      if (singleSurvey && normalizeSurvey(singleSurvey).includes(needle)) {
-        return true;
-      }
-      
-      return false;
-    });
+      match = (propertiesData?.listings || []).find((item) => {
+        const state = String(item?.location?.state || "").trim();
+        const district = String(item?.location?.district || "").trim();
+        const cityMandal = getCityOrMandal(item);
+        const village = getVillage(item);
+        const surveys = getSurveyNumbers(item);
+
+        if (state !== selectedState) return false;
+        if (district !== selectedDistrict) return false;
+        if (cityMandal !== selectedCityMandal) return false;
+        if (village !== selectedVillage) return false;
+        return surveys.some((survey) => normalizeSurvey(survey) === needle);
+      });
+    } else {
+      const needle = normalizePassbook(passbookInput);
+      match = (propertiesData?.listings || []).find(
+        (item) => normalizePassbook(getPassbookNumber(item)) === needle
+      );
+    }
 
     setMatchedProperty(match || null);
     setSearched(true);
@@ -186,40 +284,190 @@ const BuyerHome = () => {
             and government-backed verification criteria designed to
             eliminate risk and improve decision-making.
           </p>
-          <div className="mt-16 sm:mt-20 relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl 
+          <div className="mt-16 sm:mt-20 relative z-10 max-w-4xl mr-auto text-left p-4 sm:p-6 md:p-8 rounded-3xl bg-white/95 border border-white/20 shadow-[0_40px_120px_rgba(0,0,0,0.25)]">
+            <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+              <h3 className="text-sm font-semibold text-slate-900 mb-3">Search By</h3>
+              <div className="flex items-center justify-between gap-4">
+                <label className="inline-flex items-center gap-2 text-sm sm:text-base font-medium text-slate-800 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="searchMode"
+                    checked={searchMode === "survey"}
+                    onChange={() => {
+                      setSearchMode("survey");
+                      setPassbookInput("");
+                      clearSearchResult();
+                    }}
+                    className="h-4 w-4 accent-brand-dark"
+                  />
+                  Search by Survey Number
+                </label>
+                <label className="inline-flex items-center gap-2 text-sm sm:text-base font-medium text-slate-800 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="searchMode"
+                    checked={searchMode === "passbook"}
+                    onChange={() => {
+                      setSearchMode("passbook");
+                      setSelectedState("");
+                      setSelectedDistrict("");
+                      setSelectedCityMandal("");
+                      setSelectedVillage("");
+                      setSelectedSurvey("");
+                      clearSearchResult();
+                    }}
+                    className="h-4 w-4 accent-brand-dark"
+                  />
+                  Search by Pattadar Passbook Number
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 relative z-10 max-w-4xl mr-auto text-left bg-white/95 backdrop-blur-xl rounded-3xl 
                           shadow-[0_40px_120px_rgba(0,0,0,0.25)] 
                           border border-white/20 p-4 sm:p-8 md:p-10 text-slate-800 
                           transition-all duration-500 hover:shadow-[0_50px_150px_rgba(0,0,0,0.35)]">
             <form onSubmit={handleSurveySearch}>
-              <div className="grid grid-cols-1 gap-4">
-                <input
-                  type="text"
-                  value={surveyInput}
-                  onChange={(e) => setSurveyInput(e.target.value)}
-                  placeholder="ENTER SURVEY NUMBER (e.g., 123/45, 456/A)"
-                  className="px-4 py-4 sm:px-5 sm:py-5 rounded-2xl border border-slate-200 
-                            focus:ring-2 focus:ring-brand focus:border-brand 
-                            outline-none transition w-full text-base sm:text-lg"
-                />
+              {searchMode === "survey" && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <select
+                  value={selectedState}
+                  onChange={(e) => {
+                    setSelectedState(e.target.value);
+                    setSelectedDistrict("");
+                    setSelectedCityMandal("");
+                    setSelectedVillage("");
+                    setSelectedSurvey("");                    clearSearchResult();
+                  }}
+                  className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white"
+                >
+                  <option value="">Select State</option>
+                  {stateOptions.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedDistrict}
+                  onChange={(e) => {
+                    setSelectedDistrict(e.target.value);
+                    setSelectedCityMandal("");
+                    setSelectedVillage("");
+                    setSelectedSurvey("");                    clearSearchResult();
+                  }}
+                  disabled={!selectedState}
+                  className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white disabled:bg-slate-100 disabled:text-slate-400"
+                >
+                  <option value="">Select District</option>
+                  {districtOptions.map((district) => (
+                    <option key={district} value={district}>
+                      {district}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedCityMandal}
+                  onChange={(e) => {
+                    setSelectedCityMandal(e.target.value);
+                    setSelectedVillage("");
+                    setSelectedSurvey("");                    clearSearchResult();
+                  }}
+                  disabled={!selectedDistrict}
+                  className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white disabled:bg-slate-100 disabled:text-slate-400"
+                >
+                  <option value="">Select City / Mandal</option>
+                  {cityMandalOptions.map((cityMandal) => (
+                    <option key={cityMandal} value={cityMandal}>
+                      {cityMandal}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedVillage}
+                  onChange={(e) => {
+                    setSelectedVillage(e.target.value);
+                    setSelectedSurvey("");                    clearSearchResult();
+                  }}
+                  disabled={!selectedCityMandal}
+                  className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white disabled:bg-slate-100 disabled:text-slate-400"
+                >
+                  <option value="">Select Village</option>
+                  {villageOptions.map((village) => (
+                    <option key={village} value={village}>
+                      {village}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedSurvey}
+                  onChange={(e) => {
+                    setSelectedSurvey(e.target.value);                    clearSearchResult();
+                  }}
+                  disabled={!selectedVillage}
+                  className="md:col-span-2 px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white disabled:bg-slate-100 disabled:text-slate-400"
+                >
+                  <option value="">Select Survey Number</option>
+                  {surveyOptions.map((survey) => (
+                    <option key={survey} value={survey}>
+                      {survey}
+                    </option>
+                  ))}
+                </select>
+                </div>
+              )}
+
+              {searchMode === "passbook" && (
+                <div className="grid grid-cols-1 gap-4">
+                  <input
+                    type="text"
+                    value={passbookInput}
+                    onChange={(e) => {
+                      setPassbookInput(e.target.value);
+                      clearSearchResult();
+                    }}
+                    placeholder="Enter Pattadar Passbook Number"
+                    className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base"
+                  />
+                </div>
+              )}
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <button
+                  type="submit"
+                  disabled={searchMode === "survey" ? !selectedSurvey : !passbookInput.trim()}
+                  className="flex-1 bg-brand-dark text-white py-3 sm:py-4 rounded-2xl
+                       hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
+                       transition-all duration-300 font-semibold text-base 
+                             shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Verify Property
+                </button>
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="flex-1 border border-slate-300 text-slate-700 py-3 sm:py-4 rounded-2xl hover:bg-slate-100 transition-all duration-200 font-medium text-sm sm:text-base"
+                >
+                  Reset Filters
+                </button>
               </div>
-              <button
-                type="submit"
-                className="mt-6 w-full bg-brand-dark text-white py-4 sm:py-5 rounded-2xl
-                           hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
-                           transition-all duration-300 font-semibold text-lg 
-                           shadow-xl"
-              >
-                Verify Property
-              </button>
             </form>
 
             {searched && !matchedProperty && (
               <div className="mt-5 text-left">
                 <p className="text-sm text-red-600 font-medium">
-                  No property found for survey number: "{surveyInput}"
+                  {searchMode === "survey"
+                    ? `No property found for selected survey number: "${selectedSurvey}"`
+                    : `No property found for passbook number: "${passbookInput}"`}
                 </p>
                 <p className="text-xs text-slate-500 mt-1">
-                  Try these formats: 123/45, 456/A, 78/90A, or check the survey number
+                  {searchMode === "survey"
+                    ? "Please verify the selected location and survey number."
+                    : "Please verify the entered passbook number."}
                 </p>
               </div>
             )}
@@ -276,6 +524,7 @@ const BuyerHome = () => {
                       (matchedProperty?.government_approvals?.land_ownership?.survey_numbers?.join(', ')) || 
                       "-"
                     }</p>
+                    <p>Pattadar Passbook No: {getPassbookNumber(matchedProperty) || "-"}</p>
                     <p>Status: {
                       matchedProperty?.government_approvals?.land_ownership?.verification_status || 
                       (matchedProperty?.verified_badge === "Not Verified" ? "Verification Pending" : "-")

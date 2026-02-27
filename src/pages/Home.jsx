@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import propertiesData from "../data/properties.json";
 import {
@@ -15,7 +15,14 @@ import {
  
 export default function Home() {
   const navigate = useNavigate();
-  const [surveyInput, setSurveyInput] = useState("");
+  const listings = propertiesData?.listings || [];
+  const [searchMode, setSearchMode] = useState("survey");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedCityMandal, setSelectedCityMandal] = useState("");
+  const [selectedVillage, setSelectedVillage] = useState("");
+  const [selectedSurvey, setSelectedSurvey] = useState("");
+  const [passbookInput, setPassbookInput] = useState("");
   const [searched, setSearched] = useState(false);
   const [matchedProperty, setMatchedProperty] = useState(null);
 
@@ -96,16 +103,227 @@ export default function Home() {
       desc: "Legal disputes cost ₹5 - ₹15 lakhs per case, creating significant liability."
     }
   ];
+  const telanganaIntegrationSlides = useMemo(
+    () => [
+      {
+        title: "Bhu Bharati API",
+        subtitle: "Land Records & Pattadar Data",
+        description:
+          "Fetches survey-linked ownership, pattadar details, and core land record attributes for title validation.",
+        logo: "/Bhubhartu.png",
+      },
+      {
+        title: "IGRS TS",
+        subtitle: "Registration & Stamps Department",
+        description:
+          "Validates registration history, transaction records, and stamp-duty context to flag inconsistencies early.",
+        logo: "/Igrs.png",
+      },
+      {
+        title: "RERA TS",
+        subtitle: "Project Registration Compliance",
+        description:
+          "Checks project registration status and regulatory compliance signals for plotted and development projects.",
+        logo: "/TS Rera.png",
+      },
+      {
+        title: "GHMC / HMDA",
+        subtitle: "Municipal & Layout Approvals",
+        description:
+          "Verifies planning permissions, municipal approvals, and layout authorization for urban transactions.",
+        logo: "/GHMC.png",
+      },
+      {
+        title: "TSSPDCL",
+        subtitle: "Electricity Verification",
+        description:
+          "Confirms electricity connection and service-level record consistency as part of utility due diligence.",
+        logo: "/TGSPDCL.png",
+      },
+    ],
+    []
+  );
+  const andhraIntegrationSlides = useMemo(
+    () => [
+      {
+        title: "Meebhoomi API",
+        subtitle: "Land & Adangal Records",
+        description:
+          "Fetches AP land records, adangal-linked metadata, and ownership context for due diligence verification.",
+        logo: "/MeeBhoomi.png",
+      },
+      {
+        title: "IGRS AP",
+        subtitle: "Registration Office Data",
+        description:
+          "Verifies registration-side transaction details and record continuity for property transfer validation.",
+        logo: "/IgrsAp.png",
+      },
+      {
+        title: "RERA AP",
+        subtitle: "Real Estate Regulation",
+        description:
+          "Checks project-level regulatory registration and compliance signals under Andhra Pradesh RERA systems.",
+        logo: "/APRera.png",
+      },
+      {
+        title: "CRDA / DTCP",
+        subtitle: "Development Approvals",
+        description:
+          "Validates planning permissions and development authority approvals for layout and land-use checks.",
+        logo: "/APCrda.png",
+      },
+      {
+        title: "APSPDCL",
+        subtitle: "Power Verification",
+        description:
+          "Confirms electricity connection status and utility consistency as part of transaction risk assessment.",
+        logo: "/APSPDCL.png",
+      },
+    ],
+    []
+  );
+  const [activeTelanganaSlide, setActiveTelanganaSlide] = useState(0);
+  const [activeAndhraSlide, setActiveAndhraSlide] = useState(0);
+
+  useEffect(() => {
+    if (!telanganaIntegrationSlides.length) return;
+    const timer = setInterval(() => {
+      setActiveTelanganaSlide(
+        (prev) => (prev + 1) % telanganaIntegrationSlides.length
+      );
+    }, 3200);
+    return () => clearInterval(timer);
+  }, [telanganaIntegrationSlides]);
+
+  useEffect(() => {
+    if (!andhraIntegrationSlides.length) return;
+    const timer = setInterval(() => {
+      setActiveAndhraSlide((prev) => (prev + 1) % andhraIntegrationSlides.length);
+    }, 3200);
+    return () => clearInterval(timer);
+  }, [andhraIntegrationSlides]);
 
   const normalizeSurvey = (value) => String(value || "").toUpperCase().replace(/\s+/g, "");
+  const normalizePassbook = (value) => String(value || "").toUpperCase().replace(/\s+/g, "");
+  const getVillage = (item) => String(item?.location?.address || "").split(",")[0]?.trim() || "";
+  const getCityOrMandal = (item) => String(item?.location?.city || item?.location?.zone || "").trim();
+  const getPassbookNumber = (item) => {
+    const revenue = item?.government_approvals?.revenue_records || {};
+    const ownership = item?.government_approvals?.land_ownership || {};
+    const candidates = [
+      revenue?.pattadar_passbook_number,
+      revenue?.passbook_number,
+      ownership?.pattadar_passbook_number,
+      ownership?.passbook_number,
+      item?.pattadar_passbook_number,
+      item?.passbook_number,
+    ];
+    return String(candidates.find(Boolean) || "").trim();
+  };
+  const getSurveyNumbers = (item) => {
+    const landOwnership = item?.government_approvals?.land_ownership || {};
+    const surveys = [];
+    if (landOwnership?.survey_number) {
+      surveys.push(String(landOwnership.survey_number).trim());
+    }
+    if (Array.isArray(landOwnership?.survey_numbers)) {
+      landOwnership.survey_numbers.forEach((survey) => surveys.push(String(survey).trim()));
+    }
+    return surveys.filter(Boolean);
+  };
+  const uniqueSorted = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
+
+  const stateOptions = useMemo(
+    () => uniqueSorted(listings.map((item) => String(item?.location?.state || "").trim())),
+    [listings]
+  );
+
+  const districtOptions = useMemo(
+    () =>
+      uniqueSorted(
+        listings
+          .filter((item) => String(item?.location?.state || "").trim() === selectedState)
+          .map((item) => String(item?.location?.district || "").trim())
+      ),
+    [listings, selectedState]
+  );
+
+  const cityMandalOptions = useMemo(
+    () =>
+      uniqueSorted(
+        listings
+          .filter((item) => String(item?.location?.state || "").trim() === selectedState)
+          .filter((item) => String(item?.location?.district || "").trim() === selectedDistrict)
+          .map((item) => getCityOrMandal(item))
+      ),
+    [listings, selectedState, selectedDistrict]
+  );
+
+  const villageOptions = useMemo(
+    () =>
+      uniqueSorted(
+        listings
+          .filter((item) => String(item?.location?.state || "").trim() === selectedState)
+          .filter((item) => String(item?.location?.district || "").trim() === selectedDistrict)
+          .filter((item) => getCityOrMandal(item) === selectedCityMandal)
+          .map((item) => getVillage(item))
+      ),
+    [listings, selectedState, selectedDistrict, selectedCityMandal]
+  );
+
+  const surveyOptions = useMemo(
+    () =>
+      uniqueSorted(
+        listings
+          .filter((item) => String(item?.location?.state || "").trim() === selectedState)
+          .filter((item) => String(item?.location?.district || "").trim() === selectedDistrict)
+          .filter((item) => getCityOrMandal(item) === selectedCityMandal)
+          .filter((item) => getVillage(item) === selectedVillage)
+          .flatMap((item) => getSurveyNumbers(item))
+      ),
+    [listings, selectedState, selectedDistrict, selectedCityMandal, selectedVillage]
+  );
+
+  const clearSearchResult = () => {
+    setMatchedProperty(null);
+    setSearched(false);
+  };
+
+  const resetFilters = () => {
+    setSearchMode("survey");
+    setSelectedState("");
+    setSelectedDistrict("");
+    setSelectedCityMandal("");
+    setSelectedVillage("");
+    setSelectedSurvey("");
+    setPassbookInput("");
+    clearSearchResult();
+  };
 
   const handleSurveySearch = (e) => {
     e.preventDefault();
-    const needle = normalizeSurvey(surveyInput);
-    const match = propertiesData?.listings?.find((item) => {
-      const survey = item?.government_approvals?.land_ownership?.survey_number;
-      return normalizeSurvey(survey) === needle || normalizeSurvey(survey).includes(needle);
-    });
+    let match = null;
+
+    if (searchMode === "survey") {
+      const needle = normalizeSurvey(selectedSurvey);
+      match = listings.find((item) => {
+        const state = String(item?.location?.state || "").trim();
+        const district = String(item?.location?.district || "").trim();
+        const cityMandal = getCityOrMandal(item);
+        const village = getVillage(item);
+        const surveys = getSurveyNumbers(item);
+
+        if (state !== selectedState) return false;
+        if (district !== selectedDistrict) return false;
+        if (cityMandal !== selectedCityMandal) return false;
+        if (village !== selectedVillage) return false;
+        return surveys.some((survey) => normalizeSurvey(survey) === needle);
+      });
+    } else {
+      const needle = normalizePassbook(passbookInput);
+      match = listings.find((item) => normalizePassbook(getPassbookNumber(item)) === needle);
+    }
 
     setMatchedProperty(match || null);
     setSearched(true);
@@ -113,7 +331,7 @@ export default function Home() {
 
   return (
     <div className="bg-white text-slate-800 overflow-x-hidden">
-      <ScrollToTopButton />
+      {/* <ScrollToTopButton /> */}
 
       {/* ================= HERO (UNCHANGED) ================= */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -124,10 +342,13 @@ export default function Home() {
       transform: "translateY(var(--parallax)) scale(1.08)",
     }}
   ></div>
-  <div className="relative text-center px-4 sm:px-6 max-w-5xl text-white">
-    <p className="uppercase tracking-[0.3em] text-xs mb-6 text-brand-dark font-medium">
-      ADVANCED SEARCH & DISCOVERY
-    </p>
+  <div className="relative text-center px-6 sm:px-6 max-w-5xl text-white">
+    <div className="max-w-sm mx-auto mb-8 bg-white border  border-gray-600 rounded-xl px-6 py-3 shadow-md mt-2 ">
+      <p className="uppercase tracking-[0.3em] text-xs text-gray-900 font-semibold text-center">
+        ADVANCED SEARCH & DISCOVERY
+      </p>
+    </div>
+
     <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-dark">
       Find Verified Properties
       <span className="block text-brand-dark mt-3">
@@ -139,36 +360,185 @@ export default function Home() {
       and government backed verification criteria designed to
       eliminate risk and improve decision making.
     </p>
-    <div className="mt-16 sm:mt-20 relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl 
+    <div className="mt-8 sm:mt-20 lg:mt-8 relative z-10 max-w-4xl mr-auto text-left p-4 sm:p-6 md:p-8 rounded-3xl bg-white/95 border border-white/20 shadow-[0_40px_120px_rgba(0,0,0,0.25)]"> 
+    <h1 className="text-sm font-bold text-slate-900 text-center mb-3">Search By</h1>
+      <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+        
+        <div className="flex items-center justify-between gap-4">
+          <label className="inline-flex items-center gap-2 text-sm sm:text-base font-medium text-slate-800 cursor-pointer">
+            <input
+              type="radio"
+              name="searchMode"
+              checked={searchMode === "survey"}
+              onChange={() => {
+                setSearchMode("survey");
+                setPassbookInput("");
+                clearSearchResult();
+              }}
+              className="h-4 w-4 accent-brand-dark"
+            />
+             Survey Number
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm sm:text-base font-medium text-slate-800 cursor-pointer">
+            <input
+              type="radio"
+              name="searchMode"
+              checked={searchMode === "passbook"}
+              onChange={() => {
+                setSearchMode("passbook");
+                setSelectedState("");
+                setSelectedDistrict("");
+                setSelectedCityMandal("");
+                setSelectedVillage("");
+                setSelectedSurvey("");
+                clearSearchResult();
+              }}
+              className="h-4 w-4 accent-brand-dark"
+            />
+             Pattadar  Number
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div className="mt-4 relative z-10 max-w-4xl mr-auto text-left bg-white/95 backdrop-blur-xl rounded-3xl 
                     shadow-[0_40px_120px_rgba(0,0,0,0.25)] 
                     border border-white/20 p-4 sm:p-8 md:p-10 text-slate-800 
                     transition-all duration-500 hover:shadow-[0_50px_150px_rgba(0,0,0,0.35)]">
       <form onSubmit={handleSurveySearch}>
-        <div className="grid grid-cols-1 gap-4">
-          <input
-            type="text"
-            value={surveyInput}
-            onChange={(e) => setSurveyInput(e.target.value)}
-            placeholder="ENTER SURVEY NUMBER (e.g., 123/45)"
-            className="px-4 py-4 sm:px-5 sm:py-5 rounded-2xl border border-slate-200 
-                      focus:ring-2 focus:ring-brand focus:border-brand 
-                      outline-none transition w-full text-base sm:text-lg"
-          />
+        {searchMode === "survey" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <select
+            value={selectedState}
+            onChange={(e) => {
+              setSelectedState(e.target.value);
+              setSelectedDistrict("");
+              setSelectedCityMandal("");
+              setSelectedVillage("");
+              setSelectedSurvey("");              clearSearchResult();
+            }}
+            className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white"
+          >
+            <option value="">Select State</option>
+            {stateOptions.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={selectedDistrict}
+            onChange={(e) => {
+              setSelectedDistrict(e.target.value);
+              setSelectedCityMandal("");
+              setSelectedVillage("");
+              setSelectedSurvey("");              clearSearchResult();
+            }}
+            disabled={!selectedState}
+            className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white disabled:bg-slate-100 disabled:text-slate-400"
+          >
+            <option value="">Select District</option>
+            {districtOptions.map((district) => (
+              <option key={district} value={district}>
+                {district}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={selectedCityMandal}
+            onChange={(e) => {
+              setSelectedCityMandal(e.target.value);
+              setSelectedVillage("");
+              setSelectedSurvey("");              clearSearchResult();
+            }}
+            disabled={!selectedDistrict}
+            className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white disabled:bg-slate-100 disabled:text-slate-400"
+          >
+            <option value="">Select City / Mandal</option>
+            {cityMandalOptions.map((cityMandal) => (
+              <option key={cityMandal} value={cityMandal}>
+                {cityMandal}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={selectedVillage}
+            onChange={(e) => {
+              setSelectedVillage(e.target.value);
+              setSelectedSurvey("");              clearSearchResult();
+            }}
+            disabled={!selectedCityMandal}
+            className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white disabled:bg-slate-100 disabled:text-slate-400"
+          >
+            <option value="">Select Village</option>
+            {villageOptions.map((village) => (
+              <option key={village} value={village}>
+                {village}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={selectedSurvey}
+            onChange={(e) => {
+              setSelectedSurvey(e.target.value);              clearSearchResult();
+            }}
+            disabled={!selectedVillage}
+            className="md:col-span-2 px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base bg-white disabled:bg-slate-100 disabled:text-slate-400"
+          >
+            <option value="">Select Survey Number</option>
+            {surveyOptions.map((survey) => (
+              <option key={survey} value={survey}>
+                {survey}
+              </option>
+            ))}
+          </select>
+          </div>
+        )}
+
+        {searchMode === "passbook" && (
+          <div className="grid grid-cols-1 gap-4">
+            <input
+              type="text"
+              value={passbookInput}
+              onChange={(e) => {
+                setPassbookInput(e.target.value);
+                clearSearchResult();
+              }}
+              placeholder="Enter Pattadar Passbook Number"
+              className="px-3 py-3 sm:px-4 sm:py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-brand focus:border-brand outline-none transition w-full text-sm sm:text-base"
+            />
+          </div>
+        )}
+        <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <button
+            type="submit"
+            disabled={searchMode === "survey" ? !selectedSurvey : !passbookInput.trim()}
+            className="flex-1 bg-brand-dark text-white py-3 sm:py-4 rounded-2xl
+                       hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
+                       transition-all duration-300 font-semibold text-base 
+                       shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            Verify Property
+          </button>
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="flex-1 border border-slate-300 text-slate-700 py-3 sm:py-4 rounded-2xl hover:bg-slate-100 transition-all duration-200 font-medium text-sm sm:text-base"
+          >
+            Reset Filters
+          </button>
         </div>
-        <button
-          type="submit"
-          className="mt-6 w-full bg-brand-dark text-white py-4 sm:py-5 rounded-2xl
-                     hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
-                     transition-all duration-300 font-semibold text-lg 
-                     shadow-xl"
-        >
-          Verify Property
-        </button>
       </form>
 
       {searched && !matchedProperty && (
         <p className="mt-5 text-left text-sm text-red-600 font-medium">
-          No property found for this survey number.
+          {searchMode === "survey"
+            ? `No property found for selected survey number: "${selectedSurvey}".`
+            : `No property found for passbook number: "${passbookInput}".`}
         </p>
       )}
 
@@ -225,6 +595,7 @@ export default function Home() {
               <p>Current Owner: {matchedProperty?.government_approvals?.land_ownership?.pattadar_name || "-"}</p>
               <p>Ownership Type: {matchedProperty?.seller_information?.type || "Individual"}</p>
               <p>Survey Number: {matchedProperty?.government_approvals?.land_ownership?.survey_number || "-"}</p>
+              <p>Pattadar Passbook No: {getPassbookNumber(matchedProperty) || "-"}</p>
               <p>Status: {
                 matchedProperty?.government_approvals?.land_ownership?.verification_status || 
                 (matchedProperty?.verified_badge === "Not Verified" ? "Verification Pending" : "-")
@@ -435,7 +806,7 @@ export default function Home() {
     {/* Row 1 */}
     <div className="flex items-center gap-6">
       <img
-        src="/Ap logo.png"
+        src="/MeeBhoomi.png"
         alt="Andhra Pradesh Government"
         className="h-20 object-contain opacity-80 hover:opacity-100 transition duration-300"
       />
@@ -599,75 +970,114 @@ export default function Home() {
       </p>
     </div>
 
-    {/* STATE INTEGRATIONS */}
-    <div className="mt-20 grid md:grid-cols-2 gap-12">
+    {/* TELANGANA INTEGRATIONS SLIDER */}
+    <div className="mt-20 max-w-5xl mx-auto">
+      <div className="flex items-center justify-center gap-3">
+        <img
+          src="/TGlogo.png"
+          alt="Telangana Government"
+          className="h-10 object-contain"
+        />
+        <h3 className="text-3xl font-semibold text-yellow-800">
+          Telangana Integrations
+        </h3>
+      </div>
 
-      {/* TELANGANA CARD */}
-      <div className="group relative bg-white/70 backdrop-blur-md 
-                      border border-slate-500 rounded-3xl p-10
-                      shadow-sm hover:shadow-2xl hover:-translate-y-2
-                      transition-all duration-500">
-
-        <div className="flex items-center gap-4">
-          <img
-            src="/TG Logo.png"
-            alt="Telangana Government"
-            className="h-20 object-contain opacity-90"
-          />
-          <h3 className="text-2xl font-semibold text-yellow-800">
-            Telangana Integrations
-          </h3>
-        </div>
-
-        <div className="mt-8 space-y-5 text-slate-600">
-          {[
-            "Bhu Bharati API - Land records & pattadar data",
-            "IGRS TS - Registration & stamps department",
-            "RERA TS - Project registration compliance",
-            "GHMC / HMDA - Municipal approvals",
-            "TSSPDCL - Electricity verification"
-          ].map((item, index) => (
-            <div key={index} className="flex items-start gap-3">
-              <FiCheckCircle className="text-brand text-lg mt-1" />
-              <span>{item}</span>
+      <div className="mt-8 overflow-hidden">
+        <div
+          className="flex transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${activeTelanganaSlide * 100}%)` }}
+        >
+          {telanganaIntegrationSlides.map((slide, index) => (
+            <div key={index} className="w-full shrink-0 px-1">
+              <div className="bg-white/80 backdrop-blur-md border border-slate-300 rounded-3xl p-8 shadow-sm">
+                <div className="flex items-center justify-center gap-3">
+                  <img
+                    src={slide.logo || "/TG Logo.png"}
+                    alt="Telangana Government"
+                    className="h-10 object-contain"
+                    onError={(e) => {
+                      e.currentTarget.src = "/TG Logo.png";
+                    }}
+                  />
+                  <h4 className="text-2xl font-semibold text-slate-900">{slide.title}</h4>
+                </div>
+                <p className="mt-3 text-sm font-medium text-brand text-center">{slide.subtitle}</p>
+                <p className="mt-4 text-slate-600 leading-relaxed text-center">{slide.description}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ANDHRA PRADESH CARD */}
-      <div className="group relative bg-white/70 backdrop-blur-md 
-                      border border-slate-500 rounded-3xl p-10
-                      shadow-sm hover:shadow-2xl hover:-translate-y-2
-                      transition-all duration-500">
-
-        <div className="flex items-center gap-4">
-          <img
-            src="/Ap logo2 .png"
-            alt="Andhra Pradesh Government"
-            className="h-20 object-contain opacity-90"
+      <div className="mt-5 flex items-center justify-center gap-2">
+        {telanganaIntegrationSlides.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => setActiveTelanganaSlide(index)}
+            className={`h-2.5 rounded-full transition-all ${
+              activeTelanganaSlide === index ? "w-7 bg-brand-dark" : "w-2.5 bg-slate-300"
+            }`}
+            aria-label={`Go to Telangana slide ${index + 1}`}
           />
-          <h3 className="text-2xl font-semibold text-emerald-800">
-            Andhra Pradesh Integrations
-          </h3>
-        </div>
+        ))}
+      </div>
+    </div>
 
-        <div className="mt-8 space-y-5 text-slate-600">
-          {[
-            "Meebhoomi API - Land & Adangal records",
-            "IGRS AP - Registration office data",
-            "RERA AP - Real estate regulation",
-            "CRDA / DTCP - Development approvals",
-            "APSPDCL - Power verification"
-          ].map((item, index) => (
-            <div key={index} className="flex items-start gap-3">
-              <FiCheckCircle className="text-brand text-lg mt-1" />
-              <span>{item}</span>
+    {/* ANDHRA PRADESH INTEGRATIONS SLIDER */}
+    <div className="mt-14 max-w-5xl mx-auto">
+      <div className="flex items-center justify-center gap-3">
+        <img
+          src="/Ap logo2 .png"
+          alt="Andhra Pradesh Government"
+          className="h-10 object-contain"
+        />
+        <h3 className="text-3xl font-semibold text-emerald-800">
+          Andhra Pradesh Integrations
+        </h3>
+      </div>
+
+      <div className="mt-8 overflow-hidden">
+        <div
+          className="flex transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${activeAndhraSlide * 100}%)` }}
+        >
+          {andhraIntegrationSlides.map((slide, index) => (
+            <div key={index} className="w-full shrink-0 px-1">
+              <div className="bg-white/80 backdrop-blur-md border border-slate-300 rounded-3xl p-8 shadow-sm">
+                <div className="flex items-center justify-center gap-3">
+                  <img
+                    src={slide.logo || "/Ap logo2 .png"}
+                    alt="Andhra Pradesh Government"
+                    className="h-10 object-contain"
+                    onError={(e) => {
+                      e.currentTarget.src = "/Ap logo2 .png";
+                    }}
+                  />
+                  <h4 className="text-2xl font-semibold text-slate-900">{slide.title}</h4>
+                </div>
+                <p className="mt-3 text-sm font-medium text-brand text-center">{slide.subtitle}</p>
+                <p className="mt-4 text-slate-600 leading-relaxed text-center">{slide.description}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
+      <div className="mt-5 flex items-center justify-center gap-2">
+        {andhraIntegrationSlides.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => setActiveAndhraSlide(index)}
+            className={`h-2.5 rounded-full transition-all ${
+              activeAndhraSlide === index ? "w-7 bg-brand-dark" : "w-2.5 bg-slate-300"
+            }`}
+            aria-label={`Go to Andhra slide ${index + 1}`}
+          />
+        ))}
+      </div>
     </div>
 
     {/* THIRD PARTY INTEGRATIONS */}
