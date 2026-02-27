@@ -109,35 +109,35 @@ export default function Home() {
         title: "Bhu Bharati API",
         subtitle: "Land Records & Pattadar Data",
         description:
-          "Fetches survey-linked ownership, pattadar details, and core land record attributes for title validation.",
+          "Fetches survey-linked ownership records, Pattadar details, land classification, extent, and core revenue attributes from Telangana’s integrated land records system enabling accurate title validation, ownership traceability, and risk assessment prior to property transactions.",
         logo: "/Bhubhartu.png",
       },
       {
         title: "IGRS TS",
         subtitle: "Registration & Stamps Department",
         description:
-          "Validates registration history, transaction records, and stamp-duty context to flag inconsistencies early.",
+          "Validates registration history, past transaction records, encumbrance details, and stamp-duty compliance through Telangana’s Integrated Grievance & Registration System enabling early detection of title gaps, record inconsistencies, and transfer risks before execution of sale agreements.",
         logo: "/Igrs.png",
       },
       {
         title: "RERA TS",
         subtitle: "Project Registration Compliance",
         description:
-          "Checks project registration status and regulatory compliance signals for plotted and development projects.",
+          "Validates project registration status, promoter credentials, approval disclosures, and compliance filings under the Telangana Real Estate Regulatory Authority framework ensuring regulatory transparency and safeguarding buyers against unregistered or non-compliant plotted and development projects.",
         logo: "/TS Rera.png",
       },
       {
         title: "GHMC / HMDA",
         subtitle: "Municipal & Layout Approvals",
         description:
-          "Verifies planning permissions, municipal approvals, and layout authorization for urban transactions.",
+          "Verifies building permissions, municipal approvals, zoning classifications, and layout authorizations issued by Greater Hyderabad Municipal Corporation (GHMC) and Hyderabad Metropolitan Development Authority (HMDA)  ensuring urban regulatory compliance, approved development status, and protection against unauthorized constructions in metropolitan transactions.",
         logo: "/GHMC.png",
       },
       {
         title: "TSSPDCL",
         subtitle: "Electricity Verification",
         description:
-          "Confirms electricity connection and service-level record consistency as part of utility due diligence.",
+          "Confirms active electricity connection status, service number authenticity, sanctioned load category, and billing consistency through Telangana State Southern Power Distribution Company Limited (TSSPDCL) systems strengthening utility-level due diligence and reducing transaction risk by validating occupancy and service continuity.",
         logo: "/TGSPDCL.png",
       },
     ],
@@ -149,35 +149,35 @@ export default function Home() {
         title: "Meebhoomi API",
         subtitle: "Land & Adangal Records",
         description:
-          "Fetches AP land records, adangal-linked metadata, and ownership context for due diligence verification.",
+          "Fetches Andhra Pradesh land records directly from Meebhoomi, including Adangal/Pahani data, survey details, ownership history, cultivation classification, and linked metadata enabling accurate due diligence, title validation, and risk assessment before property transactions.",
         logo: "/MeeBhoomi.png",
       },
       {
         title: "IGRS AP",
         subtitle: "Registration Office Data",
         description:
-          "Verifies registration-side transaction details and record continuity for property transfer validation.",
+          "Verifies registration-side transaction records through the Integrated Grievance & Registration System (IGRS) of Andhra Pradesh, ensuring continuity of title history, validation of past sale deeds, encumbrance status checks, and accurate property transfer authentication for secure transactions.",
         logo: "/IgrsAp.png",
       },
       {
         title: "RERA AP",
         subtitle: "Real Estate Regulation",
         description:
-          "Checks project-level regulatory registration and compliance signals under Andhra Pradesh RERA systems.",
+          "Validates project-level registration, promoter credentials, approval status, and compliance disclosures under the Andhra Pradesh Real Estate Regulatory Authority (RERA) framework ensuring regulatory transparency, legal adherence, and reduced investment risk for buyers.",
         logo: "/APRera.png",
       },
       {
         title: "CRDA / DTCP",
         subtitle: "Development Approvals",
         description:
-          "Validates planning permissions and development authority approvals for layout and land-use checks.",
+          "Validates layout approvals, zoning classifications, land use permissions, and development clearances issued by Andhra Pradesh Capital Region Development Authority (CRDA) and Directorate of Town and Country Planning Andhra Pradesh (DTCP) ensuring regulatory compliance, authorized plotting, and protection against unauthorized or non-conforming developments.",
         logo: "/APCrda.png",
       },
       {
         title: "APSPDCL",
         subtitle: "Power Verification",
         description:
-          "Confirms electricity connection status and utility consistency as part of transaction risk assessment.",
+          "Confirms active electricity connection status, service number authenticity, load category, and billing consistency through Andhra Pradesh Southern Power Distribution Company Limited (APSPDCL) systems adding an additional utility-level verification layer to assess occupancy validity and reduce transaction risk.",
         logo: "/APSPDCL.png",
       },
     ],
@@ -185,24 +185,26 @@ export default function Home() {
   );
   const [activeTelanganaSlide, setActiveTelanganaSlide] = useState(0);
   const [activeAndhraSlide, setActiveAndhraSlide] = useState(0);
+  const [isTelanganaPaused, setIsTelanganaPaused] = useState(false);
+  const [isAndhraPaused, setIsAndhraPaused] = useState(false);
 
   useEffect(() => {
     if (!telanganaIntegrationSlides.length) return;
     const timer = setInterval(() => {
-      setActiveTelanganaSlide(
-        (prev) => (prev + 1) % telanganaIntegrationSlides.length
-      );
-    }, 3200);
+      if (isTelanganaPaused) return;
+      setActiveTelanganaSlide((prev) => (prev + 1) % telanganaIntegrationSlides.length);
+    }, 5500);
     return () => clearInterval(timer);
-  }, [telanganaIntegrationSlides]);
+  }, [telanganaIntegrationSlides, isTelanganaPaused]);
 
   useEffect(() => {
     if (!andhraIntegrationSlides.length) return;
     const timer = setInterval(() => {
+      if (isAndhraPaused) return;
       setActiveAndhraSlide((prev) => (prev + 1) % andhraIntegrationSlides.length);
-    }, 3200);
+    }, 5500);
     return () => clearInterval(timer);
-  }, [andhraIntegrationSlides]);
+  }, [andhraIntegrationSlides, isAndhraPaused]);
 
   const normalizeSurvey = (value) => String(value || "").toUpperCase().replace(/\s+/g, "");
   const normalizePassbook = (value) => String(value || "").toUpperCase().replace(/\s+/g, "");
@@ -334,7 +336,7 @@ export default function Home() {
       {/* <ScrollToTopButton /> */}
 
       {/* ================= HERO (UNCHANGED) ================= */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-16 sm:pb-20">
   <div
     className="absolute inset-0 bg-cover bg-center will-change-transform"
     style={{
@@ -734,7 +736,7 @@ export default function Home() {
       {/* LEFT SIDE - Timeline */}
       <div ref={timelineRef} className="relative pl-0 sm:pl-8 md:pl-12 w-full">
         <div className="timeline-line"></div>
-        <div className="space-y-20">
+        <div className="md:space-y-12 space-y-10">
           {problems.map((item, index) => (
             <div
               key={index}
@@ -885,37 +887,37 @@ export default function Home() {
     {
       icon: <FiShield />,
       title: "Automated Legal Verification",
-      desc: "Direct government API integration provides instant ownership verification, encumbrance checks, and document validation.",
+      desc: "Seamless government API integrations make it possible to authenticate ownership in real time, analyze encumbrances, and validate documents, ensuring that all property transactions are completed in a legally sound and risk-free manner with immediate accuracy",
       color: "text-blue-600"
     },
     {
       icon: <FiTrendingUp />,
       title: "Price Intelligence Engine",
-      desc: "AI driven valuation models analyze comparable sales and infrastructure growth signals.",
+      desc: "AI-driven valuation models analyze comparable sales data, market demand trends, and infrastructure growth signals to deliver accurate, data-backed property pricing insights in real time.",
       color: "text-purple-600"
     },
     {
       icon: <FiUsers />,
       title: "Trusted Agent Network",
-      desc: "Performance rated professionals with verified credentials and transaction transparency.",
+      desc: "A curated network of performance-rated professionals with verified credentials, transparent track records, and accountability driven workflows ensuring trustworthy guidance and seamless transaction execution.",
       color: "text-emerald-600"
     },
     {
       icon: <FiLock />,
       title: "Secure Escrow Framework",
-      desc: "Token based safeguards protecting buyers and sellers during transactions.",
+      desc: "A blockchain-enabled, token governed escrow system that securely locks funds,automates the release of funds based on milestones, ensures compliance checks, and incorporates a dispute resolution system minimizing risks associated with counterparty transactions while ensuring transparent and tamper proof transactions",
       color: "text-pink-600"
     },
     {
       icon: <FiFileText />,
       title: "Legal Document Automation",
-      desc: "Auto generated agreements tailored for TS & AP.",
+      desc: "Auto-generated, legally compliant agreements customized for Telangana (TS) and Andhra Pradesh (AP), dynamically tailored to transaction type, regulatory requirements, and property specifics reducing errors, delays, and legal risk.",
       color: "text-yellow-600"
     },
     {
       icon: <FiRefreshCw />,
       title: "Post-Sale Services",
-      desc: "Mutation tracking, tax integration, and lifecycle support.",
+      desc: "End-to-end post transaction support including mutation tracking, property tax integration, ownership record updates, and ongoing lifecycle assistance ensuring a smooth transition even after the deal is closed.",
       color: "text-indigo-600"
     }
   ].map((feature, index) => (
@@ -983,14 +985,18 @@ export default function Home() {
         </h3>
       </div>
 
-      <div className="mt-8 overflow-hidden">
+      <div
+        className="mt-8 overflow-hidden"
+        onMouseEnter={() => setIsTelanganaPaused(true)}
+        onMouseLeave={() => setIsTelanganaPaused(false)}
+      >
         <div
           className="flex transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${activeTelanganaSlide * 100}%)` }}
         >
           {telanganaIntegrationSlides.map((slide, index) => (
             <div key={index} className="w-full shrink-0 px-1">
-              <div className="bg-white/80 backdrop-blur-md border border-slate-300 rounded-3xl p-8 shadow-sm">
+              <div className="bg-white/80 backdrop-blur-md border-2 border-slate-400 rounded-3xl p-8 shadow-sm text-center">
                 <div className="flex items-center justify-center gap-3">
                   <img
                     src={slide.logo || "/TG Logo.png"}
@@ -1002,7 +1008,9 @@ export default function Home() {
                   />
                   <h4 className="text-2xl font-semibold text-slate-900">{slide.title}</h4>
                 </div>
-                <p className="mt-3 text-sm font-medium text-brand text-center">{slide.subtitle}</p>
+                <p className="mt-3 text-sm font-semibold text-brand-dark text-center bg-brand/10 border border-brand/20 rounded-full px-4 py-1 inline-block mx-auto">
+                  {slide.subtitle}
+                </p>
                 <p className="mt-4 text-slate-600 leading-relaxed text-center">{slide.description}</p>
               </div>
             </div>
@@ -1038,14 +1046,18 @@ export default function Home() {
         </h3>
       </div>
 
-      <div className="mt-8 overflow-hidden">
+      <div
+        className="mt-8 overflow-hidden"
+        onMouseEnter={() => setIsAndhraPaused(true)}
+        onMouseLeave={() => setIsAndhraPaused(false)}
+      >
         <div
           className="flex transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${activeAndhraSlide * 100}%)` }}
         >
           {andhraIntegrationSlides.map((slide, index) => (
             <div key={index} className="w-full shrink-0 px-1">
-              <div className="bg-white/80 backdrop-blur-md border border-slate-300 rounded-3xl p-8 shadow-sm">
+              <div className="bg-white/80 backdrop-blur-md border-2 border-slate-400 rounded-3xl p-8 shadow-sm text-center">
                 <div className="flex items-center justify-center gap-3">
                   <img
                     src={slide.logo || "/Ap logo2 .png"}
@@ -1057,7 +1069,9 @@ export default function Home() {
                   />
                   <h4 className="text-2xl font-semibold text-slate-900">{slide.title}</h4>
                 </div>
-                <p className="mt-3 text-sm font-medium text-brand text-center">{slide.subtitle}</p>
+                <p className="mt-3 text-sm font-semibold text-brand-dark text-center bg-brand/10 border border-brand/20 rounded-full px-4 py-1 inline-block mx-auto">
+                  {slide.subtitle}
+                </p>
                 <p className="mt-4 text-slate-600 leading-relaxed text-center">{slide.description}</p>
               </div>
             </div>
