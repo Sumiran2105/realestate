@@ -201,7 +201,7 @@ export default function Navbar() {
                 </Link>
                 <Link 
                   to="/register" 
-                  className="px-4 py-2 rounded-lg border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition font-medium text-sm"
+                  className="px-4 py-2 rounded-lg border-2 border-emerald-800 text-emerald-600 hover:bg-emerald-50 transition font-medium text-sm"
                 >
                   Sign Up
                 </Link>
@@ -235,9 +235,9 @@ export default function Navbar() {
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="p-6">
+        <div className="p-3">
           {/* Mobile Menu Header */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-4">
             <Link 
               to="/" 
               className="text-xl font-bold text-slate-800 flex items-center gap-2 "
@@ -267,7 +267,7 @@ export default function Navbar() {
             <Link
               to="/"
               onClick={handleMobileLinkClick}
-              className="block px-4 py-3 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
+              className="block px-2 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
             >
               Home
             </Link>
@@ -276,7 +276,7 @@ export default function Navbar() {
             <div>
               <button
                 onClick={() => setMobileFeaturesOpen(!mobileFeaturesOpen)}
-                className="w-full px-4 py-3 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition text-left"
+                className="w-full px-2 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition text-left"
               >
                 Features
               </button>
@@ -368,7 +368,7 @@ export default function Navbar() {
                           {featureMenus.Sell.Owner.map((item) => (
                             <Link
                               key={item}
-                              to={featureLinks[item] || "/"}
+                              to={featureLinks[item] || "/login"}
                               onClick={handleMobileLinkClick}
                               className="block text-sm text-slate-700 hover:text-blue-600 py-1"
                             >
@@ -438,21 +438,21 @@ export default function Navbar() {
             <Link
               to="/services"
               onClick={handleMobileLinkClick}
-              className="block px-4 py-3 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
+              className="block px-2 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
             >
               Services
             </Link>
             <Link
               to="/about"
               onClick={handleMobileLinkClick}
-              className="block px-4 py-3 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
+              className="block px-2 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
             >
               About
             </Link>
             <Link
               to="/contact"
               onClick={handleMobileLinkClick}
-              className="block px-4 py-3 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
+              className="block px-2 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
             >
               Contact
             </Link>
@@ -465,7 +465,7 @@ export default function Navbar() {
                 <Link
                   to="/wishlist"
                   onClick={handleMobileLinkClick}
-                  className="flex items-center gap-3 px-4 py-3 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
+                  className="flex items-center gap-3 px-2 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
                 >
                   <FaHeart className="text-red-500" />
                   <span>Wishlist</span>
@@ -473,14 +473,14 @@ export default function Navbar() {
                 <Link
                   to="/buyer/profile"
                   onClick={handleMobileLinkClick}
-                  className="flex items-center gap-3 px-4 py-3 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
+                  className="flex items-center gap-3 px-2 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition"
                 >
                   <FaUserCircle className="text-blue-600" />
                   <span>Profile</span>
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="w-full px-4 py-3 text-base font-medium text-red-600 hover:bg-red-50 rounded-lg transition border border-red-200"
+                  className="w-full px-2 py-2 text-base font-medium text-red-600 hover:bg-red-50 rounded-lg transition border border-red-200"
                 >
                   Logout
                 </button>
@@ -490,14 +490,14 @@ export default function Navbar() {
                 <Link
                   to="/login"
                   onClick={handleMobileLinkClick}
-                  className="block w-full px-4 py-3 text-center font-medium text-white bg-emerald-500 hover:bg-emerald-600 rounded-lg transition"
+                  className="block w-full px-4 py-3 text-center font-medium text-white hardgreen hover:bg-emerald-600 rounded-lg transition"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
                   onClick={handleMobileLinkClick}
-                  className="block w-full px-4 py-3 text-center font-medium text-emerald-600 border-2 border-emerald-500 hover:bg-emerald-50 rounded-lg transition"
+                  className="block w-full px-4 py-3 text-center font-medium text-emerald-600 border-2 border-emerald-800 hover:bg-emerald-50 rounded-lg transition"
                 >
                   Sign Up
                 </Link>

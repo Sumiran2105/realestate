@@ -434,77 +434,78 @@ const HomeLoan = () => {
         </div>
       </section>
 
-      {/* REDESIGNED PRICING PLANS SECTION - New Modern Look */}
+      {/* REDESIGNED PRICING PLANS SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-10">
         <div className="text-center mb-12">
           <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Pricing</span>
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">Simple, Transparent Plans</h2>
-          <p className="text-slate-600 mt-2">Choose the perfect plan for your home loan journey</p>
+          <p className="text-slate-600 mt-2">Choose the perfect plan for your rental agreement needs</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((plan, idx) => (
             <div
               key={plan.title}
-              className={`relative rounded-2xl border-2 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${
-                plan.popular 
-                  ? 'border-blue-400 shadow-blue-100' 
-                  : plan.borderColor
-              } ${plan.bgColor} p-8`}
+              className={`relative rounded-2xl border-2 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl flex flex-col h-full ${plan.popular
+                ? 'border-blue-400 shadow-blue-100'
+                : plan.borderColor
+                } ${plan.bgColor} p-5`}
             >
-              {/* Popular Badge - More Subtle */}
+              {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-medium shadow-lg">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-medium shadow-lg z-10">
                   Recommended
                 </div>
               )}
-              
-              {/* Icon & Title */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className={`w-14 h-14 rounded-2xl ${plan.iconBg} flex items-center justify-center`}>
-                  {plan.icon}
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900">{plan.title}</h3>
-                  <p className="text-sm text-slate-500">{plan.summary}</p>
-                </div>
-              </div>
 
-              {/* Price */}
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-slate-900">{plan.price}</span>
-                {plan.price !== 'Free' && (
+              {/* Content Container - takes all available space */}
+              <div className="flex flex-col flex-grow">
+                {/* Icon & Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`w-14 h-14 rounded-2xl ${plan.iconBg} flex items-center justify-center flex-shrink-0`}>
+                    {plan.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-slate-900">{plan.title}</h3>
+                    <p className="text-sm text-slate-500">{plan.summary}</p>
+                  </div>
+                </div>
+
+                {/* Price */}
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-slate-900">{plan.price}</span>
                   <span className="text-sm text-slate-500 ml-2">/one-time</span>
-                )}
+                </div>
+
+                {/* Best For Tag */}
+                <div className="mb-6">
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Best for</span>
+                  <p className="text-sm font-semibold text-slate-800 mt-1">{plan.bestFor}</p>
+                </div>
+
+                {/* Features List - with reduced line height */}
+                <ul className="space-y-2 mb-8 flex-grow">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <FaCheckCircle className="text-green-500 mt-0.5 flex-shrink-0" size={13} />
+                      <span className="text-sm text-slate-700 leading-tight">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              {/* Best For Tag */}
-              <div className="mb-6">
-                <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Best for</span>
-                <p className="text-sm font-semibold text-slate-800 mt-1">{plan.bestFor}</p>
-              </div>
-
-              {/* Features List */}
-              <ul className="space-y-4 mb-8">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <FaCheckCircle className="text-green-500 mt-0.5 flex-shrink-0" size={16} />
-                    <span className="text-sm text-slate-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA Button */}
-              <Link
-                to="/contact"
-                className={`block text-center py-3 px-4 rounded-xl font-medium transition-all ${
-                  plan.popular
+              {/* CTA Button - always at bottom */}
+              <div className="mt-auto pt-4">
+                <Link
+                  to="/contact"
+                  className={`block text-center py-3 px-4 rounded-xl font-medium transition-all w-full ${plan.popular
                     ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg'
                     : 'bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 hover:text-blue-600'
-                }`}
-              >
-                {plan.cta}
-              </Link>
+                    }`}
+                >
+                  {plan.cta}
+                </Link>
+              </div>
             </div>
           ))}
         </div>
@@ -512,7 +513,7 @@ const HomeLoan = () => {
         {/* Pricing Note */}
         <p className="text-center text-sm text-slate-500 mt-8 flex items-center justify-center gap-2">
           <FaRegCheckCircle className="text-green-500" />
-          All plans include free eligibility check • No hidden charges • Cancel anytime
+          All plans include free consultation • No hidden charges • Unlimited revisions in Premium
         </p>
       </section>
     </div>
