@@ -42,7 +42,7 @@ const AdminDashboard = () => {
       totalRevenue: '₹45.6L'
     });
 
-    // Generate recent activities
+  
     const activities = [
       ...users.slice(0, 2).map(u => ({
         id: `u-${u.id}`,
@@ -68,7 +68,7 @@ const AdminDashboard = () => {
     setRecentActivities(activities);
   }, []);
 
-  // Navigation cards configuration
+ 
   const navigationCards = [
     {
       id: 1,
@@ -260,7 +260,6 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Recent Activity Feed */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-semibold text-gray-800">Recent Activity</h3>
@@ -282,7 +281,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Quick Actions Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <button 
             onClick={() => navigate('/dashboard/admin/users')}
@@ -330,7 +328,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Custom Scrollbar Styles */}
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;

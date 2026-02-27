@@ -1069,19 +1069,6 @@ export default function Home() {
 
     </div>
 
-    {/* TRUST STRIP — Refined */}
-    <div className="mt-24 flex justify-center">
-      <div className="flex flex-wrap items-center gap-8 
-                      bg-white border border-slate-200 
-                      rounded-full px-10 py-4 shadow-sm">
-
-        <span className="text-sm text-slate-600">✓ Cancel Anytime</span>
-        <span className="text-sm text-slate-600">✓ Secure Payments</span>
-        <span className="text-sm text-slate-600">✓ Government Data Integrated</span>
-
-      </div>
-    </div>
-
   </div>
 </section>
     </div>

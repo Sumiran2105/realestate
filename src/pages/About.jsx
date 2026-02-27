@@ -44,7 +44,7 @@ const AboutPage = () => {
   ];
  
   const features = [
-    { icon: <FaSearch />, title: "Automated Legal Verification", desc: "Instant checks against Dharani, Meebhoomi, IGRS, RERA." },
+    { icon: <FaSearch />, title: "Automated Legal Verification", desc: "Instant checks against Bhu Bharati, Meebhoomi, IGRS, RERA." },
     { icon: <FaChartBar />, title: "AI Price Intelligence", desc: "ML-powered fair price estimates & market trends." },
     { icon: <FaHandshake />, title: "Trusted Agent Network", desc: "Verified professionals with performance ratings." },
     { icon: <FaLock />, title: "Secure Escrow", desc: "Token amount protection for both parties." },
@@ -53,7 +53,7 @@ const AboutPage = () => {
   ];
  
   const techItems = [
-    "Dharani",
+    "Bhu Bharati",
     "Meebhoomi",
     "IGRS",
     "RERA",
@@ -100,7 +100,7 @@ const AboutPage = () => {
       <section
         className="w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6"
         style={{
-          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(219, 234, 254, 0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')`,
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(219, 234, 254, 0.6)), url('/Land2.jpg')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -108,17 +108,16 @@ const AboutPage = () => {
       >
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="text-dark font-semibold tracking-widest text-sm">
+            <span className="text-dark-500 font-semibold tracking-widest text-sm">
               OUR PURPOSE
             </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mt-4 mb-6 text-slate-900">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mt-4 mb-6 text-dark-900">
               Trust, <span className="text-blue-600">Verified.</span>
               <br />
               Real Estate, Simplified.
             </h1>
             <p className="text-lg text-slate-800 max-w-2xl mx-auto mb-8">
-              Eliminating fraud and restoring confidence in property transactions across
-              Telangana and Andhra Pradesh.
+              To promote transparency in the real estate sector by maintaining an online platform for property verification, ensuring that buyers can make informed decisions based on accurate and up-to-date information.
             </p>
             <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
               <span className="inline-flex items-center gap-2 bg-slate-100 rounded-full px-3 sm:px-4 py-2 text-sm font-medium text-slate-800 border border-slate-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">

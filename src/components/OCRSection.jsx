@@ -59,7 +59,7 @@ export default function OCRSection() {
             {
               no: "03",
               title: "Pattadar Passbook",
-              desc: "Extract ownership and cross match with Dharani API.",
+              desc: "Extract ownership and cross match with Bhu Bharati API.",
               color: "text-emerald-600",
               accent: "from-emerald-500 to-emerald-400"
             },
