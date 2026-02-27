@@ -519,8 +519,8 @@ export default function Home() {
           <button
             type="submit"
             disabled={searchMode === "survey" ? !selectedSurvey : !passbookInput.trim()}
-            className="flex-1 bg-brand-dark text-white py-3 sm:py-4 rounded-2xl
-                       hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
+            className="flex-1 hardgreen text-white py-3 sm:py-4 rounded-2xl
+                       hover:opacity-95 hover:scale-[1.02] active:scale-[0.98]
                        transition-all duration-300 font-semibold text-base 
                        shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
           >
@@ -678,7 +678,7 @@ export default function Home() {
                 </p>
                 <button
                   onClick={() => navigate(`/verification-report/${matchedProperty.property_id}`)}
-                  className="mt-3 px-5 py-2.5 rounded-lg bg-brand-dark text-white font-medium hover:bg-brand transition"
+                  className="mt-3 px-5 py-2.5 rounded-lg hardgreen text-white font-medium hover:opacity-95 transition"
                 >
                   View Risk Report - ₹199
                 </button>
@@ -700,7 +700,7 @@ export default function Home() {
                 </p>
                 <button
                   onClick={() => navigate(`/verification-report/${matchedProperty.property_id}`)}
-                  className="mt-3 px-5 py-2.5 rounded-lg bg-brand-dark text-white font-medium hover:bg-brand transition"
+                  className="mt-3 px-5 py-2.5 rounded-lg hardgreen text-white font-medium hover:opacity-95 transition"
                 >
                   {matchedProperty?.verified_badge === "Fully Verified" 
                     ? "Download Full Verification Report - ₹299" 
@@ -1025,7 +1025,7 @@ export default function Home() {
             type="button"
             onClick={() => setActiveTelanganaSlide(index)}
             className={`h-2.5 rounded-full transition-all ${
-              activeTelanganaSlide === index ? "w-7 bg-brand-dark" : "w-2.5 bg-slate-300"
+              activeTelanganaSlide === index ? "w-7 hardgreen" : "w-2.5 bg-slate-300"
             }`}
             aria-label={`Go to Telangana slide ${index + 1}`}
           />
@@ -1086,7 +1086,7 @@ export default function Home() {
             type="button"
             onClick={() => setActiveAndhraSlide(index)}
             className={`h-2.5 rounded-full transition-all ${
-              activeAndhraSlide === index ? "w-7 bg-brand-dark" : "w-2.5 bg-slate-300"
+              activeAndhraSlide === index ? "w-7 hardgreen" : "w-2.5 bg-slate-300"
             }`}
             aria-label={`Go to Andhra slide ${index + 1}`}
           />
@@ -1448,7 +1448,7 @@ export default function Home() {
         </div>
 
         <button className="mt-8 w-full py-3 rounded-xl 
-                           bg-brand-dark text-white font-semibold 
+                           hardgreen text-white font-semibold 
                            shadow-md hover:shadow-lg 
                            hover:opacity-95 transition-all duration-300">
           Upgrade Now

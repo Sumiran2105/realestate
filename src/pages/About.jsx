@@ -317,7 +317,7 @@ const AboutPage = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-6">
             Ready to experience trusted real estate?
           </h2>
-          <button className="bg-blue-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-blue-700 transition-all hover:scale-105 shadow-md hover:shadow-lg">
+          <button className="hardgreen text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:opacity-95 transition-all hover:scale-105 shadow-md hover:shadow-lg">
             Get Started
           </button>
         </div>

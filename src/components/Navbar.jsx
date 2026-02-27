@@ -99,7 +99,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link 
             to="/" 
-            className="text-xl sm:text-2xl font-bold text-slate-800 hover:text-blue-600 transition md:mt-0 mt-4"
+            className="text-xl sm:text-2xl font-bold text-green-800 hover:text-yellow-600 transition md:mt-0 mt-4"
           >
             VeriEstate
           </Link>
@@ -179,7 +179,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/buyer/profile"
-                  className="w-10 h-10 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition flex items-center justify-center"
+                  className="w-10 h-10 rounded-lg hardgreen text-white hover:opacity-95 transition flex items-center justify-center"
                   title="Profile"
                 >
                   <FaUserCircle size={20} />
@@ -195,7 +195,7 @@ export default function Navbar() {
               <div className="flex items-center gap-2">
                 <Link 
                   to="/login" 
-                  className="px-4 py-2 rounded-lg hardgreen text-white hover:bg-emerald-600 transition font-medium text-sm"
+                  className="px-4 py-2 rounded-lg hardgreen text-white hover:opacity-95 transition font-medium text-sm"
                 >
                   Login
                 </Link>
@@ -490,7 +490,7 @@ export default function Navbar() {
                 <Link
                   to="/login"
                   onClick={handleMobileLinkClick}
-                  className="block w-full px-4 py-3 text-center font-medium text-white hardgreen hover:bg-emerald-600 rounded-lg transition"
+                  className="block w-full px-4 py-3 text-center font-medium text-white hardgreen hover:opacity-95 rounded-lg transition"
                 >
                   Login
                 </Link>

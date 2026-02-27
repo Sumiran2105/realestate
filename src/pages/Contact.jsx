@@ -235,7 +235,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full hardgreen hover:opacity-95 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   <FaPaperPlane />
                   {loading ? 'Sending...' : 'Send Message'}

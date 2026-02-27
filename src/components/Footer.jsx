@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 pb-12 pt-6">
           {/* Left: Logo & Description */}
           <div className="md:col-span-1">
-            <h3 className="text-lg font-bold text-white mb-4 inline-block bg-brand-dark px-3 py-1 rounded">
+            <h3 className="text-lg font-bold text-yellow-400 mb-4 inline-block bg-blue-dark px-3 py-1 rounded">
               VeriEstate
             </h3>
             <p className="text-sm text-gray-100 leading-relaxed mt-4">

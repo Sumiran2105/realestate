@@ -440,8 +440,8 @@ const BuyerHome = () => {
                 <button
                   type="submit"
                   disabled={searchMode === "survey" ? !selectedSurvey : !passbookInput.trim()}
-                  className="flex-1 bg-brand-dark text-white py-3 sm:py-4 rounded-2xl
-                       hover:bg-brand hover:scale-[1.02] active:scale-[0.98]
+                  className="flex-1 hardgreen text-white py-3 sm:py-4 rounded-2xl
+                       hover:opacity-95 hover:scale-[1.02] active:scale-[0.98]
                        transition-all duration-300 font-semibold text-base 
                              shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
                 >
@@ -612,7 +612,7 @@ const BuyerHome = () => {
                       </p>
                       <button
                         onClick={() => navigate(`/verification-report/${matchedProperty.property_id}`)}
-                        className="mt-3 px-5 py-2.5 rounded-lg bg-brand-dark text-white font-medium hover:bg-brand transition"
+                        className="mt-3 px-5 py-2.5 rounded-lg hardgreen text-white font-medium hover:opacity-95 transition"
                       >
                         View Risk Report - ₹199
                       </button>
@@ -634,7 +634,7 @@ const BuyerHome = () => {
                       </p>
                       <button
                         onClick={() => navigate(`/verification-report/${matchedProperty.property_id}`)}
-                        className="mt-3 px-5 py-2.5 rounded-lg bg-brand-dark text-white font-medium hover:bg-brand transition"
+                        className="mt-3 px-5 py-2.5 rounded-lg hardgreen text-white font-medium hover:opacity-95 transition"
                       >
                         {matchedProperty?.verified_badge === "Fully Verified" 
                           ? "Download Full Verification Report - ₹299" 
@@ -698,7 +698,7 @@ const BuyerHome = () => {
                     <div className="mt-4 flex gap-2">
                       <Link
                         to={`/buyer/property/${listing.id}`}
-                        className="flex-1 text-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
+                        className="flex-1 text-center px-3 py-2 hardgreen text-white rounded-lg hover:opacity-95 text-sm"
                       >
                         View Details
                       </Link>

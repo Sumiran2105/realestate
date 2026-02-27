@@ -446,7 +446,7 @@ const Services = () => {
           </div>
 
           <div className="mt-8 text-center">
-            <Link to="/properties" className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">View All Properties</Link>
+            <Link to="/properties" className="inline-block hardgreen text-white px-6 py-3 rounded-full font-semibold hover:opacity-95 transition">View All Properties</Link>
           </div>
         </div>
       </section>
