@@ -1266,37 +1266,37 @@ export default function Home() {
         {
           no: "01",
           title: "Property Identity",
-          desc: "Survey number, address, GPS coordinates and property classification.",
+          desc: "A unified digital identity layer capturing survey number, geo-tagged address, GPS coordinates, land classification, and jurisdictional mapping creating a single source of truth that eliminates ambiguity and ensures precise property traceability across verification systems.",
           accent: "bg-blue-400"
         },
         {
           no: "02",
           title: "Ownership Verification",
-          desc: "Current owner, ownership type and validation confidence score.",
+          desc: "Authenticates current ownership details, ownership structure (individual, joint, inherited, or corporate), and assigns a dynamic validation confidence score based on cross verified government records ensuring title clarity and minimizing transfer risk before transaction execution.",
           accent: "bg-purple-400"
         },
         {
           no: "03",
           title: "Legal History",
-          desc: "Transaction trail, encumbrance mapping and litigation checks.",
+          desc: "Comprehensive transaction trail mapping, encumbrance tracking, lien analysis, and litigation flag checks delivering a clear historical ownership timeline and risk visibility to prevent disputes and ensure clean title transfers.",
           accent: "bg-emerald-400"
         },
         {
           no: "04",
           title: "Compliance Status",
-          desc: "RERA validation, municipal approvals and utility authentication.",
+          desc: "Comprehensive transaction trail mapping, encumbrance tracking, lien analysis, and litigation flag checks delivering a clear historical ownership timeline and risk visibility to prevent disputes and ensure clean title transfers.",
           accent: "bg-orange-400"
         },
         {
           no: "05",
           title: "Risk Assessment",
-          desc: "AI derived legal risk score with anomaly detection signals.",
+          desc: "An AI-powered legal risk engine that generates a dynamic risk score by analyzing title data, transaction patterns, regulatory records, and anomaly detection signals  enabling proactive identification of red flags before deal closure.",
           accent: "bg-red-400"
         },
         {
           no: "06",
           title: "Market Intelligence",
-          desc: "Live price range, 6 month movement trend and comparables.",
+          desc: "Delivers real-time price ranges, 6-month movement trends, demand signals, and comparable property benchmarks empowering buyers and investors with data-driven insights for confident pricing and negotiation decisions.",
           accent: "bg-cyan-400"
         }
       ].map((item, index) => (
