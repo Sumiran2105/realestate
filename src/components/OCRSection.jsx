@@ -92,11 +92,13 @@ export default function OCRSection() {
         </motion.div>
         {/* FOOT TEXT */}
         <div className="mt-16 max-w-4xl mx-auto text-center">
+          <div className="bg-brand-soft/40 rounded-2xl p-8 border border-brand/10">
           <p className="text-slate-600 leading-relaxed text-sm">
             The AI fraud detection engine analyzes metadata,
             detects tampering, and validates chronological consistency
             significantly reducing documentation risk.
           </p>
+          </div>
         </div>
       </div>
     </section>

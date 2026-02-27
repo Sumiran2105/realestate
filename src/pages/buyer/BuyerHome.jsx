@@ -261,7 +261,7 @@ const BuyerHome = () => {
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-16 sm:pb-20">
         <div
           className="absolute inset-0 bg-cover bg-center will-change-transform"
           style={{
