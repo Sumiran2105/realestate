@@ -209,7 +209,8 @@ export default function Home() {
   const normalizeSurvey = (value) => String(value || "").toUpperCase().replace(/\s+/g, "");
   const normalizePassbook = (value) => String(value || "").toUpperCase().replace(/\s+/g, "");
   const getVillage = (item) => String(item?.location?.address || "").split(",")[0]?.trim() || "";
-  const getCityOrMandal = (item) => String(item?.location?.city || item?.location?.zone || "").trim();
+  const getCityOrMandal = (item) =>
+    String(item?.location?.mandal_name || item?.location?.city || item?.location?.zone || "").trim();
   const getPassbookNumber = (item) => {
     const revenue = item?.government_approvals?.revenue_records || {};
     const ownership = item?.government_approvals?.land_ownership || {};
@@ -228,6 +229,9 @@ export default function Home() {
     const surveys = [];
     if (landOwnership?.survey_number) {
       surveys.push(String(landOwnership.survey_number).trim());
+    }
+    if (typeof landOwnership?.survey_numbers === "string") {
+      surveys.push(String(landOwnership.survey_numbers).trim());
     }
     if (Array.isArray(landOwnership?.survey_numbers)) {
       landOwnership.survey_numbers.forEach((survey) => surveys.push(String(survey).trim()));
@@ -955,16 +959,16 @@ export default function Home() {
   </div>
 </section>
 
-<section className="relative py-12 bg-gradient-to-br from-slate-50 to-white overflow-hidden">
-  <div className="max-w-7xl mx-auto px-6">
+<section className="relative py-10 sm:py-12 bg-gradient-to-br from-slate-50 to-white overflow-hidden">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
     {/* MAIN HEADING */}
     <div className="max-w-4xl mx-auto text-center">
-      <h2 className="text-4xl font-semibold text-blue-900 tracking-tight">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-blue-900 tracking-tight leading-tight">
         Government API Integration Strategy
       </h2>
 
-      <p className="mt-6 text-lg text-slate-600 leading-relaxed">
+      <p className="mt-4 sm:mt-6 text-base sm:text-lg text-slate-600 leading-relaxed">
         Our platform integrates directly with authoritative government
         databases across Telangana and Andhra Pradesh, forming the backbone
         of our automated verification engine. This enables real-time access
@@ -973,20 +977,20 @@ export default function Home() {
     </div>
 
     {/* TELANGANA INTEGRATIONS SLIDER */}
-    <div className="mt-20 max-w-5xl mx-auto">
-      <div className="flex items-center justify-center gap-3">
+    <div className="mt-14 sm:mt-20 max-w-5xl mx-auto">
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-center">
         <img
           src="/TGlogo.png"
           alt="Telangana Government"
-          className="h-10 object-contain"
+          className="h-8 sm:h-10 object-contain"
         />
-        <h3 className="text-3xl font-semibold text-yellow-800">
+        <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-yellow-800 leading-tight">
           Telangana Integrations
         </h3>
       </div>
 
       <div
-        className="mt-8 overflow-hidden"
+        className="mt-6 sm:mt-8 overflow-hidden"
         onMouseEnter={() => setIsTelanganaPaused(true)}
         onMouseLeave={() => setIsTelanganaPaused(false)}
       >
@@ -995,23 +999,23 @@ export default function Home() {
           style={{ transform: `translateX(-${activeTelanganaSlide * 100}%)` }}
         >
           {telanganaIntegrationSlides.map((slide, index) => (
-            <div key={index} className="w-full shrink-0 px-1">
-              <div className="bg-white/80 backdrop-blur-md border-2 border-slate-400 rounded-3xl p-8 shadow-sm text-center">
-                <div className="flex items-center justify-center gap-3">
+            <div key={index} className="w-full shrink-0 px-0.5 sm:px-1">
+              <div className="bg-white/80 backdrop-blur-md border-2 border-slate-400 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm text-center">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
                   <img
                     src={slide.logo || "/TG Logo.png"}
                     alt="Telangana Government"
-                    className="h-10 object-contain"
+                    className="h-8 sm:h-10 object-contain"
                     onError={(e) => {
                       e.currentTarget.src = "/TG Logo.png";
                     }}
                   />
-                  <h4 className="text-2xl font-semibold text-slate-900">{slide.title}</h4>
+                  <h4 className="text-xl sm:text-2xl font-semibold text-slate-900 leading-tight">{slide.title}</h4>
                 </div>
-                <p className="mt-3 text-sm font-semibold text-brand-dark text-center bg-brand/10 border border-brand/20 rounded-full px-4 py-1 inline-block mx-auto">
+                <p className="mt-3 text-xs sm:text-sm font-semibold text-brand-dark text-center bg-brand/10 border border-brand/20 rounded-full px-3 sm:px-4 py-1 inline-block mx-auto">
                   {slide.subtitle}
                 </p>
-                <p className="mt-4 text-slate-600 leading-relaxed text-center">{slide.description}</p>
+                <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed text-center">{slide.description}</p>
               </div>
             </div>
           ))}
@@ -1024,9 +1028,10 @@ export default function Home() {
             key={index}
             type="button"
             onClick={() => setActiveTelanganaSlide(index)}
-            className={`h-2.5 rounded-full transition-all ${
-              activeTelanganaSlide === index ? "w-7 hardgreen" : "w-2.5 bg-slate-300"
+            className={`h-2 sm:h-2.5 rounded-full transition-all ${
+              activeTelanganaSlide === index ? "w-5 sm:w-7 hardgreen" : "w-2 sm:w-2.5 bg-slate-300"
             }`}
+            style={{ minWidth: 0, minHeight: 0 }}
             aria-label={`Go to Telangana slide ${index + 1}`}
           />
         ))}
@@ -1034,20 +1039,20 @@ export default function Home() {
     </div>
 
     {/* ANDHRA PRADESH INTEGRATIONS SLIDER */}
-    <div className="mt-14 max-w-5xl mx-auto">
-      <div className="flex items-center justify-center gap-3">
+    <div className="mt-12 sm:mt-14 max-w-5xl mx-auto">
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-center">
         <img
           src="/Ap logo2 .png"
           alt="Andhra Pradesh Government"
-          className="h-10 object-contain"
+          className="h-8 sm:h-10 object-contain"
         />
-        <h3 className="text-3xl font-semibold text-emerald-800">
+        <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-emerald-800 leading-tight">
           Andhra Pradesh Integrations
         </h3>
       </div>
 
       <div
-        className="mt-8 overflow-hidden"
+        className="mt-6 sm:mt-8 overflow-hidden"
         onMouseEnter={() => setIsAndhraPaused(true)}
         onMouseLeave={() => setIsAndhraPaused(false)}
       >
@@ -1056,23 +1061,23 @@ export default function Home() {
           style={{ transform: `translateX(-${activeAndhraSlide * 100}%)` }}
         >
           {andhraIntegrationSlides.map((slide, index) => (
-            <div key={index} className="w-full shrink-0 px-1">
-              <div className="bg-white/80 backdrop-blur-md border-2 border-slate-400 rounded-3xl p-8 shadow-sm text-center">
-                <div className="flex items-center justify-center gap-3">
+            <div key={index} className="w-full shrink-0 px-0.5 sm:px-1">
+              <div className="bg-white/80 backdrop-blur-md border-2 border-slate-400 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm text-center">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
                   <img
                     src={slide.logo || "/Ap logo2 .png"}
                     alt="Andhra Pradesh Government"
-                    className="h-10 object-contain"
+                    className="h-8 sm:h-10 object-contain"
                     onError={(e) => {
                       e.currentTarget.src = "/Ap logo2 .png";
                     }}
                   />
-                  <h4 className="text-2xl font-semibold text-slate-900">{slide.title}</h4>
+                  <h4 className="text-xl sm:text-2xl font-semibold text-slate-900 leading-tight">{slide.title}</h4>
                 </div>
-                <p className="mt-3 text-sm font-semibold text-brand-dark text-center bg-brand/10 border border-brand/20 rounded-full px-4 py-1 inline-block mx-auto">
+                <p className="mt-3 text-xs sm:text-sm font-semibold text-brand-dark text-center bg-brand/10 border border-brand/20 rounded-full px-3 sm:px-4 py-1 inline-block mx-auto">
                   {slide.subtitle}
                 </p>
-                <p className="mt-4 text-slate-600 leading-relaxed text-center">{slide.description}</p>
+                <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed text-center">{slide.description}</p>
               </div>
             </div>
           ))}
@@ -1085,9 +1090,10 @@ export default function Home() {
             key={index}
             type="button"
             onClick={() => setActiveAndhraSlide(index)}
-            className={`h-2.5 rounded-full transition-all ${
-              activeAndhraSlide === index ? "w-7 hardgreen" : "w-2.5 bg-slate-300"
+            className={`h-2 sm:h-2.5 rounded-full transition-all ${
+              activeAndhraSlide === index ? "w-5 sm:w-7 hardgreen" : "w-2 sm:w-2.5 bg-slate-300"
             }`}
+            style={{ minWidth: 0, minHeight: 0 }}
             aria-label={`Go to Andhra slide ${index + 1}`}
           />
         ))}
@@ -1095,9 +1101,9 @@ export default function Home() {
     </div>
 
     {/* THIRD PARTY INTEGRATIONS */}
-    <div className="mt-20 max-w-5xl mx-auto">
-      <div className="bg-brand-soft/40 rounded-2xl p-8 border border-brand/10 text-center">
-        <p className="text-slate-700 leading-relaxed">
+    <div className="mt-14 sm:mt-20 max-w-5xl mx-auto">
+      <div className="bg-brand-soft/40 rounded-2xl p-5 sm:p-8 border border-brand/10 text-center">
+        <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
           Beyond government systems, we integrate with trusted third party
           providers including <strong>Karza</strong>, <strong>Surepass</strong>,
           <strong> DigiLocker</strong>, and <strong>CERSAI</strong> to ensure
