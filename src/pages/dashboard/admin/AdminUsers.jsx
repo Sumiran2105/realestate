@@ -142,7 +142,7 @@ const AdminUsers = () => {
     <div className="flex items-center justify-between">
       <div>
         <p className="text-sm text-gray-500 mb-1">Total Users</p>
-        <p className="text-3xl font-bold text-gray-800">{stats.total}</p>
+        <p className="text-2xl sm:text-3xl font-bold text-gray-800">{stats.total}</p>
       </div>
       <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
         <span className="text-blue-600 text-xl"><FaUsers size={20} /></span>
@@ -158,7 +158,7 @@ const AdminUsers = () => {
     <div className="flex items-center justify-between">
       <div>
         <p className="text-sm text-gray-500 mb-1">Verified KYC</p>
-        <p className="text-3xl font-bold text-gray-800">{stats.verified}</p>
+        <p className="text-2xl sm:text-3xl font-bold text-gray-800">{stats.verified}</p>
       </div>
       <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
         <span className="text-green-600 text-xl"><FaCheckCircle size={20} /></span>
@@ -174,7 +174,7 @@ const AdminUsers = () => {
     <div className="flex items-center justify-between">
       <div>
         <p className="text-sm text-gray-500 mb-1">Pending KYC</p>
-        <p className="text-3xl font-bold text-gray-800">{stats.pending}</p>
+        <p className="text-2xl sm:text-3xl font-bold text-gray-800">{stats.pending}</p>
       </div>
       <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
         <span className="text-amber-600 text-xl"><FaExclamationTriangle size={20} /></span>
@@ -240,7 +240,7 @@ const AdminUsers = () => {
         {/* Users Table */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[800px]">
+            <table className="w-full min-w-[680px] md:min-w-[800px]">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>

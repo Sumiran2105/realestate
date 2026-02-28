@@ -221,7 +221,7 @@ const SellerInquiries = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Inquiries</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">Inquiries</h1>
             <p className="text-sm text-gray-500 mt-1">Manage and respond to buyer inquiries</p>
           </div>
           <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all flex items-center gap-2">
@@ -231,7 +231,7 @@ const SellerInquiries = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
           <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
             <p className="text-xs text-gray-500 mb-1">Total</p>
             <p className="text-2xl font-bold text-gray-800">{stats.total}</p>
@@ -276,7 +276,7 @@ const SellerInquiries = () => {
               <span>Filters</span>
             </button>
 
-            <div className={`${showFilters ? 'flex' : 'hidden'} lg:flex gap-3`}>
+            <div className={`${showFilters ? "flex" : "hidden"} lg:flex flex-col sm:flex-row gap-3`}>
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
@@ -306,12 +306,12 @@ const SellerInquiries = () => {
               {filteredInquiries.map((inquiry) => (
                 <div
                   key={inquiry.id}
-                  className={`p-6 hover:bg-gray-50 transition-all ${!inquiry.viewed ? 'bg-blue-50/30' : ''}`}
+                  className={`p-4 sm:p-6 hover:bg-gray-50 transition-all ${!inquiry.viewed ? "bg-blue-50/30" : ""}`}
                   onClick={() => handleMarkAsRead(inquiry.id)}
                 >
                   <div className="flex flex-col lg:flex-row gap-6">
                     {/* Property Image */}
-                    <div className="lg:w-48">
+                    <div className="w-full sm:w-56 lg:w-48">
                       <div className="relative h-32 rounded-lg overflow-hidden">
                         <img
                           src={inquiry.propertyImage}

@@ -4,9 +4,35 @@ export default function Auth() {
   const [active, setActive] = useState(false);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-8">
+      <div className="md:hidden w-full max-w-md bg-white border border-blue-200 shadow-xl rounded-2xl p-5">
+        <h2 className="text-2xl font-bold text-blue-700 text-center mb-5">
+          {active ? "Register" : "Login"}
+        </h2>
+        <form className="space-y-5">
+          <Input label="Username" />
+          {active && <Input label="Email" type="email" />}
+          <Input label="Password" type="password" />
+          {active && <Select label="Role" options={["Seller", "Buyer", "Agent"]} />}
+
+          <button className="w-full h-[45px] bg-blue-600 rounded-full text-white font-semibold hover:bg-blue-700 transition">
+            {active ? "Register" : "Login"}
+          </button>
+
+          <p className="text-sm text-center text-gray-600">
+            {active ? "Already have an account?" : "Don’t have an account?"}{" "}
+            <span
+              onClick={() => setActive((prev) => !prev)}
+              className="text-blue-600 font-semibold cursor-pointer"
+            >
+              {active ? "Sign In" : "Sign Up"}
+            </span>
+          </p>
+        </form>
+      </div>
+
       <div
-        className="relative w-[750px] h-[450px] border-2 border-blue-600 
+        className="hidden md:block relative w-[750px] h-[450px] border-2 border-blue-600 
         shadow-[0_10px_40px_rgba(37,99,235,0.3)] 
         overflow-hidden rounded-xl bg-white"
       >
@@ -96,7 +122,7 @@ export default function Auth() {
           text-right px-10 transition-all duration-700
           ${active ? "translate-x-[120%] opacity-0" : ""}`}
         >
-          <h2 className="text-4xl font-bold text-white uppercase">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white uppercase">
             Welcome Back!
           </h2>
           <p className="text-white mt-4">
@@ -110,7 +136,7 @@ export default function Auth() {
           text-left px-10 transition-all duration-700
           ${active ? "" : "-translate-x-[120%] opacity-0"}`}
         >
-          <h2 className="text-4xl font-bold text-white uppercase">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white uppercase">
             Welcome!
           </h2>
           <p className="text-white mt-4">

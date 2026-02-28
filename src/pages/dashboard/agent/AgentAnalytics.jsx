@@ -55,7 +55,7 @@ const AgentAnalytics = () => {
       </div>
 
       {/* Key Metrics Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-white rounded-xl shadow-sm p-4">
           <p className="text-xs text-gray-500">Total Views</p>
           <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">{metrics.totalViews}</p>
@@ -84,7 +84,7 @@ const AgentAnalytics = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Performance Chart */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-4 sm:p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Monthly Performance</h2>
           <div className="h-64 flex items-end justify-between">
             {monthlyData.map((data) => (
@@ -116,7 +116,7 @@ const AgentAnalytics = () => {
         </div>
 
         {/* Top Locations */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Top Locations</h2>
           <div className="space-y-4">
             {topLocations.map((loc) => (
@@ -140,7 +140,7 @@ const AgentAnalytics = () => {
       {/* Recent Activity & Insights */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Activity */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
           <div className="space-y-4">
             {recentActivities.map((activity, index) => (
@@ -157,7 +157,7 @@ const AgentAnalytics = () => {
         </div>
 
         {/* Insights */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Insights</h2>
           <div className="space-y-4">
             <div className="p-4 bg-blue-50 rounded-lg">

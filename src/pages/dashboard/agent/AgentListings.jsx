@@ -147,7 +147,7 @@ const AgentListings = () => {
     <DashboardLayout title="My Listings">
       <div className="space-y-6">
         {/* Header with Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-blue-100 rounded-xl shadow-sm p-4 border border-blue-100">
             <p className="text-xs text-blue-500 mb-1">Total</p>
             <p className="text-2xl font-bold text-blue-700">{stats.total}</p>
@@ -234,7 +234,7 @@ const AgentListings = () => {
 
         {/* Properties Grid */}
         {filteredProperties.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-sm p-12 text-center">
+          <div className="bg-white rounded-xl shadow-sm p-8 sm:p-12 text-center">
             <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <FaHome className="text-blue-600 text-3xl" />
             </div>
@@ -301,7 +301,7 @@ const AgentListings = () => {
                   </div>
 
                   {/* Property Features */}
-                  <div className="grid grid-cols-3 gap-2 mb-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
                     {property.bedrooms > 0 && (
                       <div className="bg-gray-50 rounded-lg p-2 text-center">
                         <FaBed className="text-gray-600 mx-auto mb-1" />

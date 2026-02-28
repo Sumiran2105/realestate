@@ -20,14 +20,14 @@ const cardVariants = {
 
 export default function OCRSection() {
   return (
-    <section className="py-12 bg-slate-50">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="py-10 sm:py-12 bg-slate-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* HEADER */}
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-semibold text-blue-900">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-blue-900 leading-tight">
             Document OCR & AI Verification
           </h2>
-          <p className="mt-6 text-lg text-slate-600 leading-relaxed">
+          <p className="mt-4 sm:mt-6 text-base sm:text-lg text-slate-600 leading-relaxed">
             Our AI powered OCR engine extracts structured data,
             validates it against authoritative records,
             and detects fraud using multi layered intelligence models.
@@ -39,7 +39,7 @@ export default function OCRSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mt-16 grid md:grid-cols-2 gap-6"
+          className="mt-12 sm:mt-16 grid md:grid-cols-2 gap-4 sm:gap-6"
         >
           {[
             {
@@ -74,7 +74,7 @@ export default function OCRSection() {
             <motion.div
               key={index}
               variants={cardVariants}
-              className="group relative bg-white rounded-xl p-6 border border-slate-200 hover:-translate-y-2 hover:shadow-lg transition-all duration-500"
+              className="group relative bg-white rounded-xl p-5 sm:p-6 border border-slate-200 hover:-translate-y-2 hover:shadow-lg transition-all duration-500"
             >
               {/* Animated Accent Line */}
               <div
@@ -91,8 +91,8 @@ export default function OCRSection() {
           ))}
         </motion.div>
         {/* FOOT TEXT */}
-        <div className="mt-16 max-w-4xl mx-auto text-center">
-          <div className="bg-brand-soft/40 rounded-2xl p-8 border border-brand/10">
+        <div className="mt-12 sm:mt-16 max-w-4xl mx-auto text-center">
+          <div className="bg-brand-soft/40 rounded-2xl p-5 sm:p-8 border border-brand/10">
           <p className="text-slate-600 leading-relaxed text-sm">
             The AI fraud detection engine analyzes metadata,
             detects tampering, and validates chronological consistency

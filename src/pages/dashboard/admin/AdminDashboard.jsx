@@ -123,7 +123,7 @@ const AdminDashboard = () => {
   const StatCard = ({ card }) => (
     <div
       onClick={() => navigate(card.path)}
-      className={`relative overflow-hidden bg-gradient-to-br ${card.gradient} rounded-2xl shadow-lg p-6 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl group`}
+      className={`relative overflow-hidden bg-gradient-to-br ${card.gradient} rounded-2xl shadow-lg p-4 sm:p-6 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl group`}
     >
       {/* Background Pattern */}
       <div className="absolute right-0 top-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
@@ -133,7 +133,7 @@ const AdminDashboard = () => {
       {/* Content */}
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
-          <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-2xl text-white shadow-lg">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-xl sm:text-2xl text-white shadow-lg">
             {card.icon}
           </div>
           <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-xs text-white flex items-center gap-1">
@@ -143,7 +143,7 @@ const AdminDashboard = () => {
         </div>
         
         <p className="text-sm font-medium text-white/80 mb-1">{card.title}</p>
-        <p className="text-3xl font-bold text-white mb-2">{card.value}</p>
+        <p className="text-2xl sm:text-3xl font-bold text-white mb-2">{card.value}</p>
         
         <div className="flex items-center justify-between">
           <p className="text-xs text-white/70">{card.description}</p>
@@ -190,20 +190,20 @@ const AdminDashboard = () => {
         {/* Header with Welcome Message */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Admin Dashboard</h1>
             <p className="text-sm text-gray-500 mt-1">Here's what's happening with your platform today.</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3 w-full sm:w-auto">
             <button 
               onClick={() => navigate('/dashboard/admin/reports')}
-              className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2 text-sm"
+              className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2 text-sm w-full sm:w-auto justify-center"
             >
               <FaFileAlt />
               Generate Report
             </button>
             <button 
               onClick={() => navigate('/dashboard/admin/analytics')}
-              className="px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all shadow-md hover:shadow-lg border border-gray-200 flex items-center gap-2 text-sm"
+              className="px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all shadow-md hover:shadow-lg border border-gray-200 flex items-center gap-2 text-sm w-full sm:w-auto justify-center"
             >
               <FaChartLine />
               Analytics

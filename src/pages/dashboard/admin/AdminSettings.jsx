@@ -247,14 +247,14 @@ const AdminSettings = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Platform Settings</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Platform Settings</h1>
             <p className="text-sm text-gray-500 mt-1">Configure and manage your platform preferences</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3 w-full sm:w-auto">
             <button
               onClick={handleTestConnection}
               disabled={testingConnection}
-              className="px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all shadow-md border border-gray-200 flex items-center gap-2 text-sm"
+              className="px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all shadow-md border border-gray-200 flex items-center gap-2 text-sm w-full sm:w-auto justify-center"
             >
               <FaServer />
               {testingConnection ? 'Testing...' : 'Test Connection'}
@@ -262,7 +262,7 @@ const AdminSettings = () => {
             <button
               onClick={handleSave}
               disabled={loading}
-              className={`px-6 py-2 rounded-xl text-white flex items-center gap-2 transition-all shadow-lg ${
+              className={`px-6 py-2 rounded-xl text-white flex items-center justify-center gap-2 transition-all shadow-lg w-full sm:w-auto ${
                 loading 
                   ? 'bg-blue-400 cursor-not-allowed' 
                   : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800'
@@ -293,7 +293,7 @@ const AdminSettings = () => {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar - Modern Tab Navigation */}
-          <div className="lg:w-72 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="w-full lg:w-72 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
             <div className="p-5 bg-gradient-to-r from-blue-600 to-blue-700">
               <h2 className="text-white font-semibold flex items-center gap-2">
                 <FaCog />

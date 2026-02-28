@@ -348,7 +348,7 @@ export default function Home() {
       transform: "translateY(var(--parallax)) scale(1.08)",
     }}
   ></div>
-  <div className="relative text-center px-6 sm:px-6 max-w-5xl text-white">
+  <div className="relative text-center px-4 sm:px-6 max-w-5xl text-white">
     <div className="max-w-sm mx-auto mb-8 bg-white border  border-gray-600 rounded-xl px-6 py-3 shadow-md mt-2 ">
       <p className="uppercase tracking-[0.3em] text-xs text-gray-900 font-semibold text-center">
         ADVANCED SEARCH & DISCOVERY
@@ -727,7 +727,7 @@ export default function Home() {
   <div className="max-w-7xl mx-auto px-4 sm:px-6">
     {/* Title */}
     <div className="text-center max-w-3xl mx-auto">
-      <h2 className="text-4xl font-semibold text-blue-900 tracking-tight">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-blue-900 tracking-tight leading-tight">
         The Critical Market Problem
       </h2>
       <p className="mt-8 text-lg text-slate-600">
@@ -778,7 +778,7 @@ export default function Home() {
 
   
 
-  <div className="relative max-w-7xl mx-auto px-6">
+  <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
 
     {/* Header */}
     <div className="text-center max-w-3xl mx-auto">
@@ -786,7 +786,7 @@ export default function Home() {
         The Solution
       </p>
 
-      <h2 className="text-4xl md:text-5xl font-semibold text-blue-900 tracking-tight">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-blue-900 tracking-tight leading-tight">
         Our Comprehensive Platform
       </h2>
 
@@ -1120,11 +1120,11 @@ export default function Home() {
 
 
 <section className="relative py-12 bg-slate-50 overflow-hidden">
-  <div className="max-w-7xl mx-auto px-6">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
     {/* SECTION HEADER */}
     <div className="max-w-4xl mx-auto text-center">
-      <h2 className="text-4xl font-semibold text-blue-900 tracking-tight">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-blue-900 tracking-tight leading-tight">
         Comprehensive Regulatory & Compliance Verification
       </h2>
 
@@ -1140,7 +1140,7 @@ export default function Home() {
 
       {/* RERA CARD */}
       <div className="group bg-white/80 backdrop-blur-md 
-                      border border-slate-500 rounded-3xl p-8
+                      border border-slate-500 rounded-3xl p-5 sm:p-8
                       shadow-sm hover:shadow-2xl hover:-translate-y-2
                       transition-all duration-500">
 
@@ -1170,7 +1170,7 @@ export default function Home() {
 
       {/* MUNICIPAL CARD */}
       <div className="group bg-white/80 backdrop-blur-md 
-                      border border-slate-500 rounded-3xl p-8
+                      border border-slate-500 rounded-3xl p-5 sm:p-8
                       shadow-sm hover:shadow-2xl hover:-translate-y-2
                       transition-all duration-500">
 
@@ -1200,7 +1200,7 @@ export default function Home() {
 
       {/* UTILITY CARD */}
       <div className="group bg-white/80 backdrop-blur-md 
-                      border border-slate-500 rounded-3xl p-8
+                      border border-slate-500 rounded-3xl p-5 sm:p-8
                       shadow-sm hover:shadow-2xl hover:-translate-y-2
                       transition-all duration-500">
 
@@ -1232,7 +1232,7 @@ export default function Home() {
 
     {/* OUTCOME NOTE */}
     <div className="mt-20 max-w-5xl mx-auto text-center">
-      <div className="bg-brand-soft/40 rounded-2xl p-8 border border-brand/10">
+      <div className="bg-brand-soft/40 rounded-2xl p-5 sm:p-8 border border-brand/10">
         <p className="text-slate-700 leading-relaxed">
           Properties that pass all compliance layers receive verified badges
           (RERA Verified, Approval Cleared, Utility Verified), enabling buyers
@@ -1250,11 +1250,11 @@ export default function Home() {
 
 <section className="relative py-12 bg-gradient-to-b from-slate-50 to-white">
 
-  <div className="max-w-7xl mx-auto px-8">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     {/* CENTERED HEADER */}
     <div className="max-w-3xl mx-auto text-center">
-      <h2 className="text-4xl font-bold text-blue-900 tracking-tight">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-900 tracking-tight leading-tight">
         Comprehensive Verification Report
       </h2>
 
@@ -1308,7 +1308,7 @@ export default function Home() {
       ].map((item, index) => (
         <div
           key={index}
-          className="group relative rounded-2xl p-8 bg-white
+          className="group relative rounded-2xl p-5 sm:p-8 bg-white
                      shadow-md border border-slate-200
                      hover:shadow-xl hover:-translate-y-2
                      transition-all duration-500"
@@ -1364,11 +1364,11 @@ export default function Home() {
                   w-[900px] h-[900px] 
                   bg-brand/5 rounded-full blur-[140px] -z-10" />
 
-  <div className="max-w-7xl mx-auto px-6">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
     {/* HEADER */}
     <div className="max-w-3xl mx-auto text-center">
-      <h2 className="text-4xl font-bold text-blue-900 tracking-tight">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-900 tracking-tight leading-tight">
         Freemium Model Strategy
       </h2>
 
@@ -1379,11 +1379,11 @@ export default function Home() {
     </div>
 
     {/* PRICING GRID */}
-    <div className="mt-20 grid md:grid-cols-3 gap-8 items-stretch">
+    <div className="mt-14 sm:mt-20 grid md:grid-cols-3 gap-5 sm:gap-8 items-stretch">
 
       {/* FREE */}
       <div className="group bg-white border border-slate-200 
-                      rounded-2xl p-8 shadow-sm 
+                      rounded-2xl p-5 sm:p-8 shadow-sm 
                       hover:shadow-xl hover:-translate-y-2
                       transition-all duration-500">
 
@@ -1395,7 +1395,7 @@ export default function Home() {
           Ideal for exploration
         </p>
 
-        <div className="mt-6 text-4xl font-bold text-slate-900">
+        <div className="mt-6 text-3xl sm:text-4xl font-bold text-slate-900">
           ₹0
         </div>
 
@@ -1418,7 +1418,7 @@ export default function Home() {
 
       {/* PREMIUM BUYERS (FEATURED) */}
       <div className="relative group bg-white border-2 border-brand 
-                      rounded-2xl p-8 shadow-xl 
+                      rounded-2xl p-5 sm:p-8 shadow-xl 
                       hover:-translate-y-3 transition-all duration-500">
 
         {/* Badge */}
@@ -1436,7 +1436,7 @@ export default function Home() {
           Serious due diligence
         </p>
 
-        <div className="mt-6 text-4xl font-bold text-brand">
+        <div className="mt-6 text-3xl sm:text-4xl font-bold text-brand">
           ₹499
           <span className="text-sm text-slate-500 font-normal"> /month</span>
         </div>
@@ -1463,7 +1463,7 @@ export default function Home() {
 
       {/* PREMIUM SELLERS */}
       <div className="group bg-white border border-slate-200 
-                      rounded-2xl p-8 shadow-sm 
+                      rounded-2xl p-5 sm:p-8 shadow-sm 
                       hover:shadow-xl hover:-translate-y-2
                       transition-all duration-500">
 
@@ -1475,7 +1475,7 @@ export default function Home() {
           Maximize visibility
         </p>
 
-        <div className="mt-6 text-4xl font-bold text-slate-900">
+        <div className="mt-6 text-3xl sm:text-4xl font-bold text-slate-900">
           ₹999
           <span className="text-sm text-slate-500 font-normal"> /month</span>
         </div>
