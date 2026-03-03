@@ -339,7 +339,7 @@ export default function Home() {
     <div className="bg-white text-slate-800 overflow-x-hidden">
       {/* <ScrollToTopButton /> */}
 
-      {/* ================= HERO (UNCHANGED) ================= */}
+    
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-16 sm:pb-20">
   <div
     className="absolute inset-0 bg-cover bg-center will-change-transform"
@@ -628,7 +628,7 @@ export default function Home() {
                 <p className="text-sm text-slate-700">Encumbrance: {matchedProperty?.government_approvals?.land_ownership?.encumbrance_status || "Not Verified"}</p>
                 <p className="text-sm text-slate-700">Last Verified: {matchedProperty?.verification_report_card?.last_verified_date || "Not Available"}</p>
                 
-                {/* Show approval status if available */}
+               
                 {matchedProperty?.government_approvals?.layout_approval?.status && (
                   <p className="text-sm text-slate-700">
                     Layout Approval: {matchedProperty.government_approvals.layout_approval.status}
@@ -654,7 +654,7 @@ export default function Home() {
                   <p className="text-sm text-slate-500 italic">No verified documents available</p>
                 )}
                 
-                {/* Show pending documents for partially verified */}
+               
                 {matchedProperty?.verified_badge === "Partially Verified" && 
                  matchedProperty?.verification_report_card?.pending_documents && 
                  matchedProperty.verification_report_card.pending_documents.length > 0 && (
@@ -670,7 +670,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Blur overlay for Not Verified - shows message */}
+           
             {matchedProperty?.verified_badge === "Not Verified" && (
               <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px] flex flex-col items-center justify-center p-4 rounded-b-2xl">
                 <p className="text-sm sm:text-base font-semibold text-red-600 text-center">
@@ -689,7 +689,7 @@ export default function Home() {
               </div>
             )}
 
-            {/* Blur overlay for Fully/Partially Verified - premium feature */}
+           
             {matchedProperty?.verified_badge !== "Not Verified" && (
               <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex flex-col items-center justify-center p-4 rounded-b-2xl">
                 <p className="text-sm sm:text-base font-semibold text-slate-900 text-center">
@@ -721,11 +721,11 @@ export default function Home() {
       
      
 
-      {/* ================= TIMELINE ================= */}
+   
       <section className="relative py-12 bg-slate-50 overflow-hidden">
 
   <div className="max-w-7xl mx-auto px-4 sm:px-6">
-    {/* Title */}
+
     <div className="text-center max-w-3xl mx-auto">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-blue-900 tracking-tight leading-tight">
         The Critical Market Problem
@@ -735,9 +735,9 @@ export default function Home() {
       </p>
     </div>
 
-    {/* Responsive Layout */}
+   
     <div className="mt-24 flex flex-col-reverse lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-      {/* LEFT SIDE - Timeline */}
+  
       <div ref={timelineRef} className="relative pl-0 sm:pl-8 md:pl-12 w-full">
         <div className="timeline-line"></div>
         <div className="md:space-y-12 space-y-10">
@@ -758,14 +758,14 @@ export default function Home() {
           ))}
         </div>
       </div>
-      {/* RIGHT SIDE - Image */}
+     
       <div className="relative flex justify-center items-center w-full mb-10 lg:mb-0">
         <img
           src="/Building.png"
           alt="Legal Land Documentation"
           className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg object-cover"
         />
-        {/* Optional subtle floating effect */}
+       
         <div className="absolute -z-10 top-4 left-4 w-full h-full bg-brand/10 rounded-2xl hidden sm:block"></div>
       </div>
     </div>
@@ -773,7 +773,7 @@ export default function Home() {
 </section>
 
 
-{/* ================= OUR COMPREHENSIVE SOLUTION ================= */}
+
 <section className="relative py-12 bg-slate-50 overflow-hidden">
 
   
@@ -796,7 +796,7 @@ export default function Home() {
       </p>
     </div>
 
-    {/* ================= FEATURED CORE ENGINE ================= */}
+
    
 
 <div className="mt-24 relative bg-gradient-to-br from-brand-soft to-white 

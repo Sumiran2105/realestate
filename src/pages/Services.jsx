@@ -526,14 +526,14 @@ const Services = () => {
       
 
       {/* CTA Section - FROM PAGE 55 */}
-      <div className="bg-brand-dark text-white py-16 relative overflow-hidden">
+      <div className="bg-hardorange text-white py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-64 h-64 bg-brand-light rounded-full filter blur-3xl"></div>
           <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-400 rounded-full filter blur-3xl"></div>
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">
             Ready to Transform Your Property Journey?
           </h2>
           <p className="text-xl text-brand-light mb-8 max-w-2xl mx-auto">

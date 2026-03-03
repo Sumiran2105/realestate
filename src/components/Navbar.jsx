@@ -53,6 +53,9 @@ export default function Navbar() {
       Property: ["Verify Property", "Legal Assistance", "Home Loans", "Rental Agreements"],
       Support: ["Customer Care", "FAQs", "Contact Us"],
     },
+    Other: {
+      Popular: ["Property Management", "Interior Design", "Moving Services", "Pest Control", "Home Renovation"],
+    },
   };
 
   const featureLinks = {
@@ -79,6 +82,11 @@ export default function Navbar() {
     "Customer Care": "/contact",
     FAQs: "/contact",
     "Contact Us": "/contact",
+    "Property Management": "/services",
+    "Interior Design": "/services",
+    "Moving Services": "/services",
+    "Pest Control": "/services",
+    "Home Renovation": "/services",
   };
 
   const handleLogout = () => {
@@ -124,7 +132,7 @@ export default function Navbar() {
               
               {/* Dropdown Menu */}
               <div
-                className={`absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[780px] bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 grid grid-cols-4 gap-6 z-50 transition-all duration-200 ${
+                className={`absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[980px] bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 grid grid-cols-5 gap-6 z-50 transition-all duration-200 ${
                   featuresOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
                 }`}
               >
@@ -421,6 +429,28 @@ export default function Navbar() {
                             <Link
                               key={item}
                               to={featureLinks[item] || "/"}
+                              onClick={handleMobileLinkClick}
+                              className="block text-sm text-slate-700 hover:text-blue-600 py-1"
+                            >
+                              {item}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Other Section */}
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900 mb-2">Other</h4>
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-xs font-medium text-slate-500">Popular</p>
+                        <div className="pl-2 mt-1 space-y-1">
+                          {featureMenus.Other.Popular.map((item) => (
+                            <Link
+                              key={item}
+                              to={featureLinks[item] || "/services"}
                               onClick={handleMobileLinkClick}
                               className="block text-sm text-slate-700 hover:text-blue-600 py-1"
                             >

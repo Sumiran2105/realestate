@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import Services from "../pages/Services";
 
 export default function HeroDropdown() {
   const [active, setActive] = useState(null);
@@ -24,8 +25,12 @@ export default function HeroDropdown() {
       Tools: ["Property Valuation", "Find Agent"],
     },
     Services: {
-      Property: ["Verify Property", "Legal Assistance", "Home Loans","Rental Agreements"],
+      Property: ["Verify Property", "Legal Assistance", "Home Loans","Rental Agreements","Home Insurance"],
       Support: ["Customer Care", "FAQs", "Contact Us"],
+    },
+    Other: {
+      Popular: ["Property Management", "Interior Design", "Moving Services", "Pest Control", "Home Renovation"],
+        Resources: ["Blog", "Guides", "Market Trends"], 
     },
   };
 
