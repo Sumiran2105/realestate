@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
-import { getPendingKYC, updateUserKYC } from '@/features/dashboard/admin/data/adminData';
+import { getPendingKYC, updateUserKYC } from '@/dashboards/admin/data/adminData';
 import { 
   FaUserCheck, 
   FaUserTimes, 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { 
-  getAgentProperties, getAgentStats, updateProperty, deleteProperty } from '@/features/dashboard/agent/data/propertyStore';
+  getAgentProperties, getAgentStats, updateProperty, deleteProperty } from '@/dashboards/agent/data/propertyStore';
 import { 
   FaEdit, 
   FaEye, 

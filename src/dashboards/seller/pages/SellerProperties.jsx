@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '@/features/dashboard/components/Sidebar';
-import Header from '@/features/dashboard/components/Header';
+import Sidebar from '@/dashboards/components/Sidebar';
+import Header from '@/dashboards/components/Header';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { getSellerListings } from '@/features/listings/store/sellerListings';
 import { 

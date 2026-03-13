@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import Sidebar from '@/features/dashboard/components/Sidebar';
-import Header from '@/features/dashboard/components/Header';
+import Sidebar from '@/dashboards/components/Sidebar';
+import Header from '@/dashboards/components/Header';
 
 const DashboardLayout = ({ children, title }) => {
   const { user } = useAuth();

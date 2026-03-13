@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
-import { getAllUsers, updateUserStatus, deleteUser } from '@/features/dashboard/admin/data/adminData';
+import { getAllUsers, updateUserStatus, deleteUser } from '@/dashboards/admin/data/adminData';
 import { 
   FaSearch, 
   FaEdit, 

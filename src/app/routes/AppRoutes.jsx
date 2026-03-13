@@ -1,11 +1,11 @@
 import React from 'react';
 import { Routes } from 'react-router-dom';
 
-import { renderAuthRoutes } from '@/app/routes/groups/authRoutes';
-import { renderBuyerRoutes } from '@/app/routes/groups/buyerRoutes';
-import { renderDashboardRoutes } from '@/app/routes/groups/dashboardRoutes';
-import { renderFallbackRoutes } from '@/app/routes/groups/fallbackRoutes';
-import { renderPublicRoutes } from '@/app/routes/groups/publicRoutes';
+import { renderAuthRoutes } from '@/app/routes/authRoutes';
+import { renderBuyerRoutes } from '@/app/routes/buyerRoutes';
+import { renderDashboardRoutes } from '@/app/routes/dashboardRoutes';
+import { renderFallbackRoutes } from '@/app/routes/fallbackRoutes';
+import { renderPublicRoutes } from '@/app/routes/publicRoutes';
 
 export const getDashboardPath = (role) => {
   switch (role) {

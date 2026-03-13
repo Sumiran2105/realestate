@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
-import { getAllProperties, getAllUsers, getPendingKYC } from '@/features/dashboard/admin/data/adminData';
+import { getAllProperties, getAllUsers, getPendingKYC } from '@/dashboards/admin/data/adminData';
 import { 
   FaUsers, 
   FaHome, 

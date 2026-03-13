@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
-import { getAllProperties, updatePropertyStatus } from '@/features/dashboard/admin/data/adminData';
+import { getAllProperties, updatePropertyStatus } from '@/dashboards/admin/data/adminData';
 
 const AdminProperties = () => {
   const [properties, setProperties] = useState([]);
