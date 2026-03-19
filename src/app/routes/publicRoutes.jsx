@@ -1,17 +1,17 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import About from '@/features/marketing/pages/About';
-import Contact from '@/features/marketing/pages/Contact';
-import Home from '@/features/marketing/pages/Home';
-import Services from '@/features/marketing/pages/Services';
+import About from '@/pages/public/About';
+import Contact from '@/pages/public/Contact';
+import Home from '@/pages/public/Home';
+import HomeLoan from '@/pages/public/HomeLoan';
+import LegalAssistance from '@/pages/public/LegalAssistance';
 import Properties from '@/features/properties/pages/Properties';
 import PropertyDetail from '@/features/properties/pages/PropertyDetail';
 import VerificationReport from '@/features/properties/pages/VerificationReport';
-import HomeLoan from '@/features/services/pages/HomeLoan';
-import LegalAssistance from '@/features/services/pages/LegalAssistance';
-import RentalAgreements from '@/features/services/pages/RentalAgreements';
-import VerifyProperty from '@/features/services/pages/VerifyProperty';
+import RentalAgreements from '@/pages/public/RentalAgreements';
+import Services from '@/pages/public/Services';
+import VerifyProperty from '@/pages/public/VerifyProperty';
 
 export function renderPublicRoutes() {
   return [

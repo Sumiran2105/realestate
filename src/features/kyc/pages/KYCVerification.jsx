@@ -1,500 +1,449 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ArrowRight, BadgeCheck, FileBadge2, FileText, ShieldCheck, Upload, UserSquare2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "@/features/auth/hooks/useAuth";
+
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { kycApi } from '@/features/kyc/api/kycApi';
+import { useToast } from '@/shared/hooks/useToast';
+
+const resolveDocumentIcon = (documentId) => {
+  switch (documentId) {
+    case 'aadhaar':
+      return UserSquare2;
+    case 'pan':
+      return FileText;
+    case 'rera':
+      return ShieldCheck;
+    case 'gst':
+      return BadgeCheck;
+    default:
+      return FileBadge2;
+  }
+};
+
+const roleTitles = {
+  buyer: 'Buyer KYC',
+  seller: 'Seller KYC',
+  builder: 'Builder KYC',
+  agent: 'Agent KYC',
+  admin: 'Admin Access',
+};
 
 const KYCVerification = () => {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    // Aadhaar Details
-    aadhaarNumber: '',
-    aadhaarFront: null,
-    aadhaarBack: null,
-    
-    // PAN Details
-    panNumber: '',
-    panCard: null,
-    
-    // Selfie
-    selfie: null,
-    selfiePreview: null
-  });
-  
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [verificationStatus, setVerificationStatus] = useState('pending');
-  
-  const { user, updateKYCStatus } = useAuth();
+  const { user } = useAuth();
+  const { error: showError, info } = useToast();
   const navigate = useNavigate();
 
-  const handleFileUpload = (field, file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData({
-        ...formData,
-        [field]: file,
-        [`${field}Preview`]: reader.result
-      });
+  const [requirements, setRequirements] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [formState, setFormState] = useState({});
+  const [submittingDocumentId, setSubmittingDocumentId] = useState(null);
+
+  useEffect(() => {
+    const loadRequirements = async () => {
+      try {
+        const response = await kycApi.getRequirements();
+        setRequirements(response);
+      } catch (loadError) {
+        showError(loadError.message || 'Failed to load KYC requirements.', 'KYC Load Failed');
+      } finally {
+        setLoading(false);
+      }
     };
-    reader.readAsDataURL(file);
+
+    loadRequirements();
+  }, [showError]);
+
+  const documents = useMemo(() => {
+    if (!requirements) return [];
+
+    return [
+      ...(requirements.basic_requirements || []).map((item) => ({ ...item, section: 'basic' })),
+      ...((requirements.requires_professional ? requirements.professional_requirements : []) || []).map((item) => ({
+        ...item,
+        section: 'professional',
+      })),
+    ];
+  }, [requirements]);
+
+  const getDocumentFields = (document) => {
+    if (document.document_id === 'aadhaar') {
+      return ['aadhaar_number'];
+    }
+
+    if (document.document_id === 'pan') {
+      return ['pan_number'];
+    }
+
+    return document.fields || [];
   };
 
-  const validateAadhaar = () => {
-    const newErrors = {};
-    
-    if (!formData.aadhaarNumber || formData.aadhaarNumber.length !== 12) {
-      newErrors.aadhaarNumber = 'Aadhaar number must be 12 digits';
-    }
-    if (!formData.aadhaarFront) {
-      newErrors.aadhaarFront = 'Please upload front side of Aadhaar';
-    }
-    if (!formData.aadhaarBack) {
-      newErrors.aadhaarBack = 'Please upload back side of Aadhaar';
-    }
-    
-    return newErrors;
+  const completion = useMemo(() => {
+    const total = documents.length;
+    const completed = documents.filter((document) => {
+      const current = formState[document.document_id];
+      if (!current?.file) return false;
+
+      const requiredFields = getDocumentFields(document);
+      return requiredFields.every((field) => current?.fields?.[field]?.trim());
+    }).length;
+
+    return {
+      total,
+      completed,
+      percent: total ? Math.round((completed / total) * 100) : 0,
+    };
+  }, [documents, formState]);
+
+  const updateDocumentField = (documentId, updater) => {
+    setFormState((currentState) => {
+      const currentDocument = currentState[documentId] || { file: null, fields: {}, submitted: false };
+      return {
+        ...currentState,
+        [documentId]: updater(currentDocument),
+      };
+    });
   };
 
-  const validatePAN = () => {
-    const newErrors = {};
-    const panRegex = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
-    
-    if (!formData.panNumber || !panRegex.test(formData.panNumber)) {
-      newErrors.panNumber = 'Please enter a valid PAN number (e.g., ABCDE1234F)';
-    }
-    if (!formData.panCard) {
-      newErrors.panCard = 'Please upload your PAN card';
-    }
-    
-    return newErrors;
+  const handleFileChange = (documentId, file) => {
+    updateDocumentField(documentId, (currentDocument) => ({
+      ...currentDocument,
+      file,
+    }));
   };
 
-  const validateSelfie = () => {
-    const newErrors = {};
-    
-    if (!formData.selfie) {
-      newErrors.selfie = 'Please take a selfie';
-    }
-    
-    return newErrors;
+  const handleTextFieldChange = (documentId, field, value) => {
+    updateDocumentField(documentId, (currentDocument) => ({
+      ...currentDocument,
+      fields: {
+        ...(currentDocument.fields || {}),
+        [field]: value,
+      },
+    }));
   };
 
-  const handleNext = () => {
-    let stepErrors = {};
-    
-    if (step === 1) {
-      stepErrors = validateAadhaar();
-    } else if (step === 2) {
-      stepErrors = validatePAN();
-    }
-    
-    if (Object.keys(stepErrors).length > 0) {
-      setErrors(stepErrors);
-      return;
-    }
-    
-    setErrors({});
-    setStep(step + 1);
+  const handleContinue = () => {
+    info('KYC requirements are now loaded from the backend. Document submission endpoint is not wired yet.', 'Requirements Loaded');
   };
 
-  const handleBack = () => {
-    setStep(step - 1);
-    setErrors({});
-  };
+  const handleDocumentSubmit = async (document) => {
+    const current = formState[document.document_id] || { file: null, fields: {}, submitted: false };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Validate selfie before submission
-    const selfieErrors = validateSelfie();
-    if (Object.keys(selfieErrors).length > 0) {
-      setErrors(selfieErrors);
-      return;
+    if (document.document_id === 'aadhaar') {
+      const aadhaarNumber = current.fields?.aadhaar_number?.trim();
+
+      if (!aadhaarNumber) {
+        showError('Aadhaar number is required before upload.', 'Aadhaar Missing');
+        return;
+      }
+
+      if (!current.file) {
+        showError('Please choose the Aadhaar file before submitting.', 'Aadhaar Missing');
+        return;
+      }
+
+      try {
+        setSubmittingDocumentId(document.document_id);
+        await kycApi.submitAadhaar({
+          aadhaarNumber,
+          file: current.file,
+        });
+        updateDocumentField(document.document_id, (currentDocument) => ({
+          ...currentDocument,
+          submitted: true,
+        }));
+        info('Aadhaar submitted successfully.', 'Aadhaar Uploaded');
+      } catch (submitError) {
+        showError(submitError.message || 'Failed to submit Aadhaar.', 'Upload Failed');
+      } finally {
+        setSubmittingDocumentId(null);
+      }
     }
-    
-    setLoading(true);
-    setVerificationStatus('processing');
-    
-    // Simulate KYC verification process
-    setTimeout(() => {
-      setVerificationStatus('success');
-      
-      setTimeout(() => {
-        updateKYCStatus('verified');
-        
-        // Redirect based on user role
-        switch(user?.role) {
-          case 'agent':
-            navigate('/dashboard/agent');
-            break;
-          case 'seller':
-            navigate('/dashboard/seller');
-            break;
-          default:
-            navigate('/buyer/home');
-        }
-      }, 2000);
-    }, 3000);
+
+    if (document.document_id === 'pan') {
+      const panNumber = current.fields?.pan_number?.trim().toUpperCase();
+
+      if (!panNumber) {
+        showError('PAN number is required before upload.', 'PAN Missing');
+        return;
+      }
+
+      if (!current.file) {
+        showError('Please choose the PAN file before submitting.', 'PAN Missing');
+        return;
+      }
+
+      try {
+        setSubmittingDocumentId(document.document_id);
+        await kycApi.submitPan({
+          panNumber,
+          file: current.file,
+        });
+        updateDocumentField(document.document_id, (currentDocument) => ({
+          ...currentDocument,
+          submitted: true,
+          fields: {
+            ...(currentDocument.fields || {}),
+            pan_number: panNumber,
+          },
+        }));
+        info('PAN submitted successfully.', 'PAN Uploaded');
+      } catch (submitError) {
+        showError(submitError.message || 'Failed to submit PAN.', 'Upload Failed');
+      } finally {
+        setSubmittingDocumentId(null);
+      }
+    }
   };
 
-  // Progress indicators
-  const steps = [
-    { number: 1, name: 'Aadhaar Verification', icon: '🆔' },
-    { number: 2, name: 'PAN Verification', icon: '📄' },
-    { number: 3, name: 'Selfie Verification', icon: '📸' }
-  ];
+  const title = roleTitles[requirements?.user_type || user?.role] || 'KYC';
+  const basicRequirements = requirements?.basic_requirements || [];
+  const professionalRequirements = requirements?.professional_requirements || [];
 
-  return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">KYC Verification</h1>
-          <p className="text-gray-600 mt-2">
-            Complete your verification to start using all features
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[linear-gradient(180deg,_#f6f7f3_0%,_#eef2f7_100%)] px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl rounded-[32px] border border-slate-200 bg-white p-8 text-sm text-slate-600 shadow-sm">
+          Loading KYC requirements...
+        </div>
+      </div>
+    );
+  }
+
+  if (!requirements) {
+    return (
+      <div className="min-h-screen bg-[linear-gradient(180deg,_#f6f7f3_0%,_#eef2f7_100%)] px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl rounded-[32px] border border-red-200 bg-white p-8 shadow-sm">
+          <h1 className="text-2xl font-semibold text-slate-900">Unable to load KYC requirements</h1>
+          <p className="mt-3 text-sm text-slate-600">
+            The frontend could not load `/api/v1/requirements`. Check the backend response and try again.
           </p>
         </div>
+      </div>
+    );
+  }
 
-        {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            {steps.map((s, index) => (
-              <React.Fragment key={s.number}>
-                <div className="flex flex-col items-center">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl ${
-                    step > s.number 
-                      ? 'bg-green-500 text-white' 
-                      : step === s.number
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {step > s.number ? '✓' : s.icon}
-                  </div>
-                  <span className="text-xs mt-2 text-gray-600">{s.name}</span>
-                </div>
-                {index < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-4 ${
-                    step > index + 1 ? 'bg-green-500' : 'bg-gray-200'
-                  }`} />
-                )}
-              </React.Fragment>
-            ))}
+  if (requirements.user_type === 'admin') {
+    return (
+      <div className="min-h-screen bg-[linear-gradient(180deg,_#f6f7f3_0%,_#eef2f7_100%)] px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
+          <div className="flex items-center gap-3 text-emerald-700">
+            <BadgeCheck size={22} />
+            <h1 className="text-2xl font-semibold text-slate-900">No KYC required for admin users</h1>
+          </div>
+          <p className="mt-3 text-sm text-slate-600">
+            Your current user type does not require KYC onboarding.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const renderRequirementCard = (document) => {
+    const Icon = resolveDocumentIcon(document.document_id);
+    const current = formState[document.document_id] || { file: null, fields: {}, submitted: false };
+    const documentFields = getDocumentFields(document);
+
+    return (
+      <div key={document.document_id} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+        <div className="flex items-start gap-4">
+          <div className="rounded-2xl bg-slate-100 p-3 text-slate-700 ring-1 ring-slate-200">
+            <Icon size={20} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="text-lg font-semibold text-slate-900">{document.name}</h3>
+              {document.is_required && (
+                <span className="rounded-full bg-rose-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-rose-700">
+                  Required
+                </span>
+              )}
+            </div>
+            <p className="mt-2 text-sm text-slate-600">{document.description}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-500">{document.instructions}</p>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          {verificationStatus === 'processing' && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔄</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Verifying Your Documents</h2>
-              <p className="text-gray-600 mb-6">
-                Please wait while we verify your Aadhaar, PAN, and selfie...
-              </p>
-              <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            </div>
-          )}
-
-          {verificationStatus === 'success' && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">✅</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">KYC Verified Successfully!</h2>
-              <p className="text-gray-600 mb-6">
-                Your identity has been verified. Redirecting to dashboard...
-              </p>
-              <div className="w-16 h-16 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            </div>
-          )}
-
-          {verificationStatus === 'pending' && (
-            <form onSubmit={handleSubmit}>
-              {/* Step 1: Aadhaar Verification */}
-              {step === 1 && (
-                <div className="space-y-6">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <p className="text-sm text-blue-800 flex items-center">
-                      <span className="text-xl mr-2">🆔</span>
-                      Enter your Aadhaar details and upload clear images of both sides
-                    </p>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Aadhaar Number <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.aadhaarNumber}
-                      onChange={(e) => setFormData({ 
-                        ...formData, 
-                        aadhaarNumber: e.target.value.replace(/\D/g, '').slice(0, 12)
-                      })}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
-                        errors.aadhaarNumber ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="XXXX XXXX XXXX"
-                    />
-                    {errors.aadhaarNumber && (
-                      <p className="mt-1 text-sm text-red-600">{errors.aadhaarNumber}</p>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Front Side <span className="text-red-500">*</span>
-                      </label>
-                      <div className={`border-2 border-dashed rounded-lg p-4 text-center ${
-                        errors.aadhaarFront ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                      }`}>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload('aadhaarFront', e.target.files[0])}
-                          className="hidden"
-                          id="aadhaar-front"
-                        />
-                        <label htmlFor="aadhaar-front" className="cursor-pointer block">
-                          {formData.aadhaarFrontPreview ? (
-                            <img 
-                              src={formData.aadhaarFrontPreview} 
-                              alt="Aadhaar Front" 
-                              className="w-full h-32 object-cover rounded-lg"
-                            />
-                          ) : (
-                            <div>
-                              <span className="text-3xl mb-2 block">📄</span>
-                              <span className="text-blue-600 text-sm">Click to upload</span>
-                              <p className="text-xs text-gray-500 mt-1">Front side of Aadhaar</p>
-                            </div>
-                          )}
-                        </label>
-                      </div>
-                      {errors.aadhaarFront && (
-                        <p className="mt-1 text-sm text-red-600">{errors.aadhaarFront}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Back Side <span className="text-red-500">*</span>
-                      </label>
-                      <div className={`border-2 border-dashed rounded-lg p-4 text-center ${
-                        errors.aadhaarBack ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                      }`}>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload('aadhaarBack', e.target.files[0])}
-                          className="hidden"
-                          id="aadhaar-back"
-                        />
-                        <label htmlFor="aadhaar-back" className="cursor-pointer block">
-                          {formData.aadhaarBackPreview ? (
-                            <img 
-                              src={formData.aadhaarBackPreview} 
-                              alt="Aadhaar Back" 
-                              className="w-full h-32 object-cover rounded-lg"
-                            />
-                          ) : (
-                            <div>
-                              <span className="text-3xl mb-2 block">📄</span>
-                              <span className="text-blue-600 text-sm">Click to upload</span>
-                              <p className="text-xs text-gray-500 mt-1">Back side of Aadhaar</p>
-                            </div>
-                          )}
-                        </label>
-                      </div>
-                      {errors.aadhaarBack && (
-                        <p className="mt-1 text-sm text-red-600">{errors.aadhaarBack}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 2: PAN Verification */}
-              {step === 2 && (
-                <div className="space-y-6">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <p className="text-sm text-blue-800 flex items-center">
-                      <span className="text-xl mr-2">📄</span>
-                      Enter your PAN details and upload a clear image of your PAN card
-                    </p>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      PAN Number <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.panNumber}
-                      onChange={(e) => setFormData({ 
-                        ...formData, 
-                        panNumber: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10)
-                      })}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
-                        errors.panNumber ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="ABCDE1234F"
-                    />
-                    {errors.panNumber && (
-                      <p className="mt-1 text-sm text-red-600">{errors.panNumber}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      PAN Card Image <span className="text-red-500">*</span>
-                    </label>
-                    <div className={`border-2 border-dashed rounded-lg p-4 text-center ${
-                      errors.panCard ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                    }`}>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleFileUpload('panCard', e.target.files[0])}
-                        className="hidden"
-                        id="pan-upload"
-                      />
-                      <label htmlFor="pan-upload" className="cursor-pointer block">
-                        {formData.panCardPreview ? (
-                          <img 
-                            src={formData.panCardPreview} 
-                            alt="PAN Card" 
-                            className="w-full h-48 object-contain rounded-lg"
-                          />
-                        ) : (
-                          <div>
-                            <span className="text-4xl mb-2 block">📎</span>
-                            <span className="text-blue-600">Click to upload PAN card</span>
-                            <p className="text-xs text-gray-500 mt-1">JPG or PNG (max 5MB)</p>
-                          </div>
-                        )}
-                      </label>
-                    </div>
-                    {errors.panCard && (
-                      <p className="mt-1 text-sm text-red-600">{errors.panCard}</p>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Step 3: Selfie Verification */}
-              {step === 3 && (
-                <div className="space-y-6">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <p className="text-sm text-blue-800 flex items-center">
-                      <span className="text-xl mr-2">📸</span>
-                      Take a clear selfie holding your PAN card near your face
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <div className={`border-2 border-dashed rounded-lg p-4 text-center ${
-                        errors.selfie ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                      }`}>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          capture="user"
-                          onChange={(e) => handleFileUpload('selfie', e.target.files[0])}
-                          className="hidden"
-                          id="selfie-capture"
-                        />
-                        <label htmlFor="selfie-capture" className="cursor-pointer block">
-                          {formData.selfiePreview ? (
-                            <img 
-                              src={formData.selfiePreview} 
-                              alt="Selfie" 
-                              className="w-full h-64 object-cover rounded-lg"
-                            />
-                          ) : (
-                            <div className="py-8">
-                              <span className="text-6xl mb-4 block">📸</span>
-                              <span className="text-blue-600 text-lg">Take Photo</span>
-                              <p className="text-xs text-gray-500 mt-2">Click to open camera</p>
-                            </div>
-                          )}
-                        </label>
-                      </div>
-                      {errors.selfie && (
-                        <p className="mt-1 text-sm text-red-600">{errors.selfie}</p>
-                      )}
-                    </div>
-
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h4 className="font-medium text-gray-700 mb-3">Guidelines:</h4>
-                      <ul className="space-y-2 text-sm text-gray-600">
-                        <li className="flex items-start">
-                          <span className="text-green-500 mr-2">✓</span>
-                          Hold your PAN card near your face
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-green-500 mr-2">✓</span>
-                          Ensure both face and card are clearly visible
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-green-500 mr-2">✓</span>
-                          Good lighting is important
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-green-500 mr-2">✓</span>
-                          No filters or editing
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-green-500 mr-2">✓</span>
-                          Look directly at the camera
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Navigation Buttons */}
-              <div className="flex justify-between mt-8">
-                {step > 1 && (
-                  <button
-                    type="button"
-                    onClick={handleBack}
-                    className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-                  >
-                    Back
-                  </button>
-                )}
-                
-                {step < 3 ? (
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    className="ml-auto px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                  >
-                    Continue
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="ml-auto px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400"
-                  >
-                    {loading ? 'Submitting...' : 'Submit for Verification'}
-                  </button>
-                )}
+        {documentFields.length > 0 && (
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {documentFields.map((field) => (
+              <div key={field} className={field === 'company_name' ? 'sm:col-span-2' : ''}>
+                <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  {field.replace(/_/g, ' ')}
+                </label>
+                <input
+                  type={field.includes('date') ? 'date' : 'text'}
+                  value={current.fields?.[field] || ''}
+                  onChange={(event) =>
+                    handleTextFieldChange(
+                      document.document_id,
+                      field,
+                      field === 'pan_number'
+                        ? event.target.value.toUpperCase().slice(0, 10)
+                        : field === 'aadhaar_number'
+                          ? event.target.value.replace(/\D/g, '').slice(0, 12)
+                          : event.target.value
+                    )
+                  }
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#1F4B43] focus:ring-4 focus:ring-[#1F4B43]/10"
+                  placeholder={`Enter ${field.replace(/_/g, ' ')}`}
+                  maxLength={field === 'aadhaar_number' ? 12 : field === 'pan_number' ? 10 : undefined}
+                />
               </div>
-            </form>
-          )}
+            ))}
+          </div>
+        )}
+
+        <div className="mt-6 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-5">
+          <label className="cursor-pointer">
+            <input
+              type="file"
+              className="hidden"
+              onChange={(event) => handleFileChange(document.document_id, event.target.files?.[0] || null)}
+            />
+            <div className="flex flex-col items-center justify-center text-center">
+              <div className="rounded-2xl bg-white p-3 text-slate-700 shadow-sm ring-1 ring-slate-200">
+                <Upload size={20} />
+              </div>
+              <p className="mt-4 text-sm font-medium text-slate-900">
+                {current.file ? current.file.name : `Upload ${document.name}`}
+              </p>
+              <p className="mt-2 text-xs text-slate-500">JPG, PNG, or PDF</p>
+            </div>
+          </label>
         </div>
 
-        {/* Security Note */}
-        <div className="mt-6 bg-gray-50 p-4 rounded-lg">
-          <h4 className="text-sm font-medium text-gray-900 mb-2">🔒 Your Data is Secure</h4>
-          <p className="text-xs text-gray-600">
-            All documents are encrypted. We use secure government APIs for verification 
-            and never store your full document numbers.
-          </p>
-        </div>
+        {(document.document_id === 'aadhaar' || document.document_id === 'pan') && (
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => handleDocumentSubmit(document)}
+              disabled={submittingDocumentId === document.document_id}
+              className="inline-flex items-center gap-2 rounded-full bg-[#1F4B43] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#173730] disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {submittingDocumentId === document.document_id
+                ? 'Submitting...'
+                : document.document_id === 'aadhaar'
+                  ? 'Submit Aadhaar'
+                  : 'Submit PAN'}
+              <ArrowRight size={15} />
+            </button>
+            {current.submitted && (
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-700">
+                Submitted
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-[linear-gradient(180deg,_#f6f7f3_0%,_#eef2f7_100%)] px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl space-y-8">
+        <section className="overflow-hidden rounded-[32px] border border-white/70 bg-white/80 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
+          <div className="relative bg-[linear-gradient(135deg,_#0f172a_0%,_#0f766e_50%,_#22c55e_100%)] px-6 py-10 sm:px-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.22),_transparent_30%)]" />
+            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.28em] text-white/70">KYC Requirements</p>
+                <h1 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">{title}</h1>
+                <p className="mt-3 max-w-2xl text-sm text-white/80 sm:text-base">
+                  This page is now driven by `/api/v1/requirements` and shows the exact basic and professional documents required for your account type.
+                </p>
+              </div>
+
+              <div className="rounded-[28px] border border-white/20 bg-white/10 p-5 text-white backdrop-blur">
+                <p className="text-xs uppercase tracking-[0.2em] text-white/70">Progress</p>
+                <p className="mt-3 text-3xl font-semibold">{completion.percent}%</p>
+                <p className="mt-2 text-sm text-white/80">
+                  {completion.completed} of {completion.total} requirements prepared
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
+          <div className="space-y-6">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Overview</p>
+              <div className="mt-5 space-y-4">
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">User Type</p>
+                  <p className="mt-3 text-lg font-semibold text-slate-900">
+                    {(requirements.user_type || user?.role || 'user').replace(/^\w/, (char) => char.toUpperCase())}
+                  </p>
+                </div>
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Basic Documents</p>
+                  <p className="mt-3 text-lg font-semibold text-slate-900">{basicRequirements.length}</p>
+                </div>
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Professional Documents</p>
+                  <p className="mt-3 text-lg font-semibold text-slate-900">
+                    {requirements.requires_professional ? professionalRequirements.length : 0}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Next Step</p>
+              <p className="mt-4 text-sm leading-7 text-slate-600">
+                Prepare all required documents here. Once the upload/submission backend endpoint is connected, this page can submit the same dynamic form directly.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={handleContinue}
+                  className="inline-flex items-center gap-2 rounded-full bg-[#1F4B43] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#173730]"
+                >
+                  Continue
+                  <ArrowRight size={15} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate(-1)}
+                  className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                >
+                  Go Back
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+              <div className="mb-5 flex items-center gap-3">
+                <div className="rounded-2xl bg-sky-50 p-3 text-sky-700 ring-1 ring-sky-100">
+                  <UserSquare2 size={18} />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Basic Requirements</p>
+                </div>
+              </div>
+              <div className="grid gap-5">{basicRequirements.map(renderRequirementCard)}</div>
+            </div>
+
+            {requirements.requires_professional && (
+              <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 ring-1 ring-emerald-100">
+                    <ShieldCheck size={18} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+                      Professional Requirements
+                    </p>
+                  </div>
+                </div>
+                <div className="grid gap-5">{professionalRequirements.map(renderRequirementCard)}</div>
+              </div>
+            )}
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -782,7 +782,7 @@ export default function Home() {
 
     {/* Header */}
     <div className="text-center max-w-3xl mx-auto">
-      <p className="uppercase tracking-widest text-sm text-brand mb-4">
+      <p className="uppercase tracking-widest text-sm text-brand mb-4 border border-gray-400 inline-block px-3 py-1 rounded-full">
         The Solution
       </p>
 

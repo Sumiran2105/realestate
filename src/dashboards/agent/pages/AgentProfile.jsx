@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/features/auth/hooks/useAuth';
+import KycStatusBar from '@/features/profile/components/KycStatusBar';
+import ProfileSettings from '@/features/profile/components/ProfileSettings';
+import VerificationBadge from '@/features/profile/components/VerificationBadge';
+import { useCurrentProfile } from '@/features/profile/hooks/useCurrentProfile';
+import { useToast } from '@/shared/hooks/useToast';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
 
 const AgentProfile = () => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
+  const { profile, isLoading: isProfileLoading } = useCurrentProfile();
+  const { info, success } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    name: user?.name || 'Mike Agent',
-    email: user?.email || 'agent@example.com',
-    phone: '9876543210',
+    name: '',
+    email: '',
+    phone: '',
     agency: 'Prime Properties',
     experience: '8 years',
     licenseNumber: 'RERA/TS/2024/12345',
@@ -17,10 +24,38 @@ const AgentProfile = () => {
     address: 'Road No. 36, Jubilee Hills, Hyderabad - 500033'
   });
 
+  useEffect(() => {
+    if (!profile) return;
+
+    setProfileData((prevProfile) => ({
+      ...prevProfile,
+      name: profile.name || prevProfile.name,
+      email: profile.email || prevProfile.email,
+      phone: profile.phone || prevProfile.phone,
+      agency: prevProfile.agency || `${profile.name || 'Agent'} Realty`,
+    }));
+  }, [profile]);
+
   const handleSave = () => {
-    // Save logic here
+    updateUser({
+      name: profileData.name,
+      email: profileData.email,
+      phone: profileData.phone,
+    });
     setIsEditing(false);
+    info('Basic profile details are loaded from the backend. Save is still local until an update-profile API is connected.', 'Local Save Only');
+    success('Profile details updated locally.', 'Profile Updated');
   };
+
+  if (isProfileLoading) {
+    return (
+      <DashboardLayout title="Profile">
+        <div className="rounded-xl bg-white p-6 text-sm text-gray-600 shadow-sm">
+          Loading profile...
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout title="Profile">
@@ -43,9 +78,14 @@ const AgentProfile = () => {
               <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 mb-2">
                 <h1 className="text-2xl font-bold text-gray-900">{profileData.name}</h1>
                 <span className="px-3 py-1 bg-green-100 text-green-600 text-sm rounded-full">
-                  Verified Agent
+                  {user?.accountStatus === 'active' ? 'Verified Agent' : 'Verification Pending'}
                 </span>
               </div>
+              <KycStatusBar
+                kycStatus={profile?.kycStatus}
+                kycCompleted={Boolean(profile?.kycCompleted)}
+                className="mb-3 mt-0"
+              />
               <p className="text-gray-600 mb-2">{profileData.agency} • {profileData.experience} experience</p>
               <p className="text-sm text-gray-500 mb-3">Member since Jan 2024</p>
               
@@ -167,11 +207,17 @@ const AgentProfile = () => {
                   <p className="font-medium text-gray-900">{profileData.name}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Email</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-sm text-gray-500">Email</p>
+                    <VerificationBadge verified={Boolean(profile?.emailVerified)} />
+                  </div>
                   <p className="font-medium text-gray-900">{profileData.email}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Phone</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-sm text-gray-500">Phone</p>
+                    <VerificationBadge verified={Boolean(profile?.phoneVerified)} />
+                  </div>
                   <p className="font-medium text-gray-900">{profileData.phone}</p>
                 </div>
                 <div>
@@ -220,6 +266,8 @@ const AgentProfile = () => {
             <p className="text-xs text-gray-600">Rating</p>
           </div>
         </div>
+
+        <ProfileSettings />
       </div>
     </DashboardLayout>
   );

@@ -1,121 +1,149 @@
-import { authStorage } from '@/features/auth/store/authStorage';
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const buildDemoUser = (email) => {
-  if (email === 'admin@example.com') {
-    return {
-      id: 999,
-      name: 'Admin User',
-      email,
-      role: 'admin',
-      kycStatus: 'verified',
-      emailVerified: true,
-      phoneVerified: true,
-      createdAt: new Date().toISOString(),
-    };
-  }
-
-  if (email.includes('agent')) {
-    return {
-      id: 2,
-      name: 'Mike Agent',
-      email,
-      role: 'agent',
-      kycStatus: 'verified',
-      emailVerified: true,
-      phoneVerified: true,
-      agentId: 'RERA12345',
-      rating: 4.5,
-      createdAt: new Date().toISOString(),
-    };
-  }
-
-  if (email.includes('seller')) {
-    return {
-      id: 3,
-      name: 'Sarah Seller',
-      email,
-      role: 'seller',
-      kycStatus: 'verified',
-      emailVerified: true,
-      phoneVerified: true,
-      createdAt: new Date().toISOString(),
-    };
-  }
-
-  return {
-    id: 1,
-    name: 'John Buyer',
-    email,
-    role: 'buyer',
-    kycStatus: 'not_started',
-    emailVerified: true,
-    phoneVerified: true,
-    createdAt: new Date().toISOString(),
-  };
-};
+import { apiClient } from '@/shared/api/client';
+import { authStorage } from '@/store/auth/authStorage';
+import { normalizeProfileUser } from '@/features/profile/utils/normalizeProfile';
 
 export const authApi = {
   async register(userData) {
-    await delay(1000);
+    const payload = {
+      phone: userData.phone,
+      email: userData.email,
+      user_type: userData.role,
+      full_name: userData.name,
+      password: userData.password,
+      confirm_password: userData.confirmPassword,
+    };
+
+    const response = await apiClient.request('/api/v1/register', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
 
     return {
-      success: true,
-      message: 'Registration initiated. Please verify OTP.',
+      ...response,
       tempRegistrationData: {
-        ...userData,
-        id: Date.now(),
-        createdAt: new Date().toISOString(),
+        id: response.user?.id || Date.now(),
+        name: userData.name,
+        full_name: response.user?.full_name || userData.name,
+        email: response.user?.email || userData.email,
+        phone: response.user?.phone || userData.phone,
+        role: userData.role,
+        user_type: response.user?.user_type || userData.role,
+        createdAt: response.user?.created_at || new Date().toISOString(),
       },
     };
   },
 
   async verifyOtp({ emailOTP, phoneOTP, tempRegistrationData }) {
-    await delay(1500);
-
-    if (emailOTP !== '123456' || phoneOTP !== '123456') {
-      throw new Error('Invalid OTP');
-    }
-
-    const pendingUser = {
-      ...tempRegistrationData,
+    const pendingUser = authStorage.getPendingUser() || tempRegistrationData;
+    authStorage.savePendingUser({
+      ...pendingUser,
       kycStatus: 'not_started',
       emailVerified: true,
       phoneVerified: true,
-    };
+      lastVerifiedEmailOtp: emailOTP,
+      lastVerifiedPhoneOtp: phoneOTP,
+    });
 
-    authStorage.savePendingUser(pendingUser);
+    return { success: true, message: 'Verification successful! Please login.' };
+  },
 
-    return {
-      success: true,
-      message: 'Verification successful! Please login.',
-    };
+  async verifyEmailOtp({ email, otp }) {
+    return apiClient.request('/api/v1/verify-email-otp', {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        otp,
+      }),
+    });
+  },
+
+  async resendEmailOtp(email) {
+    const formData = new URLSearchParams();
+    formData.append('email', email);
+
+    return apiClient.request('/api/v1/resend-email-otp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData.toString(),
+    });
+  },
+
+  async verifyPhoneOtp({ phone, otp }) {
+    return apiClient.request('/api/v1/verify-phone-otp', {
+      method: 'POST',
+      body: JSON.stringify({
+        phone,
+        otp,
+      }),
+    });
+  },
+
+  async resendPhoneOtp(phone) {
+    const formData = new URLSearchParams();
+    formData.append('phone', phone);
+
+    return apiClient.request('/api/v1/resend-phone-otp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData.toString(),
+    });
   },
 
   async resendOtp(type) {
-    await delay(1000);
     return { success: true, message: `OTP resent to your ${type}` };
   },
 
-  async login({ email }) {
-    await delay(1000);
+  async forgotPassword(identifier) {
+    return apiClient.request('/api/v1/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify({
+        identifier,
+      }),
+    });
+  },
 
-    const pendingUser = authStorage.getPendingUser();
-    let user = null;
+  async resetPassword({ identifier, otp, newPassword }) {
+    return apiClient.request('/api/v1/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({
+        identifier,
+        otp,
+        new_password: newPassword,
+      }),
+    });
+  },
 
-    if (pendingUser?.email === email) {
-      user = pendingUser;
-      authStorage.clearPendingUser();
-    }
+  async login({ identifier, password }) {
+    const response = await apiClient.request('/api/v1/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        identifier,
+        password,
+      }),
+    });
 
-    if (!user) {
-      user = buildDemoUser(email);
-    }
+    const normalizedUser = normalizeProfileUser(response.user);
 
-    const token = `mock_token_${Date.now()}`;
-    authStorage.saveSession({ user, token });
+    const accessToken = response.tokens?.access_token;
+    authStorage.saveSession({ user: normalizedUser, token: accessToken });
+    authStorage.clearPendingUser();
 
-    return { success: true, user, token };
+    return {
+      success: true,
+      user: normalizedUser,
+      token: accessToken,
+      refreshToken: response.tokens?.refresh_token,
+      expiresIn: response.tokens?.expires_in,
+    };
+  },
+
+  async logout() {
+    return apiClient.request('/api/v1/logout', {
+      method: 'POST',
+    });
   },
 };

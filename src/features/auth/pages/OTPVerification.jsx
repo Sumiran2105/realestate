@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/features/auth/hooks/useAuth';
+import { authApi } from '@/features/auth/api/authApi';
+import { authStorage } from '@/store/auth/authStorage';
+import { useToast } from '@/shared/hooks/useToast';
 
 const OTPVerification = () => {
   const [otp, setOtp] = useState({ email: ['', '', '', '', '', ''], phone: ['', '', '', '', '', ''] });
@@ -14,16 +16,31 @@ const OTPVerification = () => {
   const emailInputs = useRef([]);
   const phoneInputs = useRef([]);
   
-  const { verifyOTP, resendOTP } = useAuth();
+  const { success, error: showError, info } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-  const { email, phone } = location.state || { email: 'user@example.com', phone: '9876543210' };
+  const pendingUser = authStorage.getPendingUser();
+  const fallbackEmail = pendingUser?.email || '';
+  const fallbackPhone = pendingUser?.phone || '';
+  const { email = fallbackEmail, phone = fallbackPhone, toastMessage } = location.state || {};
 
   useEffect(() => {
     // Start timers for both OTPs
     startTimer('email');
     startTimer('phone');
   }, []);
+
+  useEffect(() => {
+    if (toastMessage) {
+      info(toastMessage, 'Verification Required');
+    }
+  }, [info, toastMessage]);
+
+  useEffect(() => {
+    if (!email || !phone) {
+      setError('Missing verification details. Please register again or use the same browser session.');
+    }
+  }, [email, phone]);
 
   useEffect(() => {
     // Check if both OTPs are verified
@@ -105,21 +122,22 @@ const OTPVerification = () => {
     setError('');
 
     try {
-      // In real app, verify OTP with backend
-      // For demo, accept 123456 as valid OTP
-      if (otpString === '123456') {
+      if (type === 'email') {
+        await authApi.verifyEmailOtp({ email, otp: otpString });
         setVerificationStatus(prev => ({ ...prev, [type]: true }));
         setError('');
-        
-        // Show success message
-        if (type === 'email') {
-          setActiveTab('phone');
-        }
+        success('Email OTP verified successfully.', 'OTP Verified');
+
+        setActiveTab('phone');
       } else {
-        setError(`Invalid ${type} OTP`);
+        await authApi.verifyPhoneOtp({ phone, otp: otpString });
+        setVerificationStatus(prev => ({ ...prev, [type]: true }));
+        setError('');
+        success('Phone OTP verified successfully.', 'OTP Verified');
       }
     } catch (err) {
       setError(err.message);
+      showError(err.message);
     } finally {
       setLoading(false);
     }
@@ -130,12 +148,18 @@ const OTPVerification = () => {
     
     setLoading(true);
     try {
-      await resendOTP(type);
+      if (type === 'email') {
+        await authApi.resendEmailOtp(email);
+      } else {
+        await authApi.resendPhoneOtp(phone);
+      }
       startTimer(type);
       setOtp({ ...otp, [type]: ['', '', '', '', '', ''] });
       setError('');
+      success(`A new ${type} OTP has been sent.`, 'OTP Sent');
     } catch (err) {
       setError(err.message);
+      showError(err.message);
     } finally {
       setLoading(false);
     }
@@ -144,8 +168,13 @@ const OTPVerification = () => {
   const handleVerificationComplete = async () => {
     setLoading(true);
     try {
-      const result = await verifyOTP(otp.email.join(''), otp.phone.join(''));
+      const result = await authApi.verifyOtp({
+        emailOTP: otp.email.join(''),
+        phoneOTP: otp.phone.join(''),
+        tempRegistrationData: { email, phone },
+      });
       if (result.success) {
+        success('Email and phone verified successfully.', 'Verification Complete');
         // Redirect to login with success message
         navigate('/login', { 
           state: { 
@@ -155,6 +184,7 @@ const OTPVerification = () => {
       }
     } catch (err) {
       setError(err.message);
+      showError(err.message);
     } finally {
       setLoading(false);
     }
@@ -249,9 +279,9 @@ const OTPVerification = () => {
 
             <button
               onClick={() => handleVerifyOTP('email')}
-              disabled={loading || !isOtpComplete('email')}
+              disabled={loading || !isOtpComplete('email') || !email}
               className={`w-full py-3 px-4 rounded-lg text-white font-medium ${
-                loading || !isOtpComplete('email')
+                loading || !isOtpComplete('email') || !email
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-blue-600 hover:bg-blue-700'
               }`}
@@ -264,9 +294,9 @@ const OTPVerification = () => {
                 Didn't receive code?{' '}
                 <button
                   onClick={() => handleResendOTP('email')}
-                  disabled={!canResend.email || loading}
+                  disabled={!canResend.email || loading || !email}
                   className={`font-medium ${
-                    canResend.email && !loading
+                    canResend.email && !loading && email
                       ? 'text-blue-600 hover:text-blue-800'
                       : 'text-gray-400 cursor-not-allowed'
                   }`}
@@ -304,9 +334,9 @@ const OTPVerification = () => {
 
             <button
               onClick={() => handleVerifyOTP('phone')}
-              disabled={loading || !isOtpComplete('phone')}
+              disabled={loading || !isOtpComplete('phone') || !phone}
               className={`w-full py-3 px-4 rounded-lg text-white font-medium ${
-                loading || !isOtpComplete('phone')
+                loading || !isOtpComplete('phone') || !phone
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-blue-600 hover:bg-blue-700'
               }`}
@@ -319,9 +349,9 @@ const OTPVerification = () => {
                 Didn't receive code?{' '}
                 <button
                   onClick={() => handleResendOTP('phone')}
-                  disabled={!canResend.phone || loading}
+                  disabled={!canResend.phone || loading || !phone}
                   className={`font-medium ${
-                    canResend.phone && !loading
+                    canResend.phone && !loading && phone
                       ? 'text-blue-600 hover:text-blue-800'
                       : 'text-gray-400 cursor-not-allowed'
                   }`}
@@ -348,7 +378,7 @@ const OTPVerification = () => {
 
         <div className="mt-6 text-center">
           <p className="text-xs text-gray-500">
-            For demo, use OTP: <span className="font-mono font-bold">123456</span>
+            Enter the OTPs sent by email and SMS to complete verification.
           </p>
         </div>
       </div>

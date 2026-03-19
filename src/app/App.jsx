@@ -6,6 +6,7 @@ import AppRoutes from '@/app/routes/AppRoutes';
 import Footer from '@/shared/components/Footer';
 import Navbar from '@/shared/components/Navbar';
 import ScrollToTop from '@/shared/components/ScrollToTop';
+import ToastContainer from '@/shared/components/ToastContainer';
 
 const LoadingSpinner = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -18,7 +19,9 @@ const LoadingSpinner = () => (
 
 const isDashboardPath = (pathname) =>
   pathname.startsWith('/dashboard') ||
-  pathname.startsWith('/kyc') ||
+  pathname.startsWith('/kyc');
+
+const isAuthPage = (pathname) =>
   pathname.startsWith('/login') ||
   pathname.startsWith('/register') ||
   pathname.startsWith('/forgot-password') ||
@@ -30,7 +33,8 @@ const isAgentOrSeller = (user) =>
 function AppContent() {
   const { user, loading } = useAuth();
   const location = useLocation();
-  const showNavFooter = !(isDashboardPath(location.pathname) && isAgentOrSeller(user));
+  const hideNavFooter = isAuthPage(location.pathname) || (isDashboardPath(location.pathname) && isAgentOrSeller(user));
+  const showNavFooter = !hideNavFooter;
 
   if (loading) {
     return <LoadingSpinner />;
@@ -38,6 +42,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ToastContainer />
       {showNavFooter && <Navbar />}
       <main className={`flex-grow ${!showNavFooter ? 'pt-0' : ''}`}>
         <ScrollToTop />

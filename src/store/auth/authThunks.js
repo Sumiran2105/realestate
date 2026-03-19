@@ -26,9 +26,18 @@ export const resendOtp = createAsyncThunk('auth/resendOtp', async (type, { rejec
   }
 });
 
-export const loginUser = createAsyncThunk('auth/loginUser', async ({ email }, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk('auth/loginUser', async ({ identifier, password }, { rejectWithValue }) => {
   try {
-    return await authApi.login({ email });
+    return await authApi.login({ identifier, password });
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
+export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, { rejectWithValue }) => {
+  try {
+    await authApi.logout();
+    return null;
   } catch (error) {
     return rejectWithValue(error.message);
   }

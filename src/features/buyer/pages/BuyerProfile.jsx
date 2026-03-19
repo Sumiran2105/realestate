@@ -1,35 +1,134 @@
 import React from 'react';
-import { useAuth } from '@/features/auth/hooks/useAuth';
+import { Mail, Phone, UserRound, WalletCards } from 'lucide-react';
+import KycStatusBar from '@/features/profile/components/KycStatusBar';
+import ProfileSettings from '@/features/profile/components/ProfileSettings';
+import VerificationBadge from '@/features/profile/components/VerificationBadge';
+import { useCurrentProfile } from '@/features/profile/hooks/useCurrentProfile';
 
 const BuyerProfile = () => {
-  const { user } = useAuth();
+  const { profile: profileUser, isLoading } = useCurrentProfile();
 
-  return (
-    <div className="bg-slate-50 min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-        <div className="bg-white rounded-2xl border border-slate-300 p-8">
-          <h1 className="text-3xl font-bold text-slate-900">Buyer Profile</h1>
-          <p className="text-slate-600 mt-2">Dummy buyer profile for workflow testing.</p>
+  const displayName = profileUser?.name || 'Buyer User';
+  const initials =
+    displayName
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join('') || 'BU';
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">Name</p>
-              <p className="text-lg font-semibold text-slate-900 mt-1">{user?.name || 'Buyer User'}</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">Email</p>
-              <p className="text-lg font-semibold text-slate-900 mt-1">{user?.email || 'buyer@example.com'}</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">Role</p>
-              <p className="text-lg font-semibold text-slate-900 mt-1">{user?.role || 'buyer'}</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">KYC Status</p>
-              <p className="text-lg font-semibold text-slate-900 mt-1">{user?.kycStatus || 'verified'}</p>
-            </div>
+  const accountStatus = profileUser?.accountStatus || 'pending';
+
+  const identityCards = [
+    {
+      label: 'Email Address',
+      value: profileUser?.email || 'buyer@example.com',
+      icon: Mail,
+      verified: profileUser?.emailVerified,
+      tone: 'from-sky-500/15 to-cyan-400/10',
+      iconTone: 'text-sky-700',
+    },
+    {
+      label: 'Phone Number',
+      value: profileUser?.phone || 'Not available',
+      icon: Phone,
+      verified: profileUser?.phoneVerified,
+      tone: 'from-emerald-500/15 to-lime-400/10',
+      iconTone: 'text-emerald-700',
+    },
+    {
+      label: 'User Type',
+      value: (profileUser?.role || 'buyer').replace(/^\w/, (char) => char.toUpperCase()),
+      icon: UserRound,
+      tone: 'from-violet-500/15 to-fuchsia-400/10',
+      iconTone: 'text-violet-700',
+    },
+    {
+      label: 'Account Status',
+      value: accountStatus.replace(/^\w/, (char) => char.toUpperCase()),
+      icon: WalletCards,
+      tone: 'from-amber-500/15 to-orange-400/10',
+      iconTone: 'text-amber-700',
+    },
+  ];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.12),_transparent_32%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)]">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="rounded-[28px] border border-white/70 bg-white/80 p-8 text-sm text-slate-600 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
+            Loading profile...
           </div>
         </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.12),_transparent_32%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)]">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6 lg:px-8">
+        <section className="overflow-hidden rounded-[32px] border border-white/70 bg-white/80 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
+          <div className="relative border-b border-slate-200/70 bg-[linear-gradient(135deg,_#0f172a_0%,_#0f766e_50%,_#22c55e_100%)] px-6 py-10 sm:px-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.22),_transparent_30%)]" />
+            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="flex items-center gap-4 sm:gap-5">
+                <div className="flex h-20 w-20 items-center justify-center rounded-3xl border border-white/30 bg-white/15 text-2xl font-semibold tracking-wide text-white shadow-lg sm:h-24 sm:w-24 sm:text-3xl">
+                  {initials}
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.28em] text-white/70">Your Account</p>
+                  <h1 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">{displayName}</h1>
+                  <KycStatusBar
+                    kycStatus={profileUser?.kycStatus}
+                    kycCompleted={Boolean(profileUser?.kycCompleted)}
+                    variant="header-dark"
+                  />
+                  <p className="mt-2 max-w-2xl text-sm text-white/80 sm:text-base">
+                    This is your profile page where you can view your account details and manage your information.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white ring-1 ring-white/25">
+                  <UserRound size={16} />
+                  {(profileUser?.role || 'buyer').replace(/^\w/, (char) => char.toUpperCase())}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="px-6 py-8 sm:px-8">
+            <div className="space-y-6">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Live Fields</p>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+                  {identityCards.map(({ label, value, icon: Icon, tone, iconTone, verified }) => (
+                    <div
+                      key={label}
+                      className={`rounded-3xl border border-slate-200 bg-gradient-to-br ${tone} p-5 shadow-sm sm:p-6`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className={`rounded-2xl bg-white p-3 shadow-sm ring-1 ring-white/80 ${iconTone}`}>
+                          <Icon size={18} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{label}</p>
+                            {typeof verified === 'boolean' && <VerificationBadge verified={verified} />}
+                          </div>
+                          <p className="mt-3 break-words text-base font-semibold text-slate-900 sm:text-lg">{value}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <ProfileSettings />
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

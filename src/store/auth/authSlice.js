@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { authStorage } from '@/features/auth/store/authStorage';
-import { loginUser, registerUser, resendOtp, verifyOtp } from '@/features/auth/store/authThunks';
+import { authStorage } from '@/store/auth/authStorage';
+import { loginUser, logoutUser, registerUser, resendOtp, verifyOtp } from '@/store/auth/authThunks';
 
 const storedUser = authStorage.getUser();
 const storedToken = authStorage.getToken();
@@ -19,7 +19,7 @@ const authSlice = createSlice({
     tempRegistrationData: null,
   },
   reducers: {
-    logoutUser(state) {
+    completeLogout(state) {
       state.user = null;
       state.token = null;
       state.tempRegistrationData = null;
@@ -88,9 +88,27 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Login failed';
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.token = null;
+        state.tempRegistrationData = null;
+        authStorage.clearAll();
+      })
+      .addCase(logoutUser.rejected, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.token = null;
+        state.tempRegistrationData = null;
+        authStorage.clearAll();
       });
   },
 });
 
-export const { logoutUser, updateKycStatus, updateUser, clearAuthError } = authSlice.actions;
+export const { completeLogout, updateKycStatus, updateUser, clearAuthError } = authSlice.actions;
 export default authSlice.reducer;

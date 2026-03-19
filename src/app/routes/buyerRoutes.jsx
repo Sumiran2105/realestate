@@ -31,7 +31,7 @@ export function renderBuyerRoutes() {
       key="/buyer/profile"
       path="/buyer/profile"
       element={
-        <ProtectedRoute allowedRoles={['buyer']}>
+        <ProtectedRoute allowedRoles={['buyer']} requireKYC={false}>
           <BuyerProfile />
         </ProtectedRoute>
       }

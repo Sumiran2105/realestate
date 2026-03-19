@@ -74,7 +74,7 @@ export function renderDashboardRoutes({ user, getDashboardPath }) {
       key="/dashboard/agent/profile"
       path="/dashboard/agent/profile"
       element={
-        <ProtectedRoute allowedRoles={['agent']}>
+        <ProtectedRoute allowedRoles={['agent']} requireKYC={false}>
           <AgentProfile />
         </ProtectedRoute>
       }
@@ -137,7 +137,7 @@ export function renderDashboardRoutes({ user, getDashboardPath }) {
       key="/dashboard/seller/profile"
       path="/dashboard/seller/profile"
       element={
-        <ProtectedRoute allowedRoles={['seller']}>
+        <ProtectedRoute allowedRoles={['seller']} requireKYC={false}>
           <SellerProfile />
         </ProtectedRoute>
       }

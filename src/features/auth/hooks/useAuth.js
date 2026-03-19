@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
   clearAuthError,
-  logoutUser,
+  completeLogout,
   updateKycStatus,
   updateUser,
-} from '@/features/auth/store/authSlice';
+} from '@/store/auth/authSlice';
 import {
   selectAuthError,
   selectAuthLoading,
@@ -15,8 +15,8 @@ import {
   selectIsBuyer,
   selectIsSeller,
   selectNeedsKyc,
-} from '@/features/auth/store/authSelectors';
-import { loginUser, registerUser, resendOtp, verifyOtp } from '@/features/auth/store/authThunks';
+} from '@/store/auth/authSelectors';
+import { loginUser, logoutUser, registerUser, resendOtp, verifyOtp } from '@/store/auth/authThunks';
 
 export const useAuth = () => {
   const dispatch = useDispatch();
@@ -34,11 +34,11 @@ export const useAuth = () => {
     user,
     loading,
     error,
-    login: (email, password) => dispatch(loginUser({ email, password })).unwrap(),
+    login: (identifier, password) => dispatch(loginUser({ identifier, password })).unwrap(),
     register: (userData) => dispatch(registerUser(userData)).unwrap(),
     verifyOTP: (emailOTP, phoneOTP) => dispatch(verifyOtp({ emailOTP, phoneOTP })).unwrap(),
     resendOTP: (type) => dispatch(resendOtp(type)).unwrap(),
-    logout: () => dispatch(logoutUser()),
+    logout: () => dispatch(logoutUser()).unwrap().catch(() => dispatch(completeLogout())),
     updateKYCStatus: (status) => dispatch(updateKycStatus(status)),
     updateUser: (updates) => dispatch(updateUser(updates)),
     clearError: () => dispatch(clearAuthError()),

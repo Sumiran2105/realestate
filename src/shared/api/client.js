@@ -2,7 +2,13 @@ const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
 };
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+const DEFAULT_DEV_API_BASE_URL = 'http://localhost:8000';
+
+const TOKEN_STORAGE_KEY = 'token';
+
+export const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? DEFAULT_DEV_API_BASE_URL : '');
 
 export const buildApiUrl = (path) => {
   if (!API_BASE_URL) return path;
@@ -11,10 +17,14 @@ export const buildApiUrl = (path) => {
 
 export const apiClient = {
   async request(path, options = {}) {
+    const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+    const isFormDataBody = typeof FormData !== 'undefined' && options.body instanceof FormData;
+
     const response = await fetch(buildApiUrl(path), {
       ...options,
       headers: {
-        ...DEFAULT_HEADERS,
+        ...(isFormDataBody ? {} : DEFAULT_HEADERS),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(options.headers || {}),
       },
     });
@@ -24,7 +34,13 @@ export const apiClient = {
 
       try {
         const errorBody = await response.json();
-        message = errorBody.message || errorBody.detail || message;
+        if (typeof errorBody?.detail === 'string') {
+          message = errorBody.detail;
+        } else if (typeof errorBody?.detail?.message === 'string') {
+          message = errorBody.detail.message;
+        } else if (typeof errorBody?.message === 'string') {
+          message = errorBody.message;
+        }
       } catch {
         message = response.statusText || message;
       }

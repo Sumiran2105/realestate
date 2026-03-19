@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  BadgeCheck,
+  Building2,
+  Camera,
+  Clock3,
+  Eye,
+  House,
+  Mail,
+  MapPin,
+  MessageSquareMore,
+  Phone,
+  Pencil,
+  Save,
+  ShieldCheck,
+  Star,
+  UserRound,
+} from 'lucide-react';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { 
-  FaUser, 
-  FaEnvelope, 
-  FaPhone, 
-  FaMapMarkerAlt, 
-  FaBuilding,
-  FaIdCard,
-  FaEdit,
-  FaCamera,
-  FaSave,
-  FaCheckCircle,
-  FaTimesCircle,
-  FaClock,
-  FaStar,
-  FaCalendarAlt,
-  FaFileAlt,
-  FaDownload,
-  FaShieldAlt,
-  FaHome,
-  FaEye,
-  FaComments
-} from 'react-icons/fa';
+import KycStatusBar from '@/features/profile/components/KycStatusBar';
+import ProfileSettings from '@/features/profile/components/ProfileSettings';
+import VerificationBadge from '@/features/profile/components/VerificationBadge';
+import { useCurrentProfile } from '@/features/profile/hooks/useCurrentProfile';
+import { useToast } from '@/shared/hooks/useToast';
 
 const SellerProfile = () => {
   const { user, updateUser } = useAuth();
+  const { profile, isLoading: isProfileLoading } = useCurrentProfile();
+  const { success, info } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [saveSuccess, setSaveSuccess] = useState(false);
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -66,32 +67,27 @@ const SellerProfile = () => {
   });
 
   useEffect(() => {
-    if (user) {
-      setProfileData({
-        name: user.name || 'Sarah Seller',
-        email: user.email || 'sarah.seller@example.com',
-        phone: user.phone || '+91 9876543210',
-        company: 'Sarah Properties',
-        gstNumber: '22AAAAA0000A1Z5',
-        address: '123, Jubilee Hills',
-        city: 'Hyderabad',
-        state: 'Telangana',
-        pincode: '500033',
-        panNumber: 'ABCDE1234F',
-        aadhaarNumber: 'XXXX-XXXX-1234',
-        experience: '5 years',
-        specialization: ['Residential', 'Luxury Homes', 'Apartments'],
-        about: 'Experienced real estate seller with a passion for helping people find their dream homes. Specializing in luxury properties and residential spaces in prime locations.',
-        website: 'www.sarahproperties.com',
-        socialMedia: {
-          facebook: 'sarah.properties',
-          twitter: '@sarah_properties',
-          linkedin: 'sarah-seller',
-          instagram: 'sarah.properties'
-        }
-      });
+    if (!profile) return;
+
+    setProfileData((prevProfile) => ({
+      ...prevProfile,
+      name: profile.name || prevProfile.name,
+      email: profile.email || prevProfile.email,
+      phone: profile.phone || prevProfile.phone,
+      company: prevProfile.company || `${profile.name || 'Seller'} Properties`,
+    }));
+
+    if (profile.createdAt) {
+      const joinedDate = new Date(profile.createdAt);
+      setStats((prevStats) => ({
+        ...prevStats,
+        memberSince: joinedDate.toLocaleDateString('en-IN', {
+          month: 'short',
+          year: 'numeric',
+        }),
+      }));
     }
-  }, [user]);
+  }, [profile]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -114,12 +110,17 @@ const SellerProfile = () => {
 
   const handleSave = () => {
     setLoading(true);
-    // Simulate API call
+
     setTimeout(() => {
+      updateUser({
+        name: profileData.name,
+        email: profileData.email,
+        phone: profileData.phone,
+      });
       setLoading(false);
-      setSaveSuccess(true);
       setIsEditing(false);
-      setTimeout(() => setSaveSuccess(false), 3000);
+      info('Basic profile details are loaded from the backend. Save is still local until an update-profile API is connected.', 'Local Save Only');
+      success('Profile details updated locally.', 'Profile Updated');
     }, 1500);
   };
 
@@ -128,83 +129,175 @@ const SellerProfile = () => {
     console.log('Uploading image:', e.target.files[0]);
   };
 
-  const StatCard = ({ icon, label, value, color }) => (
-    <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
-      <div className="flex items-center gap-3">
-        <div className={`w-10 h-10 ${color} rounded-lg flex items-center justify-center text-xl`}>
-          {icon}
+  const isKycVerified = user?.accountStatus === 'active';
+  const verificationLabel = isKycVerified ? 'KYC Verified' : 'Verification Pending';
+  const displayName = profileData.name || 'Seller User';
+  const initials =
+    displayName
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join('') || 'SU';
+
+  const summaryCards = [
+    {
+      label: 'Total Properties',
+      value: stats.totalProperties,
+      icon: House,
+      tone: 'from-sky-500/15 to-cyan-400/10',
+      iconTone: 'text-sky-700',
+    },
+    {
+      label: 'Active Listings',
+      value: stats.activeListings,
+      icon: BadgeCheck,
+      tone: 'from-emerald-500/15 to-lime-400/10',
+      iconTone: 'text-emerald-700',
+    },
+    {
+      label: 'Total Views',
+      value: stats.totalViews,
+      icon: Eye,
+      tone: 'from-violet-500/15 to-fuchsia-400/10',
+      iconTone: 'text-violet-700',
+    },
+    {
+      label: 'Inquiries',
+      value: stats.totalInquiries,
+      icon: MessageSquareMore,
+      tone: 'from-amber-500/15 to-orange-400/10',
+      iconTone: 'text-amber-700',
+    },
+  ];
+
+  const personalFields = [
+    {
+      label: 'Full Name',
+      name: 'name',
+      type: 'text',
+      icon: UserRound,
+      tone: 'from-sky-500/15 to-cyan-400/10',
+      iconTone: 'text-sky-700',
+    },
+    {
+      label: 'Email',
+      name: 'email',
+      type: 'email',
+      verificationKey: 'emailVerified',
+      icon: Mail,
+      tone: 'from-emerald-500/15 to-lime-400/10',
+      iconTone: 'text-emerald-700',
+    },
+    {
+      label: 'Phone',
+      name: 'phone',
+      type: 'tel',
+      verificationKey: 'phoneVerified',
+      icon: Phone,
+      tone: 'from-violet-500/15 to-fuchsia-400/10',
+      iconTone: 'text-violet-700',
+    },
+    {
+      label: 'Experience',
+      name: 'experience',
+      type: 'select',
+      icon: Clock3,
+      tone: 'from-amber-500/15 to-orange-400/10',
+      iconTone: 'text-amber-700',
+    },
+  ];
+
+  const businessFields = [
+    { label: 'Company Name', name: 'company' },
+    { label: 'GST Number', name: 'gstNumber' },
+    { label: 'PAN Number', name: 'panNumber' },
+    { label: 'Aadhaar Number', name: 'aadhaarNumber' },
+  ];
+
+  const addressFields = [
+    { label: 'Street Address', name: 'address', fullWidth: true },
+    { label: 'City', name: 'city' },
+    { label: 'State', name: 'state' },
+    { label: 'Pincode', name: 'pincode' },
+    { label: 'Website', name: 'website' },
+  ];
+
+  const renderField = (field) => {
+    const verified =
+      field.verificationKey === 'emailVerified'
+        ? profile?.emailVerified
+        : field.verificationKey === 'phoneVerified'
+          ? profile?.phoneVerified
+          : null;
+
+    if (field.type === 'select') {
+      return isEditing ? (
+        <select
+          name={field.name}
+          value={profileData[field.name]}
+          onChange={handleChange}
+          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+        >
+          <option>1-2 years</option>
+          <option>3-5 years</option>
+          <option>5-10 years</option>
+          <option>10+ years</option>
+        </select>
+      ) : (
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <p className="break-words text-base font-semibold text-slate-900 sm:text-lg">{profileData[field.name]}</p>
+          {typeof verified === 'boolean' && <VerificationBadge verified={verified} />}
         </div>
-        <div>
-          <p className="text-xs text-gray-500">{label}</p>
-          <p className="text-lg font-semibold text-gray-900">{value}</p>
-        </div>
+      );
+    }
+
+    return isEditing ? (
+      <input
+        type={field.type || 'text'}
+        name={field.name}
+        value={profileData[field.name]}
+        onChange={handleChange}
+        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+      />
+    ) : (
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <p className="min-w-0 break-all text-base font-semibold text-slate-900 sm:text-lg">{profileData[field.name]}</p>
+        {typeof verified === 'boolean' && <VerificationBadge verified={verified} />}
       </div>
-    </div>
-  );
+    );
+  };
+
+  if (isProfileLoading) {
+    return (
+      <DashboardLayout title="Seller Profile">
+        <div className="rounded-[28px] border border-white/70 bg-white/80 p-8 text-sm text-slate-600 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
+          Loading profile...
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout title="Seller Profile">
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">My Profile</h1>
-            <p className="text-sm text-gray-500 mt-1">Manage your personal and business information</p>
-          </div>
-          {!isEditing ? (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all flex items-center gap-2"
-            >
-              <FaEdit />
-              Edit Profile
-            </button>
-          ) : (
-            <div className="flex gap-2">
-              <button
-                onClick={() => setIsEditing(false)}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                disabled={loading}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all flex items-center gap-2"
-              >
-                {loading ? 'Saving...' : <><FaSave /> Save Changes</>}
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Success Message */}
-        {saveSuccess && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
-            <FaCheckCircle className="text-green-600" />
-            <p className="text-sm text-green-700">Profile updated successfully!</p>
-          </div>
-        )}
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Profile Summary */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Profile Card */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="h-24 bg-gradient-to-r from-blue-600 to-purple-600"></div>
-              <div className="px-6 pb-6 -mt-12">
+      <div className="space-y-8">
+        <section className="overflow-hidden rounded-[32px] border border-white/70 bg-white/80 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
+          <div className="relative border-b border-slate-200/70 bg-[linear-gradient(135deg,_#0f172a_0%,_#0f766e_50%,_#22c55e_100%)] px-6 py-10 sm:px-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.22),_transparent_30%)]" />
+            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="flex items-center gap-4 sm:gap-5">
                 <div className="relative">
-                  <div className="w-24 h-24 rounded-xl border-4 border-white overflow-hidden bg-white shadow-lg mx-auto">
+                  <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-white/30 bg-white/15 text-2xl font-semibold tracking-wide text-white shadow-lg sm:h-24 sm:w-24 sm:text-3xl">
                     <img
-                      src={`https://ui-avatars.com/api/?name=${profileData.name}&size=96&background=2563eb&color=fff`}
-                      alt={profileData.name}
-                      className="w-full h-full object-cover"
+                      src={`https://ui-avatars.com/api/?name=${displayName}&size=96&background=2563eb&color=fff`}
+                      alt={displayName}
+                      className="h-full w-full object-cover"
                     />
+                    <span className="sr-only">{initials}</span>
                   </div>
                   {isEditing && (
-                    <label className="absolute bottom-0 right-1/2 transform translate-x-8 bg-blue-600 text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition shadow-lg">
-                      <FaCamera size={14} />
+                    <label className="absolute -bottom-2 -right-2 cursor-pointer rounded-2xl border border-white/20 bg-slate-950/80 p-2 text-white shadow-lg backdrop-blur transition hover:bg-slate-900">
+                      <Camera size={16} />
                       <input
                         type="file"
                         accept="image/*"
@@ -214,307 +307,223 @@ const SellerProfile = () => {
                     </label>
                   )}
                 </div>
-
-                <div className="text-center mt-4">
-                  <h2 className="text-xl font-bold text-gray-900">{profileData.name}</h2>
-                  <p className="text-sm text-gray-500">{profileData.company}</p>
-                  
-                  {/* Rating */}
-                  <div className="flex items-center justify-center gap-1 mt-2">
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar key={i} className={i < Math.floor(stats.rating) ? 'text-yellow-400' : 'text-gray-300'} />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">{stats.rating} ({stats.reviews} reviews)</span>
-                  </div>
-
-                  {/* Member since */}
-                  <div className="flex items-center justify-center gap-1 mt-2 text-xs text-gray-500">
-                    <FaCalendarAlt size={12} />
-                    <span>Member since {stats.memberSince}</span>
-                  </div>
-                </div>
-
-                {/* KYC Status */}
-                <div className="mt-4 p-3 bg-green-50 rounded-lg flex items-center gap-2">
-                  <FaShieldAlt className="text-green-600" />
-                  <span className="text-sm text-green-700">KYC Verified</span>
-                  <FaCheckCircle className="text-green-600 ml-auto" />
+                <div>
+                  <p className="text-xs uppercase tracking-[0.28em] text-white/70">Seller Account</p>
+                  <h1 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">{displayName}</h1>
+                  <KycStatusBar
+                    kycStatus={profile?.kycStatus}
+                    kycCompleted={Boolean(profile?.kycCompleted)}
+                    variant="header-dark"
+                  />
+                  <p className="mt-2 max-w-2xl text-sm text-white/80 sm:text-base">
+                    Manage your seller business identity, profile information, and listing presence from one place.
+                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Quick Stats */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h3 className="font-semibold text-gray-900 mb-4">Quick Stats</h3>
-              <div className="space-y-3">
-                <StatCard icon={<FaHome />} label="Total Properties" value={stats.totalProperties} color="bg-blue-100 text-blue-600" />
-                <StatCard icon={<FaCheckCircle />} label="Active Listings" value={stats.activeListings} color="bg-green-100 text-green-600" />
-                <StatCard icon={<FaEye />} label="Total Views" value={stats.totalViews} color="bg-purple-100 text-purple-600" />
-                <StatCard icon={<FaComments />} label="Inquiries" value={stats.totalInquiries} color="bg-yellow-100 text-yellow-600" />
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column - Profile Details */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Personal Information */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <FaUser className="text-blue-600" />
-                Personal Information
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">Full Name</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="name"
-                      value={profileData.name}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.name}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">Email</label>
-                  {isEditing ? (
-                    <input
-                      type="email"
-                      name="email"
-                      value={profileData.email}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.email}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">Phone</label>
-                  {isEditing ? (
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={profileData.phone}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.phone}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">Experience</label>
-                  {isEditing ? (
-                    <select
-                      name="experience"
-                      value={profileData.experience}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
+              <div className="flex flex-wrap gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white ring-1 ring-white/25">
+                  <Building2 size={16} />
+                  Seller
+                </span>
+                <span
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
+                    isKycVerified ? 'bg-white text-emerald-700' : 'bg-white/15 text-white ring-1 ring-white/25'
+                  }`}
+                >
+                  {isKycVerified ? <ShieldCheck size={16} /> : <Clock3 size={16} />}
+                  {verificationLabel}
+                </span>
+                {!isEditing ? (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-900 transition hover:bg-slate-100"
+                  >
+                    <Pencil size={16} />
+                    Edit Profile
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => setIsEditing(false)}
+                      className="rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white ring-1 ring-white/25 transition hover:bg-white/20"
                     >
-                      <option>1-2 years</option>
-                      <option>3-5 years</option>
-                      <option>5-10 years</option>
-                      <option>10+ years</option>
-                    </select>
-                  ) : (
-                    <p className="text-gray-900">{profileData.experience}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Business Information */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <FaBuilding className="text-green-600" />
-                Business Information
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">Company Name</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="company"
-                      value={profileData.company}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.company}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">GST Number</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="gstNumber"
-                      value={profileData.gstNumber}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.gstNumber}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">PAN Number</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="panNumber"
-                      value={profileData.panNumber}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.panNumber}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">Aadhaar Number</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="aadhaarNumber"
-                      value={profileData.aadhaarNumber}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.aadhaarNumber}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Address */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <FaMapMarkerAlt className="text-red-600" />
-                Address
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-500 mb-1">Street Address</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="address"
-                      value={profileData.address}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.address}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">City</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="city"
-                      value={profileData.city}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.city}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">State</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="state"
-                      value={profileData.state}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.state}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">Pincode</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="pincode"
-                      value={profileData.pincode}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.pincode}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-500 mb-1">Website</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="website"
-                      value={profileData.website}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-900">{profileData.website}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* About */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h3 className="font-semibold text-gray-900 mb-2">About</h3>
-              {isEditing ? (
-                <textarea
-                  name="about"
-                  value={profileData.about}
-                  onChange={handleChange}
-                  rows="4"
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                />
-              ) : (
-                <p className="text-gray-600">{profileData.about}</p>
-              )}
-            </div>
-
-            {/* Specializations */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h3 className="font-semibold text-gray-900 mb-3">Specializations</h3>
-              <div className="flex flex-wrap gap-2">
-                {profileData.specialization.map((spec, index) => (
-                  <span key={index} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-                    {spec}
-                  </span>
-                ))}
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSave}
+                      disabled={loading}
+                      className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-emerald-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      <Save size={16} />
+                      {loading ? 'Saving...' : 'Save Changes'}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
-        </div>
+
+          <div className="space-y-8 px-6 py-8 sm:px-8">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {summaryCards.map(({ label, value, icon: Icon, tone, iconTone }) => (
+                <div
+                  key={label}
+                  className={`rounded-3xl border border-slate-200 bg-gradient-to-br ${tone} p-5 shadow-sm sm:p-6`}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className={`rounded-2xl bg-white p-3 shadow-sm ring-1 ring-white/80 ${iconTone}`}>
+                      <Icon size={18} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{label}</p>
+                      <p className="mt-3 break-words text-base font-semibold text-slate-900 sm:text-lg">{value}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-2">
+              <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="rounded-2xl bg-sky-50 p-3 text-sky-700 ring-1 ring-sky-100">
+                    <UserRound size={18} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Personal Information</p>
+                  </div>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {personalFields.map(({ icon: Icon, tone, iconTone, ...field }) => (
+                    <div
+                      key={field.name}
+                      className={`rounded-3xl border border-slate-200 bg-gradient-to-br ${tone} p-5 shadow-sm`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className={`rounded-2xl bg-white p-3 shadow-sm ring-1 ring-white/80 ${iconTone}`}>
+                          <Icon size={18} />
+                        </div>
+                        <div className="min-w-0 flex-1 overflow-hidden">
+                          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{field.label}</p>
+                          {renderField(field)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 ring-1 ring-emerald-100">
+                    <Building2 size={18} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Business Information</p>
+                  </div>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {businessFields.map((field) => (
+                    <div key={field.name}>
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-500">{field.label}</p>
+                      {renderField(field)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+              <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="rounded-2xl bg-rose-50 p-3 text-rose-700 ring-1 ring-rose-100">
+                    <MapPin size={18} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Address</p>
+                  </div>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {addressFields.map((field) => (
+                    <div key={field.name} className={field.fullWidth ? 'sm:col-span-2' : ''}>
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-500">{field.label}</p>
+                      {renderField(field)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+                  <div className="mb-5 flex items-center gap-3">
+                    <div className="rounded-2xl bg-violet-50 p-3 text-violet-700 ring-1 ring-violet-100">
+                      <MessageSquareMore size={18} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">About</p>
+                    </div>
+                  </div>
+                  {isEditing ? (
+                    <textarea
+                      name="about"
+                      value={profileData.about}
+                      onChange={handleChange}
+                      rows="6"
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+                    />
+                  ) : (
+                    <p className="leading-7 text-slate-700">{profileData.about}</p>
+                  )}
+                </div>
+
+                <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+                  <div className="mb-5 flex items-center gap-3">
+                    <div className="rounded-2xl bg-amber-50 p-3 text-amber-700 ring-1 ring-amber-100">
+                      <Star size={18} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Seller Overview</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4 text-sm text-slate-600">
+                    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Rating</p>
+                      <div className="mt-3 flex items-center gap-2">
+                        {[...Array(5)].map((_, index) => (
+                          <Star
+                            key={index}
+                            size={16}
+                            className={index < Math.floor(stats.rating) ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}
+                          />
+                        ))}
+                        <span className="font-semibold text-slate-900">
+                          {stats.rating} ({stats.reviews} reviews)
+                        </span>
+                      </div>
+                    </div>
+                    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Member Since</p>
+                      <p className="mt-3 text-base font-semibold text-slate-900">{stats.memberSince}</p>
+                    </div>
+                    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Specializations</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {profileData.specialization.map((spec, index) => (
+                          <span key={index} className="rounded-full bg-sky-100 px-3 py-1 text-sm font-medium text-sky-700">
+                            {spec}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ProfileSettings />
+          </div>
+        </section>
       </div>
     </DashboardLayout>
   );

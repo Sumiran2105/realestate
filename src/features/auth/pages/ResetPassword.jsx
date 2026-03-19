@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { authApi } from '@/features/auth/api/authApi';
+import { useToast } from '@/shared/hooks/useToast';
 
 const ResetPassword = () => {
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
+  const location = useLocation();
   const navigate = useNavigate();
+  const { success, error: showError } = useToast();
+  const initialIdentifier = location.state?.identifier || '';
   
   const [formData, setFormData] = useState({
+    identifier: initialIdentifier,
+    otp: '',
     password: '',
     confirmPassword: ''
   });
@@ -25,6 +30,16 @@ const ResetPassword = () => {
     e.preventDefault();
     setError('');
 
+    if (!formData.identifier.trim()) {
+      setError('Email or phone number is required');
+      return;
+    }
+
+    if (!/^\d{6}$/.test(formData.otp)) {
+      setError('Enter a valid 6-digit OTP');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -37,37 +52,27 @@ const ResetPassword = () => {
 
     setLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setResetComplete(true);
-      setLoading(false);
-      
-      // Redirect to login after 3 seconds
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
-    }, 1500);
+    authApi
+      .resetPassword({
+        identifier: formData.identifier,
+        otp: formData.otp,
+        newPassword: formData.password,
+      })
+      .then((result) => {
+        setResetComplete(true);
+        setLoading(false);
+        success(result.message || 'Password reset successfully.', 'Password Reset');
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+      })
+      .catch((submitError) => {
+        setLoading(false);
+        const message = submitError.message || 'Failed to reset password.';
+        setError(message);
+        showError(message, 'Reset Failed');
+      });
   };
-
-  if (!token) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-          <div className="text-6xl mb-4">❌</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Invalid Reset Link</h2>
-          <p className="text-gray-600 mb-6">
-            This password reset link is invalid or has expired.
-          </p>
-          <Link
-            to="/forgot-password"
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            Request New Link
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -88,6 +93,37 @@ const ResetPassword = () => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address or Phone Number
+                </label>
+                <input
+                  type="text"
+                  name="identifier"
+                  value={formData.identifier}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="you@example.com or 9876543210"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Reset OTP
+                </label>
+                <input
+                  type="text"
+                  name="otp"
+                  value={formData.otp}
+                  onChange={handleChange}
+                  required
+                  maxLength={6}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="123456"
+                />
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   New Password
