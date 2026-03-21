@@ -1,4 +1,4 @@
-import { apiClient } from '@/shared/api/client';
+import { apiClient } from '@/shared/axios/client';
 import { authStorage } from '@/store/auth/authStorage';
 import { normalizeProfileUser } from '@/features/profile/utils/normalizeProfile';
 
@@ -15,7 +15,7 @@ export const authApi = {
 
     const response = await apiClient.request('/api/v1/register', {
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: payload,
     });
 
     return {
@@ -50,10 +50,10 @@ export const authApi = {
   async verifyEmailOtp({ email, otp }) {
     return apiClient.request('/api/v1/verify-email-otp', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         email,
         otp,
-      }),
+      },
     });
   },
 
@@ -73,10 +73,10 @@ export const authApi = {
   async verifyPhoneOtp({ phone, otp }) {
     return apiClient.request('/api/v1/verify-phone-otp', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         phone,
         otp,
-      }),
+      },
     });
   },
 
@@ -100,43 +100,49 @@ export const authApi = {
   async forgotPassword(identifier) {
     return apiClient.request('/api/v1/forgot-password', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         identifier,
-      }),
+      },
     });
   },
 
   async resetPassword({ identifier, otp, newPassword }) {
     return apiClient.request('/api/v1/reset-password', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         identifier,
         otp,
         new_password: newPassword,
-      }),
+      },
     });
   },
 
   async login({ identifier, password }) {
     const response = await apiClient.request('/api/v1/login', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         identifier,
         password,
-      }),
+      },
     });
 
     const normalizedUser = normalizeProfileUser(response.user);
 
     const accessToken = response.tokens?.access_token;
-    authStorage.saveSession({ user: normalizedUser, token: accessToken });
+    const refreshToken = response.tokens?.refresh_token;
+
+    authStorage.saveSession({
+      user: normalizedUser,
+      token: accessToken,
+      refreshToken,
+    });
     authStorage.clearPendingUser();
 
     return {
       success: true,
       user: normalizedUser,
       token: accessToken,
-      refreshToken: response.tokens?.refresh_token,
+      refreshToken,
       expiresIn: response.tokens?.expires_in,
     };
   },

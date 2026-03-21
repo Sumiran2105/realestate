@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   BadgeCheck,
   Building2,
@@ -23,18 +23,18 @@ import ProfileSettings from '@/features/profile/components/ProfileSettings';
 import VerificationBadge from '@/features/profile/components/VerificationBadge';
 import { useCurrentProfile } from '@/features/profile/hooks/useCurrentProfile';
 import { useToast } from '@/shared/hooks/useToast';
+import { getPropertyManagerLabel } from '@/shared/utils/dashboard';
 
 const SellerProfile = () => {
   const { user, updateUser } = useAuth();
   const { profile, isLoading: isProfileLoading } = useCurrentProfile();
   const { success, info } = useToast();
+  const roleLabel = getPropertyManagerLabel(user?.role);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [profileData, setProfileData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
+  const [profileEdits, setProfileEdits] = useState({});
+  const baseProfileData = useMemo(() => ({
+    company: `${profile?.name || roleLabel} Properties`,
     gstNumber: '',
     address: '',
     city: '',
@@ -51,10 +51,21 @@ const SellerProfile = () => {
       twitter: '',
       linkedin: '',
       instagram: ''
-    }
-  });
+    },
+    name: profile?.name || '',
+    email: profile?.email || '',
+    phone: profile?.phone || '',
+  }), [profile?.email, profile?.name, profile?.phone, roleLabel]);
+  const profileData = useMemo(() => ({
+    ...baseProfileData,
+    ...profileEdits,
+    socialMedia: {
+      ...baseProfileData.socialMedia,
+      ...(profileEdits.socialMedia || {}),
+    },
+  }), [baseProfileData, profileEdits]);
 
-  const [stats, setStats] = useState({
+  const stats = {
     totalProperties: 24,
     activeListings: 18,
     soldProperties: 6,
@@ -63,48 +74,30 @@ const SellerProfile = () => {
     avgResponseTime: '2.5 hours',
     rating: 4.8,
     reviews: 42,
-    memberSince: 'Jan 2024'
-  });
-
-  useEffect(() => {
-    if (!profile) return;
-
-    setProfileData((prevProfile) => ({
-      ...prevProfile,
-      name: profile.name || prevProfile.name,
-      email: profile.email || prevProfile.email,
-      phone: profile.phone || prevProfile.phone,
-      company: prevProfile.company || `${profile.name || 'Seller'} Properties`,
-    }));
-
-    if (profile.createdAt) {
-      const joinedDate = new Date(profile.createdAt);
-      setStats((prevStats) => ({
-        ...prevStats,
-        memberSince: joinedDate.toLocaleDateString('en-IN', {
+    memberSince: profile?.createdAt
+      ? new Date(profile.createdAt).toLocaleDateString('en-IN', {
           month: 'short',
           year: 'numeric',
-        }),
-      }));
-    }
-  }, [profile]);
+        })
+      : 'Jan 2024'
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setProfileData({
-        ...profileData,
+      setProfileEdits((current) => ({
+        ...current,
         [parent]: {
-          ...profileData[parent],
+          ...(current[parent] || profileData[parent]),
           [child]: value
         }
-      });
+      }));
     } else {
-      setProfileData({
-        ...profileData,
+      setProfileEdits((current) => ({
+        ...current,
         [name]: value
-      });
+      }));
     }
   };
 
@@ -119,6 +112,7 @@ const SellerProfile = () => {
       });
       setLoading(false);
       setIsEditing(false);
+      setProfileEdits({});
       info('Basic profile details are loaded from the backend. Save is still local until an update-profile API is connected.', 'Local Save Only');
       success('Profile details updated locally.', 'Profile Updated');
     }, 1500);
@@ -131,7 +125,7 @@ const SellerProfile = () => {
 
   const isKycVerified = user?.accountStatus === 'active';
   const verificationLabel = isKycVerified ? 'KYC Verified' : 'Verification Pending';
-  const displayName = profileData.name || 'Seller User';
+  const displayName = profileData.name || `${roleLabel} User`;
   const initials =
     displayName
       .split(' ')
@@ -270,7 +264,7 @@ const SellerProfile = () => {
 
   if (isProfileLoading) {
     return (
-      <DashboardLayout title="Seller Profile">
+      <DashboardLayout title={`${roleLabel} Profile`}>
         <div className="rounded-[28px] border border-white/70 bg-white/80 p-8 text-sm text-slate-600 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
           Loading profile...
         </div>
@@ -279,15 +273,15 @@ const SellerProfile = () => {
   }
 
   return (
-    <DashboardLayout title="Seller Profile">
-      <div className="space-y-8">
+    <DashboardLayout title={`${roleLabel} Profile`}>
+      <div className="space-y-6 sm:space-y-8">
         <section className="overflow-hidden rounded-[32px] border border-white/70 bg-white/80 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
-          <div className="relative border-b border-slate-200/70 bg-[linear-gradient(135deg,_#0f172a_0%,_#0f766e_50%,_#22c55e_100%)] px-6 py-10 sm:px-8">
+          <div className="relative border-b border-slate-200/70 bg-[linear-gradient(135deg,_#0f172a_0%,_#0f766e_50%,_#22c55e_100%)] px-4 py-7 sm:px-8 sm:py-10">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.22),_transparent_30%)]" />
-            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="flex items-center gap-4 sm:gap-5">
+            <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
                 <div className="relative">
-                  <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-white/30 bg-white/15 text-2xl font-semibold tracking-wide text-white shadow-lg sm:h-24 sm:w-24 sm:text-3xl">
+                  <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-[24px] border border-white/30 bg-white/15 text-xl font-semibold tracking-wide text-white shadow-lg sm:h-24 sm:w-24 sm:rounded-3xl sm:text-3xl">
                     <img
                       src={`https://ui-avatars.com/api/?name=${displayName}&size=96&background=2563eb&color=fff`}
                       alt={displayName}
@@ -307,24 +301,25 @@ const SellerProfile = () => {
                     </label>
                   )}
                 </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.28em] text-white/70">Seller Account</p>
-                  <h1 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">{displayName}</h1>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs uppercase tracking-[0.28em] text-white/70">{roleLabel} Account</p>
+                  <h1 className="mt-2 break-words text-2xl font-semibold text-white sm:text-4xl">{displayName}</h1>
                   <KycStatusBar
                     kycStatus={profile?.kycStatus}
                     kycCompleted={Boolean(profile?.kycCompleted)}
                     variant="header-dark"
+                    className="w-full max-w-2xl"
                   />
-                  <p className="mt-2 max-w-2xl text-sm text-white/80 sm:text-base">
-                    Manage your seller business identity, profile information, and listing presence from one place.
+                  <p className="mt-3 max-w-2xl text-sm leading-6 text-white/80 sm:text-base">
+                    Manage your {roleLabel.toLowerCase()} business identity, profile information, and listing presence from one place.
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 lg:justify-end">
                 <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white ring-1 ring-white/25">
                   <Building2 size={16} />
-                  Seller
+                  {roleLabel}
                 </span>
                 <span
                   className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
@@ -364,27 +359,31 @@ const SellerProfile = () => {
             </div>
           </div>
 
-          <div className="space-y-8 px-6 py-8 sm:px-8">
+          <div className="space-y-6 px-4 py-6 sm:space-y-8 sm:px-8 sm:py-8">
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {summaryCards.map(({ label, value, icon: Icon, tone, iconTone }) => (
-                <div
-                  key={label}
-                  className={`rounded-3xl border border-slate-200 bg-gradient-to-br ${tone} p-5 shadow-sm sm:p-6`}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`rounded-2xl bg-white p-3 shadow-sm ring-1 ring-white/80 ${iconTone}`}>
-                      <Icon size={18} />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{label}</p>
-                      <p className="mt-3 break-words text-base font-semibold text-slate-900 sm:text-lg">{value}</p>
+              {summaryCards.map((card) => {
+                const SummaryIcon = card.icon;
+
+                return (
+                  <div
+                    key={card.label}
+                    className={`rounded-[24px] border border-slate-200 bg-gradient-to-br ${card.tone} p-4 shadow-sm sm:rounded-3xl sm:p-6`}
+                  >
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className={`rounded-xl bg-white p-2.5 shadow-sm ring-1 ring-white/80 sm:rounded-2xl sm:p-3 ${card.iconTone}`}>
+                        <SummaryIcon size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{card.label}</p>
+                        <p className="mt-2 break-words text-sm font-semibold text-slate-900 sm:mt-3 sm:text-lg">{card.value}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            <div className="grid gap-6 xl:grid-cols-2">
+            <div className="space-y-6">
               <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="rounded-2xl bg-sky-50 p-3 text-sky-700 ring-1 ring-sky-100">
@@ -395,22 +394,26 @@ const SellerProfile = () => {
                   </div>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  {personalFields.map(({ icon: Icon, tone, iconTone, ...field }) => (
-                    <div
-                      key={field.name}
-                      className={`rounded-3xl border border-slate-200 bg-gradient-to-br ${tone} p-5 shadow-sm`}
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className={`rounded-2xl bg-white p-3 shadow-sm ring-1 ring-white/80 ${iconTone}`}>
-                          <Icon size={18} />
-                        </div>
-                        <div className="min-w-0 flex-1 overflow-hidden">
-                          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{field.label}</p>
-                          {renderField(field)}
+                  {personalFields.map((field) => {
+                    const FieldIcon = field.icon;
+
+                    return (
+                      <div
+                        key={field.name}
+                        className={`rounded-[24px] border border-slate-200 bg-gradient-to-br ${field.tone} p-4 shadow-sm sm:rounded-3xl sm:p-5`}
+                      >
+                        <div className="flex items-start gap-3 sm:gap-4">
+                          <div className={`rounded-xl bg-white p-2.5 shadow-sm ring-1 ring-white/80 sm:rounded-2xl sm:p-3 ${field.iconTone}`}>
+                            <FieldIcon size={18} />
+                          </div>
+                          <div className="min-w-0 flex-1 overflow-hidden">
+                            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{field.label}</p>
+                            {renderField(field)}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
@@ -434,7 +437,7 @@ const SellerProfile = () => {
               </div>
             </div>
 
-            <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+            <div className="space-y-6">
               <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="rounded-2xl bg-rose-50 p-3 text-rose-700 ring-1 ring-rose-100">
@@ -483,7 +486,7 @@ const SellerProfile = () => {
                       <Star size={18} />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Seller Overview</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">{roleLabel} Overview</p>
                     </div>
                   </div>
                   <div className="space-y-4 text-sm text-slate-600">

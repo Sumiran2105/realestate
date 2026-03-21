@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { getSellerListingById } from '@/features/listings/store/sellerListings';
+import { getPropertyManagerBasePath } from '@/shared/utils/dashboard';
 
 const Field = ({ label, value }) => (
   <div>
@@ -29,6 +30,7 @@ const FileList = ({ title, items = [] }) => (
 const SellerPropertyView = () => {
   const { id } = useParams();
   const { user } = useAuth();
+  const basePath = getPropertyManagerBasePath(user?.role);
   const listing = getSellerListingById(user?.id, id);
 
   if (!listing) {
@@ -38,7 +40,7 @@ const SellerPropertyView = () => {
           <h2 className="text-2xl font-bold text-gray-900">Listing Not Found</h2>
           <p className="text-gray-600 mt-2">This listing may have been deleted or is unavailable.</p>
           <Link
-            to="/dashboard/seller/properties"
+            to={`${basePath}/properties`}
             className="inline-block mt-5 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             Back to My Properties
@@ -196,13 +198,13 @@ const SellerPropertyView = () => {
 
         <div className="flex gap-3">
           <Link
-            to="/dashboard/seller/properties"
+            to={`${basePath}/properties`}
             className="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
           >
             Back to My Properties
           </Link>
           <Link
-            to="/dashboard/seller"
+            to={basePath}
             className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             Go to Dashboard

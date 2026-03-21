@@ -28,6 +28,11 @@
     - email/phone OTP verify and resend
     - forgot password
     - reset password
+  - signup roles currently supported in frontend:
+    - buyer
+    - seller
+    - builder
+    - agent
 
 - `src/features/profile`
   - current authenticated user profile only
@@ -62,14 +67,16 @@
   - `admin/pages`
   - `agent/pages`
   - `seller/pages`
+  - builder currently reuses seller dashboard pages through builder routes
   - `components`: dashboard-only shared UI
 
 - `src/shared`
   - reusable cross-feature code only
-  - `api/client.js`: shared fetch client
+  - `axios/client.js`: shared axios client
   - `components`: navbar, footer, protected route, toast container
   - `hooks`: cross-feature hooks like `useToast`
   - `layouts`: reusable layouts
+  - `utils/dashboard.js`: shared dashboard path and role-label helpers
 
 ## Rules
 

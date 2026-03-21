@@ -3,6 +3,7 @@ import { ArrowRight, BadgeIndianRupee, SearchCheck, ShieldCheck, Sparkles, UserR
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useToast } from '@/shared/hooks/useToast';
+import { getDashboardPath } from '@/shared/utils/dashboard';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -39,19 +40,7 @@ const Login = () => {
     try {
       const result = await login(formData.identifier, formData.password);
       if (result.success) {
-        switch(result.user.role) {
-          case 'agent':
-            navigate('/dashboard/agent');
-            break;
-          case 'seller':
-            navigate('/dashboard/seller');
-            break;
-          case 'admin':
-            navigate('/dashboard/admin');
-            break;
-          default:
-            navigate('/buyer/home');
-        }
+        navigate(getDashboardPath(result.user.role));
       }
     } catch (err) {
       const message = err?.message || 'Login failed. Please try again.';
@@ -79,7 +68,7 @@ const Login = () => {
                 Sign in to manage your properties and profile.
               </h1>
               <p className="mt-5 max-w-md text-sm leading-7 text-white/78 sm:text-base">
-                Access buyer, seller, agent, or admin tools from a single secure login connected to your backend account.
+                Access buyer, seller, builder, agent, or admin tools from a single secure login connected to your backend account.
               </p>
             </div>
           </div>

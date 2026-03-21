@@ -1,4 +1,4 @@
-import { apiClient } from '@/shared/api/client';
+import { apiClient } from '@/shared/axios/client';
 import { normalizeProfileUser } from '@/features/profile/utils/normalizeProfile';
 
 export const profileApi = {
@@ -18,11 +18,11 @@ export const profileApi = {
   async changePassword({ currentPassword, newPassword, confirmPassword }) {
     return apiClient.request('/api/v1/change-password', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         current_password: currentPassword,
         new_password: newPassword,
         confirm_password: confirmPassword,
-      }),
+      },
     });
   },
 };

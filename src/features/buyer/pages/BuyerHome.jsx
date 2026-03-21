@@ -6,6 +6,15 @@ import { getAllSellerListings } from '@/features/listings/store/sellerListings';
 import propertiesData from '@/features/properties/data/properties.json';
 
 const WISHLIST_KEY = 'propertyWishlist';
+const ALL_LISTINGS = getAllSellerListings();
+const getInitialWishlist = () => {
+  try {
+    const saved = localStorage.getItem(WISHLIST_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+};
 
 const formatPrice = (value) => {
   if (!value) return 'Price on Request';
@@ -21,7 +30,7 @@ const formatPrice = (value) => {
 
 const BuyerHome = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  useAuth();
   const [searchMode, setSearchMode] = useState("survey");
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -31,18 +40,10 @@ const BuyerHome = () => {
   const [passbookInput, setPassbookInput] = useState("");
   const [searched, setSearched] = useState(false);
   const [matchedProperty, setMatchedProperty] = useState(null);
-  const [listings, setListings] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState(getInitialWishlist);
+  const listings = useMemo(() => ALL_LISTINGS, []);
 
   useEffect(() => {
-    setListings(getAllSellerListings());
-    try {
-      const saved = localStorage.getItem(WISHLIST_KEY);
-      setWishlist(saved ? JSON.parse(saved) : []);
-    } catch {
-      setWishlist([]);
-    }
-
     const handleScroll = () => {
       const scrollY = window.scrollY;
       document.documentElement.style.setProperty('--parallax', `${scrollY * 0.25}px`);
@@ -661,10 +662,11 @@ const BuyerHome = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {listings.map((listing) => {
+            {listings.map((listing, index) => {
               const isWishlisted = wishlistIds.has(String(listing.id));
+              const listingKey = `${listing.id || 'listing'}-${listing.title || 'untitled'}-${index}`;
               return (
-                <article key={listing.id} className="bg-white rounded-xl border border-slate-300 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <article key={listingKey} className="bg-white rounded-xl border border-slate-300 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                   <div className="relative h-48 bg-slate-100">
                     <img src={listing.image || 'https://via.placeholder.com/400x300?text=No+Image'} alt={listing.title} className="w-full h-full object-cover" />
                     <button

@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import DashboardLayout from "@/shared/layouts/DashboardLayout";
+import { getPropertyManagerBasePath, getPropertyManagerLabel } from "@/shared/utils/dashboard";
 import {
   getSellerListings,
   updateSellerListing,
@@ -17,11 +18,9 @@ import {
 
 const SellerDashboard = () => {
   const { user } = useAuth();
-  const [properties, setProperties] = useState([]);
-
-  useEffect(() => {
-    setProperties(getSellerListings(user?.id));
-  }, [user?.id]);
+  const roleLabel = getPropertyManagerLabel(user?.role);
+  const basePath = getPropertyManagerBasePath(user?.role);
+  const [properties, setProperties] = useState(() => getSellerListings(user?.id));
 
   const stats = useMemo(() => {
     const activeStatuses = new Set(["verified", "pending", "under_review"]);
@@ -84,7 +83,7 @@ const SellerDashboard = () => {
   };
 
   return (
-    <DashboardLayout title="Seller Dashboard">
+    <DashboardLayout title={`${roleLabel} Dashboard`}>
       {/* Welcome Section */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -96,7 +95,7 @@ const SellerDashboard = () => {
           </p>
         </div>
         <Link
-          to="/dashboard/seller/add-property"
+          to={`${basePath}/add-property`}
           className="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           List Property

@@ -24,7 +24,8 @@ const Register = () => {
   const roles = [
     { value: 'buyer', label: 'Buyer' },
     { value: 'agent', label: 'Agent' },
-    { value: 'seller', label: 'Seller' }
+    { value: 'seller', label: 'Seller' },
+    { value: 'builder', label: 'Builder' },
   ];
 
   const passwordRequirements = [
@@ -132,7 +133,7 @@ const Register = () => {
                 Create your account and move into OTP verification.
               </h1>
               <p className="mt-5 max-w-md text-sm leading-7 text-white/78 sm:text-base">
-                Set up your buyer, seller, or agent account with the same verified onboarding flow that powers the live platform.
+                Set up your buyer, seller, builder, or agent account with the same verified onboarding flow that powers the live platform.
               </p>
             </div>
           </div>
@@ -157,7 +158,7 @@ const Register = () => {
                 </div>
                 <p className="mt-4 text-sm font-medium text-white">Role-Based Dashboard</p>
                 <p className="mt-2 text-xs leading-6 text-white/70">
-                  Choose buyer, seller, or agent during signup and get routed into the correct dashboard after login.
+                  Choose buyer, seller, builder, or agent during signup and get routed into the correct dashboard after login.
                 </p>
               </div>
             </div>

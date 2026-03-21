@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { ArrowRight, BadgeCheck, FileBadge2, FileText, ShieldCheck, Upload, UserSquare2 } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { ArrowRight, BadgeCheck, CheckCircle2, FileBadge2, FileText, ShieldCheck, Upload, UserSquare2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '@/features/auth/hooks/useAuth';
@@ -31,13 +31,14 @@ const roleTitles = {
 
 const KYCVerification = () => {
   const { user } = useAuth();
-  const { error: showError, info } = useToast();
+  const { error: showError, success } = useToast();
   const navigate = useNavigate();
 
   const [requirements, setRequirements] = useState(null);
   const [loading, setLoading] = useState(true);
   const [formState, setFormState] = useState({});
   const [submittingDocumentId, setSubmittingDocumentId] = useState(null);
+  const [isFinalSubmitting, setIsFinalSubmitting] = useState(false);
 
   useEffect(() => {
     const loadRequirements = async () => {
@@ -78,22 +79,34 @@ const KYCVerification = () => {
     return document.fields || [];
   };
 
-  const completion = useMemo(() => {
-    const total = documents.length;
-    const completed = documents.filter((document) => {
+  const isDocumentPrepared = useCallback(
+    (document) => {
       const current = formState[document.document_id];
       if (!current?.file) return false;
 
       const requiredFields = getDocumentFields(document);
       return requiredFields.every((field) => current?.fields?.[field]?.trim());
-    }).length;
+    },
+    [formState]
+  );
+
+  const requiredDocuments = useMemo(
+    () => documents.filter((document) => document.is_required !== false),
+    [documents]
+  );
+
+  const completion = useMemo(() => {
+    const total = documents.length;
+    const completed = documents.filter((document) => isDocumentPrepared(document)).length;
 
     return {
       total,
       completed,
       percent: total ? Math.round((completed / total) * 100) : 0,
     };
-  }, [documents, formState]);
+  }, [documents, isDocumentPrepared]);
+
+  const allRequiredDocumentsPrepared = requiredDocuments.every((document) => isDocumentPrepared(document));
 
   const updateDocumentField = (documentId, updater) => {
     setFormState((currentState) => {
@@ -122,77 +135,147 @@ const KYCVerification = () => {
     }));
   };
 
-  const handleContinue = () => {
-    info('KYC requirements are now loaded from the backend. Document submission endpoint is not wired yet.', 'Requirements Loaded');
-  };
-
-  const handleDocumentSubmit = async (document) => {
-    const current = formState[document.document_id] || { file: null, fields: {}, submitted: false };
-
+  const uploadBasicDocument = async (document, current) => {
     if (document.document_id === 'aadhaar') {
       const aadhaarNumber = current.fields?.aadhaar_number?.trim();
 
       if (!aadhaarNumber) {
-        showError('Aadhaar number is required before upload.', 'Aadhaar Missing');
-        return;
+        throw new Error('Aadhaar number is required before final submission.');
       }
 
       if (!current.file) {
-        showError('Please choose the Aadhaar file before submitting.', 'Aadhaar Missing');
-        return;
+        throw new Error('Please choose the Aadhaar file before final submission.');
       }
 
-      try {
-        setSubmittingDocumentId(document.document_id);
-        await kycApi.submitAadhaar({
-          aadhaarNumber,
-          file: current.file,
-        });
-        updateDocumentField(document.document_id, (currentDocument) => ({
-          ...currentDocument,
-          submitted: true,
-        }));
-        info('Aadhaar submitted successfully.', 'Aadhaar Uploaded');
-      } catch (submitError) {
-        showError(submitError.message || 'Failed to submit Aadhaar.', 'Upload Failed');
-      } finally {
-        setSubmittingDocumentId(null);
-      }
+      await kycApi.submitAadhaar({
+        aadhaarNumber,
+        file: current.file,
+      });
+      return {
+        ...current,
+        submitted: true,
+      };
     }
 
     if (document.document_id === 'pan') {
       const panNumber = current.fields?.pan_number?.trim().toUpperCase();
 
       if (!panNumber) {
-        showError('PAN number is required before upload.', 'PAN Missing');
-        return;
+        throw new Error('PAN number is required before final submission.');
       }
 
       if (!current.file) {
-        showError('Please choose the PAN file before submitting.', 'PAN Missing');
-        return;
+        throw new Error('Please choose the PAN file before final submission.');
       }
 
-      try {
-        setSubmittingDocumentId(document.document_id);
-        await kycApi.submitPan({
-          panNumber,
-          file: current.file,
-        });
-        updateDocumentField(document.document_id, (currentDocument) => ({
-          ...currentDocument,
-          submitted: true,
-          fields: {
-            ...(currentDocument.fields || {}),
-            pan_number: panNumber,
-          },
-        }));
-        info('PAN submitted successfully.', 'PAN Uploaded');
-      } catch (submitError) {
-        showError(submitError.message || 'Failed to submit PAN.', 'Upload Failed');
-      } finally {
-        setSubmittingDocumentId(null);
+      await kycApi.submitPan({
+        panNumber,
+        file: current.file,
+      });
+      return {
+        ...current,
+        submitted: true,
+        fields: {
+          ...(current.fields || {}),
+          pan_number: panNumber,
+        },
+      };
+    }
+
+    return {
+      ...current,
+      submitted: true,
+    };
+  };
+
+  const uploadProfessionalDocument = async (document, current) => {
+    if (!current.file) {
+      throw new Error(`Please choose the ${document.name} file before final submission.`);
+    }
+
+    if (document.document_id === 'rera') {
+      const licenseNumber = current.fields?.license_number?.trim();
+      const state = current.fields?.state?.trim();
+      const expiryDate = current.fields?.expiry_date?.trim();
+
+      if (!licenseNumber || !state || !expiryDate) {
+        throw new Error('RERA license number, state, and expiry date are required before final submission.');
       }
+
+      await kycApi.submitRera({
+        licenseNumber,
+        state,
+        expiryDate,
+        file: current.file,
+      });
+    }
+
+    if (document.document_id === 'gst') {
+      const gstNumber = current.fields?.gst_number?.trim();
+
+      if (!gstNumber) {
+        throw new Error('GST number is required before final submission.');
+      }
+
+      await kycApi.submitGst({
+        gstNumber,
+        file: current.file,
+      });
+    }
+
+    if (document.document_id === 'company_reg') {
+      const registrationNumber = current.fields?.registration_number?.trim();
+      const companyName = current.fields?.company_name?.trim();
+
+      if (!registrationNumber || !companyName) {
+        throw new Error('Company registration number and company name are required before final submission.');
+      }
+
+      await kycApi.submitCompany({
+        registrationNumber,
+        companyName,
+        file: current.file,
+      });
+    }
+
+    return {
+      ...current,
+      submitted: true,
+    };
+  };
+
+  const handleFinalSubmit = async () => {
+    if (!allRequiredDocumentsPrepared) {
+      showError('Please upload and complete all required fields before submitting KYC.', 'Incomplete KYC');
+      return;
+    }
+
+    try {
+      setIsFinalSubmitting(true);
+
+      for (const document of requiredDocuments) {
+        const current = formState[document.document_id] || { file: null, fields: {}, submitted: false };
+
+        if (!current.submitted) {
+          setSubmittingDocumentId(document.document_id);
+
+          const nextState =
+            document.document_id === 'aadhaar' || document.document_id === 'pan'
+              ? await uploadBasicDocument(document, current)
+              : await uploadProfessionalDocument(document, current);
+
+          updateDocumentField(document.document_id, () => nextState);
+        }
+      }
+
+      setSubmittingDocumentId(null);
+      await kycApi.submitKyc();
+      success('All required KYC files have been submitted successfully.', 'KYC Submitted');
+    } catch (submitError) {
+      showError(submitError.message || 'Failed to submit KYC.', 'Submission Failed');
+    } finally {
+      setSubmittingDocumentId(null);
+      setIsFinalSubmitting(false);
     }
   };
 
@@ -243,6 +326,7 @@ const KYCVerification = () => {
     const Icon = resolveDocumentIcon(document.document_id);
     const current = formState[document.document_id] || { file: null, fields: {}, submitted: false };
     const documentFields = getDocumentFields(document);
+    const isPrepared = isDocumentPrepared(document);
 
     return (
       <div key={document.document_id} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
@@ -313,28 +397,19 @@ const KYCVerification = () => {
           </label>
         </div>
 
-        {(document.document_id === 'aadhaar' || document.document_id === 'pan') && (
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => handleDocumentSubmit(document)}
-              disabled={submittingDocumentId === document.document_id}
-              className="inline-flex items-center gap-2 rounded-full bg-[#1F4B43] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#173730] disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              {submittingDocumentId === document.document_id
-                ? 'Submitting...'
-                : document.document_id === 'aadhaar'
-                  ? 'Submit Aadhaar'
-                  : 'Submit PAN'}
-              <ArrowRight size={15} />
-            </button>
-            {current.submitted && (
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-700">
-                Submitted
-              </span>
-            )}
-          </div>
-        )}
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          {isPrepared && (
+            <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-700">
+              <CheckCircle2 size={14} />
+              Ready
+            </span>
+          )}
+          {current.submitted && (
+            <span className="rounded-full bg-sky-100 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-sky-700">
+              Uploaded
+            </span>
+          )}
+        </div>
       </div>
     );
   };
@@ -350,7 +425,7 @@ const KYCVerification = () => {
                 <p className="text-xs uppercase tracking-[0.28em] text-white/70">KYC Requirements</p>
                 <h1 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">{title}</h1>
                 <p className="mt-3 max-w-2xl text-sm text-white/80 sm:text-base">
-                  This page is now driven by `/api/v1/requirements` and shows the exact basic and professional documents required for your account type.
+                  To get verified, please enter and upload all the required documents listed below.
                 </p>
               </div>
 
@@ -365,83 +440,100 @@ const KYCVerification = () => {
           </div>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
-          <div className="space-y-6">
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Overview</p>
-              <div className="mt-5 space-y-4">
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">User Type</p>
-                  <p className="mt-3 text-lg font-semibold text-slate-900">
-                    {(requirements.user_type || user?.role || 'user').replace(/^\w/, (char) => char.toUpperCase())}
-                  </p>
-                </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Basic Documents</p>
-                  <p className="mt-3 text-lg font-semibold text-slate-900">{basicRequirements.length}</p>
-                </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Professional Documents</p>
-                  <p className="mt-3 text-lg font-semibold text-slate-900">
-                    {requirements.requires_professional ? professionalRequirements.length : 0}
-                  </p>
-                </div>
+        <section className="space-y-6">
+          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Overview</p>
+                <h2 className="mt-3 text-2xl font-semibold text-slate-900">KYC Preparation Summary</h2>
+                <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-600">
+                  Complete all required fields and upload every required file. Once everything is ready, we’ll submit the full KYC request in one step.
+                </p>
               </div>
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                Go Back
+              </button>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Next Step</p>
-              <p className="mt-4 text-sm leading-7 text-slate-600">
-                Prepare all required documents here. Once the upload/submission backend endpoint is connected, this page can submit the same dynamic form directly.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={handleContinue}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#1F4B43] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#173730]"
-                >
-                  Continue
-                  <ArrowRight size={15} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => navigate(-1)}
-                  className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                >
-                  Go Back
-                </button>
+            <div className="mt-6 grid gap-4 lg:grid-cols-4">
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">User Type</p>
+                <p className="mt-3 text-lg font-semibold text-slate-900">
+                  {(requirements.user_type || user?.role || 'user').replace(/^\w/, (char) => char.toUpperCase())}
+                </p>
+              </div>
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Basic Documents</p>
+                <p className="mt-3 text-lg font-semibold text-slate-900">{basicRequirements.length}</p>
+              </div>
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Professional Documents</p>
+                <p className="mt-3 text-lg font-semibold text-slate-900">
+                  {requirements.requires_professional ? professionalRequirements.length : 0}
+                </p>
+              </div>
+              <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-emerald-700">Progress</p>
+                <p className="mt-3 text-lg font-semibold text-slate-900">{completion.completed} / {completion.total}</p>
+                <p className="mt-2 text-sm text-slate-600">{completion.percent}% requirements prepared</p>
               </div>
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+            <div className="mb-5 flex items-center gap-3">
+              <div className="rounded-2xl bg-sky-50 p-3 text-sky-700 ring-1 ring-sky-100">
+                <UserSquare2 size={18} />
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Basic Requirements</p>
+              </div>
+            </div>
+            <div className="grid gap-5">{basicRequirements.map(renderRequirementCard)}</div>
+          </div>
+
+          {requirements.requires_professional && (
             <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
               <div className="mb-5 flex items-center gap-3">
-                <div className="rounded-2xl bg-sky-50 p-3 text-sky-700 ring-1 ring-sky-100">
-                  <UserSquare2 size={18} />
+                <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 ring-1 ring-emerald-100">
+                  <ShieldCheck size={18} />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Basic Requirements</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+                    Professional Requirements
+                  </p>
                 </div>
               </div>
-              <div className="grid gap-5">{basicRequirements.map(renderRequirementCard)}</div>
+              <div className="grid gap-5">{professionalRequirements.map(renderRequirementCard)}</div>
             </div>
+          )}
 
-            {requirements.requires_professional && (
-              <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
-                <div className="mb-5 flex items-center gap-3">
-                  <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 ring-1 ring-emerald-100">
-                    <ShieldCheck size={18} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
-                      Professional Requirements
-                    </p>
-                  </div>
-                </div>
-                <div className="grid gap-5">{professionalRequirements.map(renderRequirementCard)}</div>
+          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Final Submission</p>
+                <p className="mt-2 text-sm leading-7 text-slate-600">
+                  Kindly review all your uploaded documents and details before submitting. 
+                </p>
               </div>
-            )}
+              <button
+                type="button"
+                onClick={handleFinalSubmit}
+                disabled={!allRequiredDocumentsPrepared || isFinalSubmitting}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F4B43] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#173730] disabled:cursor-not-allowed disabled:bg-slate-400"
+              >
+                {isFinalSubmitting
+                  ? submittingDocumentId
+                    ? `Uploading ${submittingDocumentId}...`
+                    : 'Submitting KYC...'
+                  : 'Submit KYC'}
+                <ArrowRight size={15} />
+              </button>
+            </div>
           </div>
         </section>
       </div>

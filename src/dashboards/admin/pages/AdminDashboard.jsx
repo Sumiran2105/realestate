@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
-import { getAllProperties, getAllUsers, getPendingKYC } from '@/dashboards/admin/data/adminData';
+import { getAllProperties } from '@/dashboards/admin/data/adminData';
+import { adminApi } from '@/dashboards/admin/api/adminApi';
+import { useToast } from '@/shared/hooks/useToast';
 import { 
   FaUsers, 
   FaHome, 
@@ -17,6 +19,7 @@ import {
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const { error: showError } = useToast();
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalProperties: 0,
@@ -29,43 +32,61 @@ const AdminDashboard = () => {
   const [recentActivities, setRecentActivities] = useState([]);
 
   useEffect(() => {
-    // Load stats
-    const users = getAllUsers();
     const properties = getAllProperties();
-    
-    setStats({
-      totalUsers: users.length,
-      totalProperties: properties.length,
-      pendingKYC: getPendingKYC().length,
-      verifiedProperties: properties.filter(p => p.verificationStatus === 'verified').length,
-      activeAgents: users.filter(u => u.role === 'agent' && u.status !== 'inactive').length,
-      totalRevenue: '₹45.6L'
-    });
 
-  
-    const activities = [
-      ...users.slice(0, 2).map(u => ({
-        id: `u-${u.id}`,
-        type: 'user',
-        title: u.name,
-        description: 'New user registered',
-        time: '2 minutes ago',
-        icon: '👤',
-        color: 'blue',
-        path: '/dashboard/admin/users'
-      })),
-      ...properties.slice(0, 1).map(p => ({
-        id: `p-${p.id}`,
-        type: 'property',
-        title: p.title,
-        description: 'New property listed',
-        time: '5 minutes ago',
-        icon: '🏠',
-        color: 'green',
-        path: '/dashboard/admin/properties'
-      }))
-    ];
-    setRecentActivities(activities);
+    adminApi
+      .getUsersDashboard()
+      .then((response) => {
+        setStats({
+          totalUsers: response?.user_stats?.total || 0,
+          totalProperties: properties.length,
+          pendingKYC: response?.kyc_stats?.pending || 0,
+          verifiedProperties: properties.filter((property) => property.verificationStatus === 'verified').length,
+          activeAgents: response?.users_by_type?.agent || 0,
+          totalRevenue: '₹45.6L',
+        });
+
+        const userActivities = (response?.recent_users || []).slice(0, 4).map((user) => ({
+          id: `u-${user.id}`,
+          type: 'user',
+          title: user.name,
+          description: `${user.type} account is ${user.status}`,
+          time: user.created_at
+            ? new Date(user.created_at).toLocaleString('en-IN', {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
+            : 'Recently joined',
+          icon: '👤',
+          color: 'blue',
+          path: '/dashboard/admin/users',
+        }));
+
+        const propertyActivity = properties.slice(0, 1).map((property) => ({
+          id: `p-${property.id}`,
+          type: 'property',
+          title: property.title,
+          description: 'New property listed',
+          time: 'Recently added',
+          icon: '🏠',
+          color: 'green',
+          path: '/dashboard/admin/properties',
+        }));
+
+        setRecentActivities([...userActivities, ...propertyActivity]);
+      })
+      .catch((loadError) => {
+        showError(loadError.message || 'Failed to load admin dashboard users data.', 'Dashboard Load Failed');
+
+        setStats({
+          totalUsers: 0,
+          totalProperties: properties.length,
+          pendingKYC: 0,
+          verifiedProperties: properties.filter((property) => property.verificationStatus === 'verified').length,
+          activeAgents: 0,
+          totalRevenue: '₹45.6L',
+        });
+      });
   }, []);
 
  

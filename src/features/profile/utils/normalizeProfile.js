@@ -53,7 +53,10 @@ export const normalizeKycStatus = (status) => {
 
   return {
     kycStatus: normalizedStatus,
-    kycCompleted: ['completed', 'verified', 'active'].includes(normalizedStatus),
-    kycLabel: normalizedStatus.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()),
+    kycCompleted: ['approved', 'completed', 'verified', 'active'].includes(normalizedStatus),
+    kycLabel:
+      normalizedStatus === 'approved'
+        ? 'KYC Verified'
+        : normalizedStatus.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()),
   };
 };

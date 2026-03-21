@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '@/dashboards/components/Sidebar';
 import Header from '@/dashboards/components/Header';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { getSellerListings } from '@/features/listings/store/sellerListings';
+import { getPropertyManagerBasePath } from '@/shared/utils/dashboard';
 import { 
   FaEdit, 
   FaEye, 
@@ -22,49 +23,25 @@ import {
   FaStar
 } from 'react-icons/fa';
 
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80';
+
 const SellerProperties = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const basePath = getPropertyManagerBasePath(user?.role);
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [properties, setProperties] = useState([]);
-  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [properties] = useState(() => getSellerListings(user?.id));
   const [showFilters, setShowFilters] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [imageErrors, setImageErrors] = useState({});
 
-  useEffect(() => {
-    loadProperties();
-  }, [user?.id]);
-
-  useEffect(() => {
-    filterProperties();
-  }, [properties, filter, searchTerm]);
-
-  useEffect(() => {
-  const data = getSellerListings(user?.id);
-  console.log('Properties from data file:', data);
-  console.log('First property image:', data[0]?.image);
-  setProperties(data);
-}, [user?.id]);
-
-  const loadProperties = () => {
-    const data = getSellerListings(user?.id);
-    console.log('Loaded properties:', data); // Debug log
-    setProperties(data);
-  };
-
-
-  const filterProperties = () => {
+  const filteredProperties = React.useMemo(() => {
     let filtered = [...properties];
-
-    // Apply status filter
     if (filter !== 'all') {
       filtered = filtered.filter((property) => property.status === filter);
     }
-
-    // Apply search filter
     if (searchTerm) {
       filtered = filtered.filter(property => 
         property.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -72,9 +49,8 @@ const SellerProperties = () => {
         property.price?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
-    setFilteredProperties(filtered);
-  };
+    return filtered;
+  }, [filter, properties, searchTerm]);
 
   const handleImageError = (propertyId) => {
     setImageErrors(prev => ({
@@ -106,7 +82,7 @@ const SellerProperties = () => {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar role="seller" />
+      <Sidebar role={user?.role || 'seller'} />
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header title="My Properties" />
@@ -120,7 +96,7 @@ const SellerProperties = () => {
                 <p className="text-sm text-gray-500 mt-1">Manage and track your property listings</p>
               </div>
               <button
-                onClick={() => navigate('/dashboard/seller/add-property')}
+                onClick={() => navigate(`${basePath}/add-property`)}
                 className="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg flex items-center gap-2"
               >
                 <FaPlus />
@@ -199,7 +175,7 @@ const SellerProperties = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">No properties found</h3>
                 <p className="text-gray-500 mb-6">Get started by listing your first property</p>
                 <button
-                  onClick={() => navigate('/dashboard/seller/add-property')}
+                  onClick={() => navigate(`${basePath}/add-property`)}
                   className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 inline-flex items-center gap-2"
                 >
                   <FaPlus />
@@ -208,7 +184,7 @@ const SellerProperties = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredProperties.map((property, index) => (
+                {filteredProperties.map((property) => (
                   <div
                     key={property.id}
                     className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group"
@@ -216,7 +192,7 @@ const SellerProperties = () => {
                     {/* Image Section */}
                     <div className="relative h-48 overflow-hidden bg-gray-100">
                       <img
-                        src={imageErrors[property.id] ? fallbackImage : property.image}
+                        src={imageErrors[property.id] ? FALLBACK_IMAGE : property.image}
                         alt={property.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         onError={() => handleImageError(property.id)}
@@ -292,14 +268,14 @@ const SellerProperties = () => {
                       {/* Actions */}
                       <div className="flex gap-2">
                         <button
-                          onClick={() => navigate(`/dashboard/seller/properties/${property.id}`)}
+                          onClick={() => navigate(`${basePath}/properties/${property.id}`)}
                           className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
                         >
                           <FaEye size={14} />
                           View Details
                         </button>
                         <button
-                          onClick={() => navigate(`/dashboard/seller/edit-property/${property.id}`)}
+                          onClick={() => navigate(`${basePath}/edit-property/${property.id}`)}
                           className="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200 transition-colors"
                         >
                           <FaEdit />

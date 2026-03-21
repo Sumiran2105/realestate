@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { appendSellerListing } from '@/features/listings/store/sellerListings';
+import { getPropertyManagerBasePath, getPropertyManagerLabel } from '@/shared/utils/dashboard';
 
 const steps = [
   'Property Type',
@@ -74,6 +75,8 @@ const fileNames = (files) => (Array.isArray(files) ? files.map((file) => file.na
 const AddProperty = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const roleLabel = getPropertyManagerLabel(user?.role);
+  const basePath = getPropertyManagerBasePath(user?.role);
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [surveyValidationStatus, setSurveyValidationStatus] = useState('idle');
@@ -237,7 +240,7 @@ const AddProperty = () => {
       };
 
       appendSellerListing(user?.id, newListing);
-      navigate('/dashboard/seller');
+      navigate(basePath);
     }, 1200);
   };
 
@@ -665,7 +668,7 @@ const AddProperty = () => {
   };
 
   return (
-    <DashboardLayout title="List Property">
+    <DashboardLayout title={`List ${roleLabel} Property`}>
       <div className="space-y-6">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Seller Listing Flow</h1>

@@ -9,24 +9,44 @@ const KycStatusBar = ({
   className = '',
 }) => {
   const normalizedStatus = (kycStatus || 'not_started').toLowerCase();
-  const label = normalizedStatus.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+  const label =
+    normalizedStatus === 'approved'
+      ? 'KYC Verified'
+      : normalizedStatus.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
   const isHeaderDark = variant === 'header-dark';
 
-  const containerClasses = isHeaderDark
-    ? kycCompleted
+  if (kycCompleted) {
+    const badgeClasses = isHeaderDark
       ? 'border-emerald-300/30 bg-emerald-400/15 text-white'
-      : 'border-white/20 bg-slate-950/15 text-white backdrop-blur'
-    : kycCompleted
-      ? 'border-emerald-200 bg-emerald-50/90 text-emerald-800'
-      : 'border-amber-200 bg-amber-50/90 text-amber-800';
+      : 'border-emerald-200 bg-emerald-50/90 text-emerald-800';
+    const iconClasses = isHeaderDark
+      ? 'bg-white/15 text-white'
+      : 'bg-emerald-100 text-emerald-700';
+
+    return (
+      <div
+        className={`mt-4 inline-flex w-fit items-center gap-3 rounded-full border px-4 py-2.5 text-sm font-semibold shadow-sm ${badgeClasses} ${className}`}
+      >
+        <div className={`rounded-full p-2 ${iconClasses}`}>
+          <BadgeCheck size={16} />
+        </div>
+        <div className="flex flex-col">
+          <span className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${isHeaderDark ? 'text-white/70' : 'text-emerald-600/80'}`}>
+            KYC Status
+          </span>
+          <span>{label}</span>
+        </div>
+      </div>
+    );
+  }
+
+  const containerClasses = isHeaderDark
+    ? 'border-white/20 bg-slate-950/15 text-white backdrop-blur'
+    : 'border-amber-200 bg-amber-50/90 text-amber-800';
 
   const iconClasses = isHeaderDark
-    ? kycCompleted
-      ? 'bg-white/15 text-white'
-      : 'bg-white/10 text-white'
-    : kycCompleted
-      ? 'bg-emerald-100 text-emerald-700'
-      : 'bg-amber-100 text-amber-700';
+    ? 'bg-white/10 text-white'
+    : 'bg-amber-100 text-amber-700';
 
   const buttonClasses = isHeaderDark
     ? 'bg-white text-slate-900 ring-1 ring-white/30 hover:bg-slate-100'
@@ -38,7 +58,7 @@ const KycStatusBar = ({
     >
       <div className="flex items-center gap-3">
         <div className={`rounded-xl p-2 ${iconClasses}`}>
-          {kycCompleted ? <BadgeCheck size={16} /> : <Clock3 size={16} />}
+          <Clock3 size={16} />
         </div>
         <div>
           <p className={`text-xs font-semibold uppercase tracking-[0.18em] ${isHeaderDark ? 'text-white/70' : 'opacity-75'}`}>
@@ -48,15 +68,13 @@ const KycStatusBar = ({
         </div>
       </div>
 
-      {!kycCompleted && (
-        <Link
-          to="/kyc"
-          className={`inline-flex items-center gap-2 self-start rounded-full px-4 py-2 text-sm font-semibold transition sm:self-auto ${buttonClasses}`}
-        >
-          Complete KYC
-          <ArrowRight size={14} />
-        </Link>
-      )}
+      <Link
+        to="/kyc"
+        className={`inline-flex items-center gap-2 self-start rounded-full px-4 py-2 text-sm font-semibold transition sm:self-auto ${buttonClasses}`}
+      >
+        Complete KYC
+        <ArrowRight size={14} />
+      </Link>
     </div>
   );
 };

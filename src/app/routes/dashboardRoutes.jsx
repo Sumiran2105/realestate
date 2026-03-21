@@ -107,10 +107,28 @@ export function renderDashboardRoutes({ user, getDashboardPath }) {
       }
     />,
     <Route
+      key="/dashboard/builder"
+      path="/dashboard/builder"
+      element={
+        <ProtectedRoute allowedRoles={['builder']}>
+          <SellerDashboard />
+        </ProtectedRoute>
+      }
+    />,
+    <Route
       key="/dashboard/seller/properties"
       path="/dashboard/seller/properties"
       element={
         <ProtectedRoute allowedRoles={['seller']}>
+          <SellerProperties />
+        </ProtectedRoute>
+      }
+    />,
+    <Route
+      key="/dashboard/builder/properties"
+      path="/dashboard/builder/properties"
+      element={
+        <ProtectedRoute allowedRoles={['builder']}>
           <SellerProperties />
         </ProtectedRoute>
       }
@@ -125,10 +143,28 @@ export function renderDashboardRoutes({ user, getDashboardPath }) {
       }
     />,
     <Route
+      key="/dashboard/builder/properties/:id"
+      path="/dashboard/builder/properties/:id"
+      element={
+        <ProtectedRoute allowedRoles={['builder']}>
+          <SellerPropertyView />
+        </ProtectedRoute>
+      }
+    />,
+    <Route
       key="/dashboard/seller/add-property"
       path="/dashboard/seller/add-property"
       element={
         <ProtectedRoute allowedRoles={['seller']}>
+          <AddProperty />
+        </ProtectedRoute>
+      }
+    />,
+    <Route
+      key="/dashboard/builder/add-property"
+      path="/dashboard/builder/add-property"
+      element={
+        <ProtectedRoute allowedRoles={['builder']}>
           <AddProperty />
         </ProtectedRoute>
       }
@@ -143,10 +179,28 @@ export function renderDashboardRoutes({ user, getDashboardPath }) {
       }
     />,
     <Route
+      key="/dashboard/builder/profile"
+      path="/dashboard/builder/profile"
+      element={
+        <ProtectedRoute allowedRoles={['builder']} requireKYC={false}>
+          <SellerProfile />
+        </ProtectedRoute>
+      }
+    />,
+    <Route
       key="/dashboard/seller/inquiries"
       path="/dashboard/seller/inquiries"
       element={
         <ProtectedRoute allowedRoles={['seller']}>
+          <SellerInquiries />
+        </ProtectedRoute>
+      }
+    />,
+    <Route
+      key="/dashboard/builder/inquiries"
+      path="/dashboard/builder/inquiries"
+      element={
+        <ProtectedRoute allowedRoles={['builder']}>
           <SellerInquiries />
         </ProtectedRoute>
       }

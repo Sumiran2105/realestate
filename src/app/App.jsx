@@ -28,7 +28,7 @@ const isAuthPage = (pathname) =>
   pathname.startsWith('/reset-password');
 
 const isAgentOrSeller = (user) =>
-  user && (user.role === 'agent' || user.role === 'seller' || user.role === 'admin');
+  user && (user.role === 'agent' || user.role === 'seller' || user.role === 'builder' || user.role === 'admin');
 
 function AppContent() {
   const { user, loading } = useAuth();

@@ -12,6 +12,7 @@ import {
   selectIsAdmin,
   selectIsAgent,
   selectIsAuthenticated,
+  selectIsBuilder,
   selectIsBuyer,
   selectIsSeller,
   selectNeedsKyc,
@@ -27,6 +28,7 @@ export const useAuth = () => {
   const isAdmin = useSelector(selectIsAdmin);
   const isAgent = useSelector(selectIsAgent);
   const isSeller = useSelector(selectIsSeller);
+  const isBuilder = useSelector(selectIsBuilder);
   const isBuyer = useSelector(selectIsBuyer);
   const needsKYC = useSelector(selectNeedsKyc);
 
@@ -46,6 +48,7 @@ export const useAuth = () => {
     isAdmin,
     isAgent,
     isSeller,
+    isBuilder,
     isBuyer,
     needsKYC,
   };

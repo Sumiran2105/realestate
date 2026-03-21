@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaHeart, FaUserCircle } from "react-icons/fa";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { getPropertyManagerBasePath } from "@/shared/utils/dashboard";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -9,6 +10,7 @@ export default function Navbar() {
   const [mobileFeaturesOpen, setMobileFeaturesOpen] = useState(false);
   const { user, logout } = useAuth();
   const isBuyer = user?.role === "buyer";
+  const propertyManagerBasePath = getPropertyManagerBasePath(user?.role);
   
   // Close mobile menu when clicking outside
   const mobileMenuRef = useRef(null);
@@ -71,7 +73,7 @@ export default function Navbar() {
     "Under ₹20K": "/properties",
     "₹20K - ₹50K": "/properties",
     "Above ₹50K": "/properties",
-    "Post Property": "/dashboard/seller/add-property",
+    "Post Property": user?.role === "seller" || user?.role === "builder" ? `${propertyManagerBasePath}/add-property` : "/dashboard",
     Dashboard: "/dashboard",
     "Property Valuation": "/services",
     "Find Agent": "/properties",

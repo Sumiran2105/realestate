@@ -6,21 +6,7 @@ import { renderBuyerRoutes } from '@/app/routes/buyerRoutes';
 import { renderDashboardRoutes } from '@/app/routes/dashboardRoutes';
 import { renderFallbackRoutes } from '@/app/routes/fallbackRoutes';
 import { renderPublicRoutes } from '@/app/routes/publicRoutes';
-
-export const getDashboardPath = (role) => {
-  switch (role) {
-    case 'agent':
-      return '/dashboard/agent';
-    case 'seller':
-      return '/dashboard/seller';
-    case 'admin':
-      return '/dashboard/admin';
-    case 'buyer':
-      return '/buyer/home';
-    default:
-      return '/';
-  }
-};
+import { getDashboardPath } from '@/shared/utils/dashboard';
 
 export default function AppRoutes({ user }) {
   return (
