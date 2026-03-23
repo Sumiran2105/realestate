@@ -1,13 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet';
+import L from 'leaflet';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { appendSellerListing } from '@/features/listings/store/sellerListings';
 import { getPropertyManagerBasePath, getPropertyManagerLabel } from '@/shared/utils/dashboard';
 
 const steps = [
-  'Property Type',
-  'Location Intelligence',
+  'Create Listing',
+  'Location Information',
   'Legal Documents',
   'Property Details',
   'Pricing Information',
@@ -17,16 +19,24 @@ const steps = [
 
 const categoryOptions = ['Residential', 'Commercial', 'Agricultural', 'Industrial'];
 const subCategoryOptions = ['Apartment', 'Villa', 'Plot', 'Land'];
-const zoneOptions = ['HMDA', 'GHMC', 'DTCP'];
 const amenityOptions = ['Parking', 'Lift', 'Security', 'Power Backup', 'Gym', 'Club House', 'Water Supply', 'CCTV'];
 const furnishingOptions = ['Unfurnished', 'Semi Furnished', 'Fully Furnished'];
 const ageConditionOptions = ['New', '0-5 Years (Good)', '5-10 Years (Average)', '10+ Years (Needs Renovation)'];
 const paymentTermOptions = ['One-time', 'Installments', 'Bank Loan + Balance', 'Custom'];
 const possessionOptions = ['Ready to Move', 'Within 3 Months', 'Within 6 Months', 'Under Construction'];
+const DRAFT_STORAGE_KEY = 'seller_add_property_draft_v1';
 
 const initialFormData = {
   propertyCategory: '',
   subCategory: '',
+  address: '',
+  village: '',
+  mandal: '',
+  district: '',
+  state: 'Telangana',
+  pincode: '',
+  landmark: '',
+  zoneType: '',
 
   gpsEnabled: false,
   pinnedLocation: '',
@@ -38,8 +48,8 @@ const initialFormData = {
   saleDeed: null,
   encumbranceCertificate: null,
   pattadarOrPahani: null,
-  taxReceipts: null,
-  approvals: null,
+  taxReceipts: [],
+  conversionCertificate: null,
 
   surveyNumber: '',
   totalArea: '',
@@ -72,41 +82,178 @@ const fileName = (file) => (file ? file.name : null);
 
 const fileNames = (files) => (Array.isArray(files) ? files.map((file) => file.name) : []);
 
+const buildLocationPreviewMapUrl = ({ address, village, mandal, district, state, landmark }) => {
+  const query = [address, landmark, village, mandal, district, state].filter(Boolean).join(', ');
+  if (!query) return '';
+  return `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=15&output=embed`;
+};
+
+const mapMarkerIcon = L.divIcon({
+  className: 'custom-map-marker',
+  html: '<div style="width:18px;height:18px;border-radius:9999px;background:#2563eb;border:3px solid #ffffff;box-shadow:0 8px 20px rgba(37,99,235,0.35);"></div>',
+  iconSize: [18, 18],
+  iconAnchor: [9, 9],
+});
+
+const parseCoordinate = (value, fallback) => {
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const MapViewportSync = ({ center }) => {
+  const map = useMap();
+
+  React.useEffect(() => {
+    map.setView(center);
+  }, [center, map]);
+
+  return null;
+};
+
+const LocationPicker = ({ center, markerPosition, onPick }) => {
+  useMapEvents({
+    click(event) {
+      onPick(event.latlng);
+    },
+  });
+
+  return (
+    <>
+      <MapViewportSync center={center} />
+      {markerPosition ? <Marker position={markerPosition} icon={mapMarkerIcon} /> : null}
+    </>
+  );
+};
+
 const AddProperty = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const roleLabel = getPropertyManagerLabel(user?.role);
   const basePath = getPropertyManagerBasePath(user?.role);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(() => {
+    try {
+      const rawDraft = localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (!rawDraft) return 1;
+      const parsedDraft = JSON.parse(rawDraft);
+      return Number.isInteger(parsedDraft?.step) ? parsedDraft.step : 1;
+    } catch {
+      return 1;
+    }
+  });
   const [loading, setLoading] = useState(false);
   const [surveyValidationStatus, setSurveyValidationStatus] = useState('idle');
-  const [formData, setFormData] = useState(initialFormData);
+  const [gpsLoading, setGpsLoading] = useState(false);
+  const [gpsError, setGpsError] = useState('');
+  const [formData, setFormData] = useState(() => {
+    try {
+      const rawDraft = localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (!rawDraft) return initialFormData;
+      const parsedDraft = JSON.parse(rawDraft);
+      const draftFormData = parsedDraft?.formData || {};
+      return {
+        ...initialFormData,
+        ...draftFormData,
+        taxReceipts: Array.isArray(draftFormData.taxReceipts) ? draftFormData.taxReceipts : [],
+        photos: Array.isArray(draftFormData.photos) ? draftFormData.photos : [],
+        videosOrTours: Array.isArray(draftFormData.videosOrTours) ? draftFormData.videosOrTours : [],
+        floorPlans: Array.isArray(draftFormData.floorPlans) ? draftFormData.floorPlans : [],
+        droneFootage: Array.isArray(draftFormData.droneFootage) ? draftFormData.droneFootage : [],
+      };
+    } catch {
+      return initialFormData;
+    }
+  });
 
   const progress = useMemo(() => Math.round((step / steps.length) * 100), [step]);
+  const mapPreviewUrl = useMemo(
+    () =>
+      buildLocationPreviewMapUrl({
+        address: formData.address,
+        village: formData.village,
+        mandal: formData.mandal,
+        district: formData.district,
+        state: formData.state,
+        landmark: formData.landmark,
+      }),
+    [formData.address, formData.village, formData.mandal, formData.district, formData.state, formData.landmark]
+  );
+  const mapCenter = useMemo(
+    () => [parseCoordinate(formData.latitude, 17.385), parseCoordinate(formData.longitude, 78.4867)],
+    [formData.latitude, formData.longitude]
+  );
+  const markerPosition = useMemo(() => {
+    if (!formData.latitude || !formData.longitude) return null;
+
+    return [parseCoordinate(formData.latitude, 17.385), parseCoordinate(formData.longitude, 78.4867)];
+  }, [formData.latitude, formData.longitude]);
 
   const updateField = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const detectZone = () => {
-    if (formData.landmarkReferences.toLowerCase().includes('secunderabad')) {
-      updateField('zone', 'GHMC');
-      return;
-    }
+  React.useEffect(() => {
+    const draft = {
+      step,
+      formData: {
+        ...formData,
+        saleDeed: null,
+        encumbranceCertificate: null,
+        pattadarOrPahani: null,
+        taxReceipts: [],
+        conversionCertificate: null,
+        photos: [],
+        videosOrTours: [],
+        floorPlans: [],
+        droneFootage: [],
+      },
+    };
 
-    if (formData.landmarkReferences.toLowerCase().includes('outer ring road')) {
-      updateField('zone', 'HMDA');
-      return;
-    }
-
-    updateField('zone', 'DTCP');
-  };
+    localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+  }, [formData, step]);
 
   const enableGps = () => {
+    if (typeof navigator === 'undefined' || !navigator.geolocation) {
+      setGpsError('Geolocation is not supported in this browser.');
+      return;
+    }
+
+    setGpsLoading(true);
+    setGpsError('');
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        updateField('gpsEnabled', true);
+        updateField('latitude', coords.latitude.toFixed(6));
+        updateField('longitude', coords.longitude.toFixed(6));
+        if (!formData.pinnedLocation) {
+          updateField('pinnedLocation', formData.address || 'Current GPS Pin');
+        }
+        setGpsLoading(false);
+      },
+      (error) => {
+        const message =
+          error.code === error.PERMISSION_DENIED
+            ? 'Location permission was denied. Please allow access and try again.'
+            : 'Unable to detect your current location. Please try again or pin manually on the map.';
+        setGpsError(message);
+        setGpsLoading(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  };
+
+  const handleMapPick = ({ lat, lng }) => {
+    updateField('latitude', lat.toFixed(6));
+    updateField('longitude', lng.toFixed(6));
     updateField('gpsEnabled', true);
-    if (!formData.latitude) updateField('latitude', '17.3850');
-    if (!formData.longitude) updateField('longitude', '78.4867');
-    if (!formData.pinnedLocation) updateField('pinnedLocation', 'Current GPS Pin');
+    if (!formData.pinnedLocation) {
+      updateField('pinnedLocation', formData.address || `${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+    }
+    setGpsError('');
   };
 
   const validateSurveyNumber = () => {
@@ -160,7 +307,12 @@ const AddProperty = () => {
       const newListing = {
         id: Date.now(),
         title: `${formData.subCategory || 'Property'} - ${formData.propertyCategory || 'Listing'}`,
-        location: formData.pinnedLocation || formData.landmarkReferences || 'Location Pending',
+        location:
+          formData.address ||
+          [formData.village, formData.district, formData.state].filter(Boolean).join(', ') ||
+          formData.pinnedLocation ||
+          formData.landmarkReferences ||
+          'Location Pending',
         price: formData.expectedPrice || 'Price Pending',
         status: 'under_review',
         views: 0,
@@ -169,6 +321,14 @@ const AddProperty = () => {
         image: listingImage,
         propertyCategory: formData.propertyCategory,
         subCategory: formData.subCategory,
+        address: formData.address,
+        village: formData.village,
+        mandal: formData.mandal,
+        district: formData.district,
+        state: formData.state,
+        pincode: formData.pincode,
+        landmark: formData.landmark,
+        zoneType: formData.zoneType,
         gpsEnabled: formData.gpsEnabled,
         pinnedLocation: formData.pinnedLocation,
         latitude: formData.latitude,
@@ -178,8 +338,8 @@ const AddProperty = () => {
         saleDeed: fileName(formData.saleDeed),
         encumbranceCertificate: fileName(formData.encumbranceCertificate),
         pattadarOrPahani: fileName(formData.pattadarOrPahani),
-        taxReceipts: fileName(formData.taxReceipts),
-        approvals: fileName(formData.approvals),
+        taxReceipts: fileNames(formData.taxReceipts),
+        conversionCertificate: fileName(formData.conversionCertificate),
         surveyNumber: formData.surveyNumber,
         totalArea: formData.totalArea,
         areaUnit: formData.areaUnit,
@@ -196,6 +356,22 @@ const AddProperty = () => {
         floorPlans: fileNames(formData.floorPlans),
         droneFootage: fileNames(formData.droneFootage),
         details: {
+          createListingPayload: {
+            property_type: {
+              property_category: formData.propertyCategory,
+              property_subtype: formData.subCategory,
+            },
+            location: {
+              address: formData.address,
+              village: formData.village,
+              mandal: formData.mandal,
+              district: formData.district,
+              state: formData.state,
+              pincode: formData.pincode,
+              landmark: formData.landmark,
+              zone_type: formData.zoneType,
+            },
+          },
           propertyType: {
             category: formData.propertyCategory,
             subCategory: formData.subCategory,
@@ -212,8 +388,8 @@ const AddProperty = () => {
             saleDeed: fileName(formData.saleDeed),
             encumbranceCertificate: fileName(formData.encumbranceCertificate),
             pattadarOrPahani: fileName(formData.pattadarOrPahani),
-            taxReceipts: fileName(formData.taxReceipts),
-            approvals: fileName(formData.approvals),
+            taxReceipts: fileNames(formData.taxReceipts),
+            conversionCertificate: fileName(formData.conversionCertificate),
           },
           propertyDetails: {
             surveyNumber: formData.surveyNumber,
@@ -240,16 +416,22 @@ const AddProperty = () => {
       };
 
       appendSellerListing(user?.id, newListing);
+      localStorage.removeItem(DRAFT_STORAGE_KEY);
       navigate(basePath);
     }, 1200);
   };
 
   const renderStep1 = () => (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900">Step 1: Property Type Selection</h2>
+      <h2 className="text-xl font-semibold text-gray-900">Step 1: Property Details</h2>
+      {/* <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
+        This step is aligned to the initial <strong>`POST /api/v1/land/listings`</strong> payload and captures
+        the required <strong>property_type</strong> and <strong>location</strong> fields.
+      </div> */}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Select Category *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Property Category *</label>
           <select
             value={formData.propertyCategory}
             onChange={(e) => updateField('propertyCategory', e.target.value)}
@@ -263,7 +445,7 @@ const AddProperty = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Select Sub-category *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Property Subtype *</label>
           <select
             value={formData.subCategory}
             onChange={(e) => updateField('subCategory', e.target.value)}
@@ -276,25 +458,138 @@ const AddProperty = () => {
           </select>
         </div>
       </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Address *</label>
+          <input
+            type="text"
+            value={formData.address}
+            onChange={(e) => {
+              updateField('address', e.target.value);
+              if (!formData.pinnedLocation) updateField('pinnedLocation', e.target.value);
+            }}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Door no, street, area, or survey location"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Village *</label>
+          <input
+            type="text"
+            value={formData.village}
+            onChange={(e) => updateField('village', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter village"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Mandal *</label>
+          <input
+            type="text"
+            value={formData.mandal}
+            onChange={(e) => updateField('mandal', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter mandal"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">District *</label>
+          <input
+            type="text"
+            value={formData.district}
+            onChange={(e) => updateField('district', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter district"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">State *</label>
+          <select
+            value={formData.state}
+            onChange={(e) => updateField('state', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="Telangana">Telangana</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Pincode *</label>
+          <input
+            type="text"
+            value={formData.pincode}
+            onChange={(e) => updateField('pincode', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter pincode"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Landmark</label>
+          <input
+            type="text"
+            value={formData.landmark}
+            onChange={(e) => {
+              updateField('landmark', e.target.value);
+              if (!formData.landmarkReferences) updateField('landmarkReferences', e.target.value);
+            }}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Nearby school, junction, temple, etc."
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Zone Type *</label>
+          <input
+            type="text"
+            value={formData.zoneType}
+            onChange={(e) => {
+              updateField('zoneType', e.target.value);
+              updateField('zone', e.target.value);
+            }}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter zone type"
+          />
+        </div>
+      </div>
     </div>
   );
 
   const renderStep2 = () => (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900">Step 2: Location Intelligence</h2>
+      <h2 className="text-xl font-semibold text-gray-900">Step 2: Location Details</h2>
+      {/* <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+        This step is where seller pins the property on the map. To actually call
+        <strong> `GET /api/v1/land/listings/{'{listing_id}'}/coordinates` </strong> and
+        <strong> `POST /api/v1/land/listings/{'{listing_id}'}/coordinates` </strong>, we will need the
+        backend `listing_id` returned after the create-listing step.
+      </div> */}
 
       <div className="flex flex-wrap items-center gap-3">
         <button
           type="button"
           onClick={enableGps}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          disabled={gpsLoading}
+          className={`px-4 py-2 rounded-lg text-white ${gpsLoading ? 'bg-blue-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
         >
-          Enable GPS for Auto-detection
+          {gpsLoading ? 'Detecting location...' : 'Use Current GPS Location'}
         </button>
         <span className={`text-sm font-medium ${formData.gpsEnabled ? 'text-green-600' : 'text-gray-500'}`}>
-          {formData.gpsEnabled ? 'GPS Enabled' : 'GPS Not Enabled'}
+          {formData.gpsEnabled ? 'Location selected' : 'Location not selected'}
         </span>
       </div>
+
+      {gpsError ? (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {gpsError}
+        </div>
+      ) : null}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -342,31 +637,88 @@ const AddProperty = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Detected Zone *</label>
-          <div className="flex gap-2">
-            <select
-              value={formData.zone}
-              onChange={(e) => updateField('zone', e.target.value)}
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Select zone</option>
-              {zoneOptions.map((option) => (
-                <option key={option} value={option}>{option}</option>
-              ))}
-            </select>
-            <button
-              type="button"
-              onClick={detectZone}
-              className="px-4 py-2 border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50"
-            >
-              Auto Detect
-            </button>
-          </div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Zone</label>
+          <input
+            type="text"
+            value={formData.zone}
+            onChange={(e) => {
+              updateField('zone', e.target.value);
+              if (!formData.zoneType) updateField('zoneType', e.target.value);
+            }}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter zone"
+          />
         </div>
       </div>
 
-      <div className="rounded-lg border border-dashed border-gray-300 p-6 text-sm text-gray-500 bg-gray-50">
-        Map pin area placeholder: integrate map provider here for exact location pinning.
+      <div className="grid grid-cols-1 xl:grid-cols-[1.4fr_0.6fr] gap-6">
+        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+          <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3">
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900">Property Map Holder</h3>
+              <p className="mt-1 text-xs text-gray-500">Preview the listing area and reserve space for pin-drop interaction.</p>
+            </div>
+            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+              Step 2
+            </span>
+          </div>
+
+          {mapPreviewUrl ? (
+            <div className="relative h-[360px] bg-gray-100">
+              <MapContainer center={mapCenter} zoom={15} scrollWheelZoom className="h-full w-full">
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <LocationPicker center={mapCenter} markerPosition={markerPosition} onPick={handleMapPick} />
+              </MapContainer>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 text-white">
+                <p className="text-sm font-medium">Click on the map to pin the property</p>
+                <p className="mt-1 text-xs text-white/85">
+                  The selected point will update latitude and longitude automatically.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex h-[360px] items-center justify-center bg-[linear-gradient(135deg,_#eff6ff_0%,_#f8fafc_48%,_#eef2ff_100%)] p-6">
+              <div className="max-w-sm text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-gray-200">
+                  <span className="text-2xl text-gray-700">+</span>
+                </div>
+                <h4 className="text-base font-semibold text-gray-900">Map preview will load from step 1 address</h4>
+                <p className="mt-2 text-sm text-gray-600">
+                  Fill address, village, mandal, district, state, and landmark in step 1 to see the location preview here.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="space-y-4">
+          <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+            <h3 className="text-sm font-semibold text-gray-900">Current Coordinates</h3>
+            <div className="mt-4 space-y-2">
+              <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm">
+                <span className="text-gray-500">Latitude</span>
+                <span className="font-medium text-gray-900">{formData.latitude || 'Not selected'}</span>
+              </div>
+              <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm">
+                <span className="text-gray-500">Longitude</span>
+                <span className="font-medium text-gray-900">{formData.longitude || 'Not selected'}</span>
+              </div>
+            </div>
+            <p className="mt-3 text-xs leading-5 text-gray-600">
+              Select coordinates by either using the GPS button or clicking directly on the map.
+            </p>
+          </div>
+
+          {/* <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-4">
+            <h3 className="text-sm font-semibold text-gray-900">API Wiring Plan</h3>
+            <p className="mt-2 text-xs leading-5 text-gray-600">1. Create listing in step 1 and store returned `listing_id`.</p>
+            <p className="mt-1 text-xs leading-5 text-gray-600">2. Load saved coordinates with the coordinates GET API.</p>
+            <p className="mt-1 text-xs leading-5 text-gray-600">3. Save map-picked coordinates with the coordinates POST API.</p>
+          </div> */}
+        </div>
       </div>
     </div>
   );
@@ -374,31 +726,47 @@ const AddProperty = () => {
   const renderStep3 = () => (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold text-gray-900">Step 3: Legal Document Upload</h2>
+      <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+        These uploads map to document APIs and will require the backend <strong>`listing_id`</strong> created in step 1.
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Upload Sale Deed *</label>
           <input type="file" onChange={(e) => handleSingleFile('saleDeed', e.target.files)} className="w-full" />
+          <p className="mt-1 text-xs text-gray-500">API: `POST /documents/sale-deed`</p>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Upload Encumbrance Certificate *</label>
           <input type="file" onChange={(e) => handleSingleFile('encumbranceCertificate', e.target.files)} className="w-full" />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Upload Pattadar Passbook / Pahani *</label>
-          <input type="file" onChange={(e) => handleSingleFile('pattadarOrPahani', e.target.files)} className="w-full" />
+          <p className="mt-1 text-xs text-gray-500">API: `POST /documents/encumbrance`</p>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Upload Tax Receipts *</label>
-          <input type="file" onChange={(e) => handleSingleFile('taxReceipts', e.target.files)} className="w-full" />
+          <input type="file" multiple onChange={(e) => handleMultipleFiles('taxReceipts', e.target.files)} className="w-full" />
+          <p className="mt-1 text-xs text-gray-500">
+            API: `POST /documents/tax-receipt` | {formData.taxReceipts.length} file(s) selected
+          </p>
         </div>
 
-        <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Upload Approvals (if applicable)</label>
-          <input type="file" onChange={(e) => handleSingleFile('approvals', e.target.files)} className="w-full" />
+        {formData.propertyCategory === 'Agricultural' ? (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Upload Pattadar Passbook *</label>
+            <input type="file" onChange={(e) => handleSingleFile('pattadarOrPahani', e.target.files)} className="w-full" />
+            <p className="mt-1 text-xs text-gray-500">Required for agricultural land | API: `POST /documents/pattadar`</p>
+          </div>
+        ) : (
+          <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-4 text-sm text-gray-500">
+            Pattadar Passbook is only required for listings under <strong>Agricultural</strong> category.
+          </div>
+        )}
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Upload Land Use Conversion Certificate</label>
+          <input type="file" onChange={(e) => handleSingleFile('conversionCertificate', e.target.files)} className="w-full" />
+          <p className="mt-1 text-xs text-gray-500">Optional | API: `POST /documents/conversion`</p>
         </div>
       </div>
     </div>
@@ -623,8 +991,9 @@ const AddProperty = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
         <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
           <p><strong>Type:</strong> {formData.propertyCategory || '-'} / {formData.subCategory || '-'}</p>
-          <p className="mt-1"><strong>Location Pin:</strong> {formData.pinnedLocation || '-'}</p>
-          <p className="mt-1"><strong>Zone:</strong> {formData.zone || '-'}</p>
+          <p className="mt-1"><strong>Address:</strong> {formData.address || '-'}</p>
+          <p className="mt-1"><strong>Village / Mandal:</strong> {[formData.village, formData.mandal].filter(Boolean).join(' / ') || '-'}</p>
+          <p className="mt-1"><strong>Zone:</strong> {formData.zoneType || formData.zone || '-'}</p>
           <p className="mt-1"><strong>Survey:</strong> {formData.surveyNumber || '-'}</p>
         </div>
         <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">

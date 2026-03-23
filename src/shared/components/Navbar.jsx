@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaHeart, FaUserCircle } from "react-icons/fa";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { getPropertyManagerBasePath } from "@/shared/utils/dashboard";
+import { getDashboardPath, getPropertyManagerBasePath } from "@/shared/utils/dashboard";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -11,6 +11,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const isBuyer = user?.role === "buyer";
   const propertyManagerBasePath = getPropertyManagerBasePath(user?.role);
+  const dashboardPath = getDashboardPath(user?.role);
   
   // Close mobile menu when clicking outside
   const mobileMenuRef = useRef(null);
@@ -74,7 +75,7 @@ export default function Navbar() {
     "₹20K - ₹50K": "/properties",
     "Above ₹50K": "/properties",
     "Post Property": user?.role === "seller" || user?.role === "builder" ? `${propertyManagerBasePath}/add-property` : "/dashboard",
-    Dashboard: "/dashboard",
+    Dashboard: user ? dashboardPath : "/login",
     "Property Valuation": "/services",
     "Find Agent": "/properties",
     "Verify Property": "/services/verify-property",
@@ -216,7 +217,22 @@ export default function Navbar() {
                   Sign Up
                 </Link>
               </div>
-            ) : null}
+            ) : (
+              <>
+                <Link
+                  to={dashboardPath}
+                  className="px-4 py-2 rounded-lg hardgreen text-white hover:opacity-95 transition font-medium text-sm"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 rounded-lg border border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 transition font-medium text-sm"
+                >
+                  Logout
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -534,7 +550,23 @@ export default function Navbar() {
                   Sign Up
                 </Link>
               </div>
-            ) : null}
+            ) : (
+              <div className="space-y-3">
+                <Link
+                  to={dashboardPath}
+                  onClick={handleMobileLinkClick}
+                  className="block w-full px-4 py-3 text-center font-medium text-white hardgreen hover:opacity-95 rounded-lg transition"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-full px-2 py-2 text-base font-medium text-red-600 hover:bg-red-50 rounded-lg transition border border-red-200"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Footer Note */}
